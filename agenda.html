@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index da Página de Teste</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	
+	
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/datapicker/jquery.ui.timepicker.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+
+	<script src='js/fullcalendar/lib/moment.min.js'></script>	
+	<script src='js/fullcalendar/fullcalendar.min.js'></script>
+	<script src='js/fullcalendar/locale/pt-br.js'></script>
+
+
+	
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.11.4.custom/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.11.4.custom/jquery-ui.structure.min.css">
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css">
+	<link rel="stylesheet" type="text/css" href="js/datapicker/jquery.ui.timepicker.css">
+
+	<link href='js/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+	<link href='js/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+
+
+
+	
+
+	<script type="text/javascript">
+		
+		$(document).ready(function(){		
+			
+			
+			verificaLogin();
+			
+			DispReuni();
+
+		});
+
+		function verificaLogin(){
+			$.ajax({
+				type: "POST",
+				url: "login/controller.php?login=sessionUsuario",
+				dataType: "json",
+				success: function(data){
+
+					if(data != null){
+						
+						$('#dropdown_login').children().remove();
+
+						$('#id_user').val(data.id);
+						if(data.nivel == 1 && data.position == 1){
+
+						}else{
+							$('#lista_de_pedido').children().remove();
+						}
+					    
+						ModalListaVend(data.id);
+						var navPainel = mudarNavBar();
+						$('#dropdown_login').append(navPainel);
+						removeNavOptions();
+					}else{
+						window.location.href = 'index.html';
+					}
+
+				}
+			}).fail(function(data){
+				window.location.href = 'index.html';
+			});
+		}
+
+		function ModalListaVend(id_user){
+			
+				$.ajax({
+				type: 'POST',
+				url: "sys_agenda/controller.php?agenda=pegarNomeReuni&idUser="+id_user,
+				dataType: 'json',
+				success: function(data){
+					$.each(data, function(key,val){
+					var nomes_vendMarc = "<option value="+val.id+">"+val.nome+" "+val.sobrenome+"</option>";
+					$("#quem_vai").append(nomes_vendMarc);
+					$('#quem_vai_edit').append(nomes_vendMarc);
+				});
+				}
+			});
+			/*
+			$.getJSON("sys_agenda/controller.php?agenda=pegarNomeReuni&idUser="+id_user, function(data){
+				$.each(data, function(key,val){
+					var nomes_vendMarc = "<option value="+val.id+">"+val.nome+" "+val.sobrenome+"</option>";
+					$("#quem_vai").append(nomes_vendMarc);
+					$('#quem_vai_edit').append(nomes_vendMarc);
+				});
+			});*/
+
+		}
+
+		
+
+		function DispReuni(){
+			$.getJSON("sys_agenda/controller.php?agenda=pegarNomesVend", function(data){
+				$.each(data, function(key, val){
+					
+						var nomeDispReuni = "<tr><td colspan='2'>"+val.nome+" "+val.sobrenome+" </td><td><span class='badge badgeColor'>"+val.quant_reuni+"</span></td></tr>";
+					
+					
+					$('#tbl_disp_reu').append(nomeDispReuni);
+				});
+			});
+		}
+
+		
+		function mudarNavBar(){
+			var paginaName = window.location.pathname;
+			var loginBarra = "<li><a href='#' ><span class='glyphicon glyphicon-user' aria-hidden='true'></span>    Minha Conta</a></li>";
+			loginBarra += "<li><a href='login/controller.php?login=deslogar&pageName="+paginaName+"'><span class='glyphicon glyphicon-off' aria-hidden='true'></span>    Logout</a></li>";
+			
+			return loginBarra;
+		}
+
+		function removeNavOptions(){
+			$('#nav_options_login').children().remove();
+			$('#nav_options_login').append('<li><a href="#">Painel Administrativo</a></li>');
+			$('#nav_menu_direita').children().remove();
+			$('#nav_menu_direita').append('<p>Menu<span class="caret"></span></p>');
+		}
+
+		
+
+
+
+
+	</script>
+
+
+
+	
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var data = getDataHoje();
+			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,basicWeek,basicDay'
+				},
+				defaultDate: data,
+				navLinks: true, // can click day/week names to navigate views
+				editable: false,
+				eventLimit: true, // allow "more" link when too many events
+				events: {
+					url: 'sys_agenda/controller.php?agenda=pegarEventosCalendario',
+					error: function(){
+						alert('Deu erro ao buscar info.');
+					}
+				},
+
+				eventClick: function(event){
+					//alert(event.id);
+					var id_user = $('#id_user').val();
+					//alert(id_user);
+
+					$.getJSON("sys_agenda/controller.php?agenda=descricaoEvento&id_user="+id_user+"&calendEventId="+event.id, function(data){
+						$.each(data, function(key, val){
+							//alert(val.result);
+							if(val.result){
+								//alert('Entrou e abre Modal');	
+								limparInfo();						
+								completarInfo(val);
+								$('#ModalListarInfo').modal();
+								if(val.editar){
+									//alert(val.editar);
+									//alert('Tem permissao para editar');
+									var btn_deletar  = "<button type='button' id='deletar_evento' onclick='deletarEvento("+id_user+", "+event.id+")' class='btn btn-danger'>Deletar</button>";
+									var btn_editar   = "<button type='button' id='editar_evento' onclick='editarEvento("+id_user+", "+event.id+")' class='btn btn-success espacoBotoes'>Editar</button>";
+									var btn_fechar   = '<button type="button" class="btn btn-default espacoBotoes" id="btn_fechar_modal_visu" data-dismiss="modal">Fechar</button>';
+									var input_hidden_idcale = "<input type='hidden' id='cale_id' value="+event.id+" />";							
+									$('#editar_evento').remove();
+									$('#deletar_evento').remove();
+									$('#cale_id').remove();
+									$('#btn_fechar_modal_visu').remove();
+									$('#div_modal_botoes').append(input_hidden_idcale);
+									$('#div_modal_botoes').append(btn_deletar);
+									$('#div_modal_botoes').append(btn_editar);
+									$('#div_modal_botoes').append(btn_fechar);
+								}else{
+									//alert('vc nao pode editar');
+									$('#editar_evento').remove();
+
+								}
+							}else{
+								alert('Você não tem permissão para visualizar');
+							}
+						});
+					});
+
+					/*$.ajax({
+						type: 'POST',
+						url: "sys_agenda/controller.php?agenda=descricaoEvento"+event.id+"&id_user=&calendEventId="+id_user,
+						dataType: 'json',
+						success: function(data){
+							alert(data.result);
+						}
+					});*/
+				}
+		});
+
+		function completarInfo(obj){
+			//alert(obj.titulo);
+			$('.nomeInfo').append(obj.nome);
+			$('.sobrenomeInfo').append(" "+obj.sobrenome);
+			$('.cargoInfo').append(obj.cargo);
+			$('.tituloInfo').append(obj.titulo);
+			$('.descInfo').append(obj.desc);
+			$('.infoInfo').append(obj.info);
+			$('.dataInfo').append(obj.data);
+			$('.h_inicioInfo').append(obj.h_inicio);
+			if(obj.presentacao == 1){ $('.projeto_enviado').append('Sim'); }else{ $('.projeto_enviado').append('Não'); }
+			$('.nome_contato').append(obj.nome_contato);
+			$('.cargo_contato').append(obj.cargo_contato);
+			$('.endereco_contato').append(obj.end_contato);
+			$('.tel_contato').append(obj.tel_contato);
+			$('.email_contato').append(obj.email_contato);
+		}
+
+		function limparInfo(){
+			$('.nomeInfo').empty();
+			$('.sobrenomeInfo').empty();
+			$('.cargoInfo').empty();
+			$('.tituloInfo').empty();
+			$('.descInfo').empty();
+			$('.infoInfo').empty();
+			$('.dataInfo').empty();
+			$('.h_inicioInfo').empty();
+
+			$('.projeto_enviado').empty();
+			$('.nome_contato').empty();
+			$('.cargo_contato').empty();
+			$('.endereco_contato').empty();
+			$('.tel_contato').empty();
+			$('.email_contato').empty();
+		}
+
+		function getDataHoje(){
+			var dia = new Date();
+			var formato = moment(dia).format('YYYY-MM-DD');
+			return formato;
+			//var dataAtual = dia.getFullYear()+"-"+dia.getMonth()+"-"+dia.getDate();
+			//alert(dataAtual);
+		}
+
+		
+
+	});
+
+		function editarEvento(id_user, id_cale){
+			//alert("id: "+id_user+" cale: "+id_cale);
+
+			$.getJSON("sys_agenda/controller.php?agenda=descricaoEvento&id_user="+id_user+"&calendEventId="+id_cale, function(data){
+						$.each(data, function(key, val){
+							//alert(val.result);
+							if(val.result){
+								
+								$('#modal_editar_cale').modal();
+								$('#ModalListarInfo').modal('hide');
+								if(val.editar){
+									$('#titulo_event_edit').val(val.titulo);
+									$('#desc_event_edit').val(val.desc);
+									$('#dataEvento_event').val(val.data);
+									$('#hora_event_ini_edit').val(val.h_inicio);
+									$('#hora_event_fim_edit').val(val.h_fim);
+									$('#id_cale_edit').val(id_cale);
+
+									$('#email_contato_edit').val(val.email_contato);
+									$('#telefone_contato_edit').val(val.tel_contato);
+									$('#nome_contato_edit').val(val.nome_contato);
+									$('#cargo_contato_edit').val(val.cargo_contato);
+									$('#endereco_edit').val(val.end_contato);
+
+									seleCategoria(val.info);
+								}
+							}else{
+								alert('Você não tem permissão para visualizar');
+							}
+						});
+					});
+
+
+
+		}
+
+		function deletarEvento(id_user, id_cale){
+			$('#modal_excluir').modal();
+			$('#btn_excluir').click(function(){
+				$.ajax({
+					type: 'POST',
+					url: "sys_agenda/controller.php?agenda=apagarCalendario&id_user="+id_user+"&id_cale="+id_cale,
+					dataType: 'text',
+					success: function(data){
+						if(data == 'true'){
+							location.reload();
+						}else{
+							alert('não foi possivel excluir o evento!');
+						}
+					}
+				});
+			});
+		}
+
+		function seleCategoria(categoria){
+			for(var i = 1; i <= $('#tipo_event_edit option').size(); i++){
+				if($("#tipo_event_edit :nth-child("+i+")").text() == categoria ){
+					$("#tipo_event_edit :nth-child("+i+")").prop('selected', true);
+				}
+			}
+		}
+	</script>
+
+
+	<style type="text/css">
+		#borda{
+			/* border: 1px solid black; */
+		}
+		
+		body {
+			
+			padding: 0;
+			font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+			font-size: 14px;
+		}
+
+		#calendar {
+			max-width: 900px;
+			margin: 0 auto;
+		}
+
+		.fc-day-grid-event{
+			cursor: pointer;
+		}
+
+		.espacoBotoes{
+			margin-left: 3%;
+		}
+
+		.badgeColor{
+			background-color: #cc6600;
+		}
+	</style>
+
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Aqcez</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav" id="nav_options_login" >
+	        <li class="active"><a href="#">HOME <span class="sr-only">(current)</span></a></li>
+	        <li><a href="#">Link</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	          <ul class="dropdown-menu" id="dropdown_painel">
+	            <li><a href="#">Action</a></li>
+	            <li><a href="#">Another action</a></li>
+	            <li><a href="#">Something else here</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">One more separated link</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	      <!--<form class="navbar-form navbar-left" >
+	        <div class="form-group">
+	          <input type="text" class="form-control" placeholder="Search">
+	        </div>
+	        <button type="submit" class="btn btn-default">Submit</button>
+	      </form> -->
+	      <ul class="nav navbar-nav navbar-right">
+	        <li id="lista_de_pedido"><a href="lista_solicitacao.html">Lista de Pedidos</a></li>
+	        <li class="dropdown">
+
+	          <a href="#" class="dropdown-toggle" id="nav_menu_direita" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><p>Login<span class="caret"></span></p> </a>
+
+	          
+		          <ul class="dropdown-menu" id="dropdown_login">
+		            <li>
+		            	<p>Login</p>
+		            	<input type="text" class="form-control" id="usuario_login" />
+		            </li>
+		            <li>
+		            	<p>Senha</p>
+		            	<input type="password" class="form-control" id="senha_login" />
+		            </li>
+		            <li style="padding-left: 30%">
+		            	<br/>
+		            	<button class="btn btn-primary" align="center" id="logar">Logar</button> 
+		            </li>
+		            
+		          </ul>
+	          
+
+	        </li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+
+
+
+	<input type="hidden" id="id_user" value=""/>
+	
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-xs-10" id='borda'>
+				<div id="calendar"></div>
+			</div>
+			<div class="col-xs-2" id="borda">
+				<div class="row">
+					<div class="col-xs-12" id="borda">
+						<table class="table">
+							<thead>
+								<th>Disponiveis para reunião</th>
+							</thead>
+							<tbody id="tbl_disp_reu">
+								
+							</tbody>
+						</table>
+						<button type="button" style="margin-left: 9%;" data-toggle="modal" data-target="#myModal" class="btn btn-success">Adicionar Evento</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12" borda="borda">
+						<h4 align="center">Legenda</h4>
+						<ul class="list-group">
+						  <li class="list-group-item">						    
+						    <p><span class="badge" style="background-color: #EB6021;    color: #EB6021;">0</span>    Pessoal</p>
+						    <p><span class="badge" style="background-color: #0B3E4C;    color: #0B3E4C;">0</span>    Reunião Propria</p>
+						    <p><span class="badge" style="background-color: #17713B;  	color: #17713B;">0</span>    Reunião (Igor)</p>
+						    <p><span class="badge" style="background-color: #612B70; 	color: #612B70;">0</span>    Compromisso AQCEZ</p>
+						    <p><span class="badge" style="background-color: #737373; 	color: #737373;">0</span>    Go Construct</p>
+						  </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+<!-- ================================================ ADICIONAR MODAL ======================================================   -->
+
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Adicionar itens no calendario</h4>
+	      </div>
+	      <div class="modal-body">
+
+
+	        <div class="row">
+	        	<div class="col-xs-6" >
+	        	   <div class="form-group">	        	   		
+	        	   		<label for="titulo_event">Nome do Evento:</label>
+	        			<input type="text" class="form-control" value="" id='titulo_event' />
+
+	        			<label for="email_contato">Email:</label>
+	        			<input type="email" class="form-control" value="" id="email_contato" />
+
+	        			<label for="telefone_contato">Telefone:</label>
+	        			<input type="text" class="form-control" value="" id="telefone_contato">
+
+	        			<label for="desc_event">Descrição</label>
+	        			<textarea class="form-control" id="desc_event" value="" placeholder="Digite a Descrição do evento."></textarea>
+
+	        			<label for="envi_apresentacao" >Enviou a apresentação:	</label><br/>
+	        			<p>
+	        				<input type="radio" name="envi_apresentacao" id="envi_apresentacao" value="1" />Sim
+	        				<input type="radio" name="envi_apresentacao" id="envi_apresentacao" value="0" />Não
+	        			</p>
+													
+	        			<label>Data evento</label>
+	        			<div class="input-group">
+	        				<div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+	        				<input type="text" class="form-control" value="" id="dataEvento" placeholder="22/12/2017" />
+	        			</div>
+	        			
+	        			
+	        		</div>
+
+	        	   </div>
+	        	   
+	        	   <div class="col-xs-6">
+	        	   		<div class="form-group">
+	        	   			<label for="nome_contato">Nome do Contato:</label>
+	        	   			<input type="text" class="form-control" id="nome_contato" />
+
+	        	   			<label for="cargo_contato" >Cargo:</label>
+	        	   			<input  type="text" class="form-control" id="cargo_contato" />
+
+	        	   			<label for="endereco">Endereço:</label>
+	        	   			<input type="text" class="form-control" id="endereco" />
+
+	        	   			<label for="tipo_event">Tipo</label>
+		        			<select class="form-control" id="tipo_event">
+		        				<option value="Pessoal">Pessoal</option>
+		        				<option value="Reuniao_propria">Reunião Própria</option>
+		        				<option value="Reuniao_ferramenta">Reunião Ferramenta</option>
+		        				<option value="Compromisso_aqcez">Compromisso Aqcez</option>
+		        				<option value="go_construct">Go Construct</option>
+
+		        			</select>
+
+	        	   			<h3 align="center">Hora</h3>
+			        			
+			        				
+	        					<label for="hora_event_ini">Inicio</label>
+	        					<input type="text" class="form-control" value="" id="hora_event_ini" />	        				
+	        				
+	        				
+	        					<label for="hora_event_fim">Fim</label>
+	        					<input type="text" class="form-control" value="" id="hora_event_fim" />
+
+	        	   		</div>
+	        	   </div>
+
+
+
+	        	   <br/>
+	        	   <hr>        	   
+	        		
+	        	</div>
+
+	        	<div class="row">
+	        	   		<div class="col-xs-12">
+	        	   			<div class="form-group">
+	        	   				<h3 align="center">Quem Vai</h3>
+				        			<div class="row">
+				        				<div class="col-xs-2"></div>
+				        				<div class="col-xs-8">
+				        					<select id="quem_vai" class="form-control">
+				        						<option value=""> - </option>					
+				        					</select>
+				        				</div>			        					
+		        					</div>
+	        	   			</div>
+	        	   		</div>
+	        	   </div>
+	        	   <hr/>
+	        	<div class="row">
+	        	   	 <div class="col-xs-7" ></div>
+	        	   	 <div class="col-xs-5" >
+	        	   	 	<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	        			<button type="button" id="addEvento" class="btn btn-primary">Salvar</button>
+	        	   	 </div>
+	        	   		
+	        	   </div>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+
+
+
+
+
+	  <!-- ================================================== Info modal ================================================= -->
+
+
+
+
+
+
+
+	  <div class="modal fade" id="ModalListarInfo" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="infoModalLabel">Visualizar Calendário</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-xs-12" >
+
+	        	          	  
+	        	   <div class="form-group" align="center"> 
+	        	   		
+	        	   	 <h3 class="tituloInfo"></h3> 
+	        	   </div>
+	        	   <div class="form-group">
+	        	   		<label>Descrição:</label>
+	        	   		<p class="descInfo" style="text-align: justify;"></p>
+	        	   </div>
+	        	   <hr>
+	        	   <div class="row">
+	        	   		<div class="col-xs-6">
+	        	   			
+
+			        	   <div class="form-group">
+			        	   		<label>Categoria:</label>
+			        	   		<p class="infoInfo"></p>
+			        	   		<hr>
+			        	   		<label>Nome vizitar:</label>
+			        	   		<p class="nomeInfo sobrenomeInfo"> </p>
+			        	   		<hr>
+			        	   		<!--<label>Data do evento: </label>
+			        	   		<p class="dataInfo"></p>
+			        	   		<hr>
+			        	   		<label>Hora do Evento:</label>
+			        	   		<p class="h_inicioInfo"></p>
+			        	   		<hr> -->
+			        	   		<label>Enviou Projeto</label>
+	        	   				<p class="projeto_enviado"></p>
+	        	   				<hr>
+	        	   				<label>Tipo:</label>
+	        	   				<p class="infoInfo"></p>
+	        	   				
+			        	   </div>
+
+			        	   <hr/>
+
+			        	   
+	        	   		</div>
+	        	   		<div class="col-xs-6">
+	        	   			<div class="form-group">
+	        	   				<label>Nome do Contato:</label>
+	        	   				<p class="nome_contato"></p>
+	        	   				<hr>
+	        	   				<label>Email do Contato:</label>
+	        	   				<p class="email_contato"></p>
+	        	   				<hr>
+	        	   				<label>Telefone do Contato:</label>
+	        	   				<p class="tel_contato"></p>
+	        	   				<hr>
+	        	   				<label>Cargo:</label>
+	        	   				<p class="cargo_contato"></p>
+	        	   				<hr>
+	        	   				<label>Endereço:</label>
+	        	   				<p class="endereco_contato"></p>
+	        	   				<hr>
+	        	   				
+	        	   				
+	        	   			</div>
+	        	   		</div>
+
+	        	   </div>
+
+	        	   
+	        	   
+
+	        	   <div class="form-group">
+	        	   		<div class="row">
+	        	   			<div class="col-xs-6">
+	        	   				<h4><b>Data do Evento:</b> <span style="font-size: 16px;" class="dataInfo"></span></h4>	        	   				
+	        	   			</div>
+	        	   			<div class="col-xs-6">
+	        	   				<h4><b>Hora do Evento:</b> <span style="font-size: 16px;" class="h_inicioInfo"></span></h4>
+	        	   			</div>	        	   			
+	        	   		</div>
+	        	   </div>
+	        	   <hr/>
+
+	        	   </div><br/>
+
+
+	        	   
+	        	   <hr>
+	        	   <div class="row">
+	        	   	 <div class="col-xs-6" ></div>
+	        	   	 <div class="col-xs-6" id="div_modal_botoes" >
+	        	   	 	<button type="button" class="btn btn-default" id="btn_fechar_modal_visu" data-dismiss="modal">Fechar</button>
+	        			<!-- <button type="button" id="addEvento" class="btn btn-primary">Salvar</button> -->
+	        	   	 </div>
+	        	   		
+	        	   </div>
+	        		
+	        	</div>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+
+
+
+
+
+
+
+
+
+
+	  <div class="modal fade" id="modal_editar_cale" tabindex="-1" role="dialog" aria-labelledby="modal_editar_cale">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="modal_editar_cale">Alterar calendario</h4>
+	      </div>
+	      <div class="modal-body">
+
+
+	        <div class="row">
+	        	<div class="col-xs-6" >
+	        	   <div class="form-group">	        	   		
+	        	   		<label for="titulo_event">Nome do Evento:</label>
+	        			<input type="text" class="form-control" value="" id='titulo_event_edit' />
+
+	        			<label for="email_contato">Email:</label>
+	        			<input type="email" class="form-control" value="" id="email_contato_edit" />
+
+	        			<label for="telefone_contato">Telefone:</label>
+	        			<input type="text" class="form-control" value="" id="telefone_contato_edit">
+
+	        			<label for="desc_event">Descrição</label>
+	        			<textarea class="form-control" id="desc_event_edit" value="" placeholder="Digite a Descrição do evento."></textarea>
+
+	        			<label for="envi_apresentacao" >Enviou a apresentação:	</label><br/>
+	        			<p>
+	        				<input type="radio" name="envi_apresentacao_edit" id="envi_apresentacao_edit" value="1" />Sim
+	        				<input type="radio" name="envi_apresentacao_edit" id="envi_apresentacao_edit" value="0" />Não
+	        			</p>
+													
+	        			<label>Data evento</label>
+	        			<div class="input-group">
+	        				<div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+	        				<input type="text" class="form-control" value="" id="dataEvento_edit" placeholder="22/12/2017" />
+	        			</div>
+	        			
+	        			
+	        		</div>
+
+	        	   </div>
+	        	   
+	        	   <div class="col-xs-6">
+	        	   		<div class="form-group">
+	        	   			<label for="nome_contato">Nome do Contato:</label>
+	        	   			<input type="text" class="form-control" id="nome_contato_edit" />
+
+	        	   			<label for="cargo_contato" >Cargo:</label>
+	        	   			<input  type="text" class="form-control" id="cargo_contato_edit" />
+
+	        	   			<label for="endereco">Endereço:</label>
+	        	   			<input type="text" class="form-control" id="endereco_edit" />
+
+	        	   			<label for="tipo_event">Tipo</label>
+		        			<select class="form-control" id="tipo_event_edit">
+		        				<option value="Pessoal">Pessoal</option>
+		        				<option value="Reuniao_propria">Reunião Própria</option>
+		        				<option value="Reuniao_ferramenta">Reunião Ferramenta</option>
+		        				<option value="Compromisso_aqcez">Compromisso Aqcez</option>
+		        				<option value="go_construct">Go Construct</option>
+		        			</select>
+
+	        	   			<h3 align="center">Hora</h3>
+			        			
+			        				
+	        					<label for="hora_event_ini">Inicio</label>
+	        					<input type="text" class="form-control" value="" id="hora_event_ini_edit" />	        				
+	        				
+	        				
+	        					<label for="hora_event_fim">Fim</label>
+	        					<input type="text" class="form-control" value="" id="hora_event_fim_edit" />
+
+	        	   		</div>
+	        	   </div>
+
+
+
+	        	   <br/>
+	        	   <hr>        	   
+	        		
+	        	</div>
+	        	<div class="row">
+	        	   		<div class="col-xs-12">
+	        	   			<div class="form-group">
+	        	   				<h3 align="center">Quem Vai</h3>
+				        			<div class="row">
+				        				<div class="col-xs-2"></div>
+				        				<div class="col-xs-8">
+				        					<select id="quem_vai_edit" class="form-control">
+				        						<option value=""> - </option>					
+				        					</select>
+				        				</div>			        					
+		        					</div>
+	        	   			</div>
+	        	   		</div>
+	        	   </div>
+	        	   <hr/>
+
+	        	<div class="row">
+	        	   	 <div class="col-xs-7" ></div>
+	        	   	 <div class="col-xs-5" >
+	        	   	 	<input type="hidden" id="id_cale_edit" value="" />
+	        	   	 	<button type="button" id="EditarEvento" class="btn btn-warning">Salvar Alterações</button>
+	        	   	 	<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>	        			
+	        	   	 </div>
+	        	   		
+	        	</div>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+
+	  <div class="modal fade bs-example-modal-sm" tabindex="-1" id="modal_excluir" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="modal_editar_cale">Excluir Evento</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row">
+		      		<div class="col-xs-3">
+		      			<img src="img/interrogacao_excluir.png" style="height: 60px; width: 60px; margin-left: 15%; margin-top: 5%;" id="img_exlcuir" alt="interrogacao" />
+		      		</div>
+		      		<div class="col-xs-9">
+		      			<p>Deseja relmente excluir o evento?</p>
+		      		</div>
+		      	</div>
+
+		      </div>
+		      <div class="modal-footer">
+		      		<button type="button" class="btn btn-danger"  id="btn_excluir" >Sim</button>
+		      		<button type="button" class="btn btn-default" id="btn_default" data-dismiss='modal' >Não</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+	  <div class="container">
+    <div class="row">
+       
+        <script type="text/javascript">
+            $(function () {
+                
+				$('#dataEvento').datetimepicker({
+					format: 'DD/MM/YYYY'
+				});
+
+				$('#dataEvento_edit').datetimepicker({
+					format: 'DD/MM/YYYY'
+				});
+
+				$('#hora_event_ini').datetimepicker({
+					format: 'HH:mm'
+				});
+
+				$('#hora_event_ini_edit').datetimepicker({
+					format: 'HH:mm'
+				});
+
+				$('#hora_event_fim').datetimepicker({
+					format: 'HH:mm'
+				});
+
+				$('#hora_event_fim_edit').datetimepicker({
+					format: 'HH:mm'
+				});
+            });
+        </script>
+    </div>
+</div>
+
+
+	
+
+	<footer>
+		
+	</footer>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#addEvento').click(function(){
+				cadastraEvento();
+			});
+
+
+			/*$('#data_event').datepicker({
+
+				dateFormat: 'dd/mm/yy',
+				dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta'],
+				dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+				dayNamesShort: ['Dom', 'Seg', 'ter','Qua','Qui','Sex','Sáb'],
+				monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+				monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Aug','Set','Out','Nov','Dez'],
+				nextText: "Próximo",
+				prevText: "Anterior",
+				minDate: '0d'
+
+			});*/
+
+
+		});
+
+		function cadastraEvento(){
+
+			var titulo_event 	= $('#titulo_event').val();
+			var desc_event 	 	= $('#desc_event').val();
+			var info_event		= $('#tipo_event').val();
+			var data_event	 	= $('#dataEvento').val();
+			var hora_event_ini  = $('#hora_event_ini').val();
+			var hora_event_fim  = $('#hora_event_fim').val();
+			var quem_vai		= $('#quem_vai').val();
+			var resp_cad		= $('#id_user').val();
+
+			var tel_contato     = $('#telefone_contato').val();
+			var nome_contato    = $('#nome_contato').val();
+			var end_contato 	= $('#endereco').val();
+			
+			var email_contato   = $('#email_contato').val();
+			var cargo_contato   = $('#cargo_contato').val();
+			var present_contato = $("input[name='envi_apresentacao']").val();
+			/*
+			alert("titulo: "+titulo_event);
+			alert("desc: "+desc_event);
+			alert("data_event: "+data_event);
+			alert("hora_event in: "+hora_event_ini);
+			alert("hora_event fim: "+hora_event_fim);
+			alert("Quem vai: "+quem_vai); 
+			alert("Email: "+email_contato);
+			alert("apresentação: "+present_contato);
+			alert("nome contato: "+nome_contato);
+			alert("Cargo: "+cargo_contato);
+			alert("End: "+end_contato);
+			alert("Tipo evento: "+info_event);
+			*/
+
+
+			if(titulo_event.trim() != '' && desc_event.trim() != '' && data_event.trim() != '' && hora_event_ini.trim() != '' && hora_event_fim.trim() != '' && quem_vai.trim() != ''){
+				$.ajax({
+					type: 'POST',
+					url: "sys_agenda/controller.php?agenda=salvarAgenda&titulo_event="+titulo_event+"&desc_event="+desc_event+"&data_event="+data_event+"&hora_event_ini="+hora_event_ini+"&hora_event_fim="+hora_event_fim+"&quem_vai="+quem_vai+"&info_event="+info_event+"&resp_cad="+resp_cad+"&tel_contato="+tel_contato+"&nome_contato="+nome_contato+"&end_contato="+end_contato+"&email_contato="+email_contato+"&cargo_contato="+cargo_contato+"&enviar_presenta="+present_contato,
+					dataType: 'text',
+					success: function(data){
+						if(data == 'true'){							
+							$('#myModal').modal('hide');
+							LimparCadastro();
+							location.reload();							
+						}
+					}
+				});
+			}else{
+				alert('Preencha todos os campos.');
+			}
+
+		}
+
+		function LimparCadastro(){
+			//alert('entrou limpar cadastro');
+			$('#titulo_event').val('');
+			$('#desc_event').val('');
+			$('#email_contato').val('');
+			$('#telefone_contato').val('');
+
+			$('#nome_contato').val('');
+			$('#cargo_contato').val('');
+			$('#endereco').val('');
+			
+			$('#dataEvento').empty();
+			$('#hora_event_ini').val('');
+			$('#hora_event_fim').val('');
+			
+			$('#id_user').empty();
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#EditarEvento').click(function(){
+
+				var titulo_event  = $('#titulo_event_edit').val();
+				var tipo_event    = $('#tipo_event_edit').val();
+				var desc_event    = $('#desc_event_edit').val();
+				var data_event    = $('#dataEvento_edit').val();
+				var hora_ini 	  = $('#hora_event_ini_edit').val();
+				var hora_fim 	  = $('#hora_event_fim_edit').val();
+				var quem_vai      = $('#quem_vai_edit').val();
+
+				var email_contato = $('#email_contato_edit').val();
+				var tel_contato   = $('#telefone_contato_edit').val();
+				var apresen_cont  = $("input[name='envi_apresentacao_edit']").val();
+				var nome_contato  = $('#nome_contato_edit').val();
+				var cargo_contato = $('#cargo_contato_edit').val();
+				var end_contato   = $('#endereco_edit').val();
+
+				var id_cale 	  = $('#id_cale_edit').val();
+
+				if(titulo_event.trim() != '' && tipo_event.trim() != '' && desc_event.trim() != '' && data_event.trim() != '' && hora_ini.trim() != '' && hora_fim.trim() != '' && quem_vai.trim() != ''){
+
+					$.ajax({
+						type: 'POST',
+						url: "sys_agenda/controller.php?agenda=alterarAgenda&titulo_event_edit="+titulo_event+"&desc_event_edit="+desc_event+"&info_event_edit="+tipo_event+"&data_event_edit="+data_event+"&hora_event_ini_edit="+hora_ini+"&hora_event_fim_edit="+hora_fim+"&quem_vai_edit="+quem_vai+"&cale_event="+id_cale+"&email_edit="+email_contato+"&tel_contato_edit="+tel_contato+"&nome_contato_edit="+nome_contato+"&cargo_contato_edit="+cargo_contato+"&end_contato_edit="+end_contato+"&apresent_edit="+apresen_cont,
+						dataType: 'text',
+						success: function(data){
+							if(data == 'true'){
+								$('#modal_editar_cale').modal('hide');
+								location.reload();
+							}
+						}
+
+					});
+
+				}else{
+					alert('Preencha todos os campos');
+				}
+
+
+			});
+		});
+	</script>
+
+	
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+[17-Apr-2017 11:10:27 America/Chicago] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php on line 235
+[17-Apr-2017 11:10:27 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php:235) in /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php on line 251
+[17-Apr-2017 12:33:30 America/Chicago] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php on line 235
+[17-Apr-2017 12:33:30 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php:235) in /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php on line 251
+[24-Apr-2017 08:16:31 America/Chicago] PHP Warning:  PHP Startup: imagick: Unable to initialize module
+Module compiled with module API=20100525
+PHP    compiled with module API=20131226
+These options need to match
+ in Unknown on line 0
+[24-Apr-2017 08:16:31 America/Chicago] PHP Warning:  PHP Startup: SourceGuardian: Unable to initialize module
+Module compiled with module API=20100525
+PHP    compiled with module API=20131226
+These options need to match
+ in Unknown on line 0
+[24-Apr-2017 08:16:31 America/Chicago] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, boolean given in /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php on line 235
+[24-Apr-2017 08:16:31 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php:235) in /home/aqcez617/public_html/ferramenta/administrativo/cad_pedido/controller.php on line 251
