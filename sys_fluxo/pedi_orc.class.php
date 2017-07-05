@@ -108,6 +108,13 @@ class PediOrc {
 
 		$otherContato = array();
 
+		$otherContato['status'] 	= $this->status;
+		$otherContato['passoVisu']	= $this->passo_visu;
+
+		// Outros Passos
+
+		$otherContato['id'] = $userdados['id'];
+		
 
 	}
 
