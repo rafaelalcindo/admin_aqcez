@@ -14,6 +14,7 @@ class PediOrc {
 
 	private $status;
 	private $passo_visu;
+	private $step_id;
 	
 	function __construct()
 	{
@@ -74,6 +75,14 @@ class PediOrc {
 		return $this->passo_visu;
 	}
 
+	public function setStepId($step_id){
+		$this->step_id = $step_id;
+	}
+
+	public function getStepId(){
+		return $this->step_id;
+	}
+
 
 	public function gravarPrimeiroPedido($userdados){
 
@@ -110,11 +119,14 @@ class PediOrc {
 
 		$otherContato['status'] 	= $this->status;
 		$otherContato['passoVisu']	= $this->passo_visu;
+		$otherContato['stepId']		= $this->step_id;
 
 		// Outros Passos
 
 		$otherContato['id'] = $userdados['id'];
-		
+		$otherContato['id_boss'] = $otherContato['id_boss'];
+
+
 
 	}
 

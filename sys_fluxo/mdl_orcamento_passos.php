@@ -37,6 +37,12 @@ class ConnectionOrcPasso{
 
 	}
 
+	public function salvarOutrasPartes($dadosInsert){
+
+		$sql_salvaPartes = sprintf(" INSERT INTO passos (step_orc_id , usuario_id , usuario_usuario_usuario_id, passos_status, passos_visu)
+				VALUES ('%u', '%u', '%u', '%s', '%s') ",$dadosInsert['stepId'] );
+	}
+
 
 
 }
