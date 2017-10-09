@@ -17,8 +17,6 @@
 	<script src='js/fullcalendar/lib/moment.min.js'></script>	
 	<script src='js/fullcalendar/fullcalendar.min.js'></script>
 	<script src='js/fullcalendar/locale/pt-br.js'></script>
-
-
 	
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -54,7 +52,7 @@
 				dataType: "json",
 				success: function(data){
 
-					if(data != null){
+					if(data != null && data.logar == true){
 						
 						$('#dropdown_login').children().remove();
 
@@ -637,12 +635,7 @@
 			        	   		<label>Nome vizitar:</label>
 			        	   		<p class="nomeInfo sobrenomeInfo"> </p>
 			        	   		<hr>
-			        	   		<!--<label>Data do evento: </label>
-			        	   		<p class="dataInfo"></p>
-			        	   		<hr>
-			        	   		<label>Hora do Evento:</label>
-			        	   		<p class="h_inicioInfo"></p>
-			        	   		<hr> -->
+			        	   		
 			        	   		<label>Enviou Projeto</label>
 	        	   				<p class="projeto_enviado"></p>
 	        	   				<hr>
@@ -872,7 +865,7 @@
                 
 				$('#dataEvento').datetimepicker({
 					format: 'DD/MM/YYYY'
-				});
+				});	
 
 				$('#dataEvento_edit').datetimepicker({
 					format: 'DD/MM/YYYY'
@@ -971,7 +964,7 @@
 						if(data == 'true'){							
 							$('#myModal').modal('hide');
 							LimparCadastro();
-							location.reload();							
+							location.reload();						
 						}
 					}
 				});
@@ -1020,6 +1013,8 @@
 				var end_contato   = $('#endereco_edit').val();
 
 				var id_cale 	  = $('#id_cale_edit').val();
+
+				//alert("Endereço a ser editado: "+end_contato);
 
 				if(titulo_event.trim() != '' && tipo_event.trim() != '' && desc_event.trim() != '' && data_event.trim() != '' && hora_ini.trim() != '' && hora_fim.trim() != '' && quem_vai.trim() != ''){
 

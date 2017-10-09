@@ -192,6 +192,7 @@
 			//echo "Agenda: ".print_r($agenda);
 			$resuAgenda = $db_agenda->salvarAgenda($agenda, $usuario);
 			if($resuAgenda){
+				
 				return true;
 			}else{ return false; }
 
@@ -336,5 +337,7 @@
 			return 'Go Construct';
 		}
 	}
+
+	
 
 	

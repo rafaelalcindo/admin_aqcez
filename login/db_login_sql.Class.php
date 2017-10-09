@@ -69,7 +69,7 @@
 										where
 										usu.usuario_id 	   	  = uhc.usuario_usuario_id 	  and
 										cale.calendario_id 	  = uhc.calendario_calendario_id and
-										(cale.calendario_color = '#17713B' or cale.calendario_color = '#0B3E4C' or cale.calendario_color = '#737373')
+										(cale.calendario_color = '#17713B' or cale.calendario_color = '#0B3E4C')
 										and cale.calendario_data >= curdate() and
 										usu.usuario_id = '%u' ",$id_user);
 			$resu_qntReuni =  $this->conexao->query($sql_qntReuni);
@@ -94,7 +94,9 @@
 		}
 		
 		public function getDadosUsuarioId($id){
-			$sql_get_dadosId = sprintf("SELECT usuario_id as 'id', usuario_usuario_id as 'id_boss' ,usuario_nome as 'nome', usuario_sobrenome as 'sobrenome', usuario_cargo as 'cargo', usuario_nivel as 'nivel', usuario_login as 'login', usuario_senha as 'senha'
+			$sql_get_dadosId = sprintf("SELECT usuario_id as 'id', usuario_nome as 'nome', usuario_sobrenome as 'sobrenome',  
+					usuario_cargo as 'cargo', usuario_nivel as 'nivel', usuario_login as 'login', usuario_senha as 'senha',
+					usuario_cod_gcm as 'gcm'
 					FROM usuario where usuario_id = '%u' ", $id);
 			$resu_consuId = $this->conexao->query($sql_get_dadosId);
 			if($resu_consuId->num_rows > 0){
@@ -150,6 +152,46 @@ from usuario usu, usuario chefe where usu.usuario_usuario_id = '%u' and chefe.us
 			if($resu_veriChefe->num_rows > 0){
 				return true;
 			}else{ return false; }
+		}
+
+		// ========================================== Registrar GCM ================================================
+
+		public function salvarRegistroGCM($login, $senha, $gcm){
+			$sql_insert = sprintf("update usuario set usuario_cod_gcm = '%s' where usuario_login = '%s' and usuario_senha = '%s' ", $gcm, $login, $senha);
+			$resu_update = $this->conexao->query($sql_insert);
+			if($resu_update){
+				return true;
+			}else{ return false; }
+		}
+
+		// ======================================= Enviar Notification Push ========================================
+
+		public function enviarNotificationPush($usuario){
+			$to = $usuario['gcm'];
+			define( 'API_ACCESS_KEY', 'AIzaSyBqa0xsTSf70YmE7CELG8yjOQ9iO9LxjIc');
+			$title="Você possui um novo agendamento.";
+			$message= "Olá ".$usuario['nome']." ".$usuario['sobrenome']." Você possui novos agendamentos, entre no App e confira ";
+			$image = "http://aqcez.com.br/ameeting.png.png";
+
+			$registrationIds = array($to);
+		    $msg = array('message' => $message,'title' => $title,'vibrate' => 1,'sound' => 1, 'image' => $image);
+		    $fields = array('registration_ids' => $registrationIds, 'data' => $msg, 'image_url' => $image );
+		    $headers = array('Authorization: key=' . API_ACCESS_KEY, 'Content-Type: application/json');
+		    $ch = curl_init();
+		    
+		    curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		    curl_setopt( $ch,CURLOPT_POST, true );
+		    curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+		    curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+		    curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+		    curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		    $result = curl_exec($ch);
+		    curl_close( $ch );		    
+			$resu_array = json_decode($result);
+			
+		    if($resu_array->success){
+		    	return true;
+		    }else{ return false; }
 		}
 
 				

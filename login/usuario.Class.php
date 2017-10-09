@@ -97,22 +97,17 @@
 		}
 
 		public function puxarDadosUsuarioId($id){
-
-			echo "Valor do id: ". $id;
 			$db_dados 	= new Connection_login();
 			$dados_user = $db_dados->getDadosUsuarioId($id);
-
 			$dados_usuario = array();
 			while($row = $dados_user->fetch_assoc()){
-
 				$dados_usuario['id'] 		= $row['id'];
-				$dados_usuario['id_boss']   = $row['id_boss'];
 				$dados_usuario['nome'] 		= utf8_encode($row['nome']);
 				$dados_usuario['sobrenome'] = utf8_encode($row['sobrenome']);
 				$dados_usuario['cargo'] 	= utf8_encode($row['cargo']);
 				$dados_usuario['nivel'] 	= $row['nivel'];
 				$dados_usuario['login'] 	= $row['login'];
-				
+				$dados_usuario['gcm']		= $row['gcm'];
 			}
 			return $dados_usuario;
 		}
@@ -195,6 +190,30 @@
 			}// fim do else dados pessoais marcar reuni
 		}
 
+		public function registrarGCM($login, $senha, $gcm){
+			$db_inserGcm = new Connection_login();
+			$resul_insert = $db_inserGcm->salvarRegistroGCM($login, $senha, $gcm);
+			if($resul_insert){ return true; }else{ return false; }
+		}
+
+		public function enviarNotificationPush($id_user){
+			$db_dados 	= new Connection_login();
+			$dados_user = $db_dados->getDadosUsuarioId($id_user);
+			$dados_usuario = array();
+			while($row = $dados_user->fetch_assoc()){
+				$dados_usuario['id'] 		= $row['id'];
+				$dados_usuario['nome'] 		= utf8_encode($row['nome']);
+				$dados_usuario['sobrenome'] = utf8_encode($row['sobrenome']);
+				$dados_usuario['cargo'] 	= utf8_encode($row['cargo']);
+				$dados_usuario['nivel'] 	= $row['nivel'];
+				$dados_usuario['login'] 	= $row['login'];
+				$dados_usuario['gcm']		= $row['gcm'];
+			}
+			
+			$resu_noti = $db_dados->enviarNotificationPush($dados_usuario);			
+			return $resu_noti;
+		}
+
 
 
 		function verificarEventoPermission($id_user){
@@ -229,7 +248,36 @@
 			}
 		}
 
-		
+		// ================================ Enviar Notificação push ================================
+
+		/*function enviarNotificaitionPush($usuario){
+			$to = $usuario['gcm'];
+			define( 'API_ACCESS_KEY', 'AIzaSyBqa0xsTSf70YmE7CELG8yjOQ9iO9LxjIc');
+			$title="Você possui um novo agendamento.";
+			$message= "Olá ".usuario['nome']." ".usuario['sobrenome']." Você possui novos agendamentos, entre no App e confira ";
+			$image = "https://d30y9cdsu7xlg0.cloudfront.net/png/58041-200.png";
+
+			$registrationIds = array($to);
+		    $msg = array('message' => $message,'title' => $title,'vibrate' => 1,'sound' => 1, 'image' => $image);
+		    $fields = array('registration_ids' => $registrationIds, 'data' => $msg, 'image_url' => $image );
+		    $headers = array('Authorization: key=' . API_ACCESS_KEY, 'Content-Type: application/json');
+		    $ch = curl_init();
+		    
+		    curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		    curl_setopt( $ch,CURLOPT_POST, true );
+		    curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+		    curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+		    curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+		    curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		    $result = curl_exec($ch);
+		    curl_close( $ch );		    
+			$resu_array = json_decode($result);
+			echo $resu_array->success;
+		    if($resu_array->success){
+		    	return true;
+		    }else{ return false; }
+
+		} */
 
 
 

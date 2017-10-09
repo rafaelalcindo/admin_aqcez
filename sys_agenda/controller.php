@@ -2,6 +2,9 @@
 
 session_start();
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With, Content-Type'); 
+
 require('../login/usuario.Class.php');
 require('agenda.Class.php');
 
@@ -41,7 +44,8 @@ switch ($requestType) {
 	case 'apagarCalendario':
 		apagarEvento();
 	break;
-	
+
+		
 	default:
 		# code...
 		break;
@@ -89,7 +93,7 @@ function gravarAgenda(){
 	$usuario 	   = new Usuario();
 	$usuario_array = $usuario->puxarDadosUsuarioId($ResponsavelEvent);
 	$usuario_array['respCad'] = $responsavelCad;
-
+	$usuario_push = $usuario->enviarNotificationPush($ResponsavelEvent);
 	//$agenda->setUsuario($usuario_array);		
 	$resu_final = $agenda->unirAgendaUsuario($usuario_array);
 	if($resu_final){
@@ -131,7 +135,7 @@ function editarEvento(){
 
 	$agenda->setTelContato($telContato_edit);
 	$agenda->setNomeContato($nome_contato_edit);
-	$agenda->setEndContato($cargo_contato_edit);
+	$agenda->setEndContato($end_contato_edit);
 	$agenda->setCargoContato($cargo_contato_edit);
 	$agenda->setEmailContato($email_contato_edit);
 	$agenda->setEnviarPresentacao($enviarPresent_edit);
