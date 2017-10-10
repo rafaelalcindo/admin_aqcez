@@ -62,7 +62,7 @@
                 dataType: "json",
                 success: function(data){
 
-                    if(data != null){
+                    if(data != null && data != false){
                         
                         //$('#dropdown_login').children().remove();
 

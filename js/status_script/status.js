@@ -44,10 +44,12 @@ function fragmentHTML_panel(num){
         script += "<div class='panel panel-success'>";
         script += "<div class='panel-heading'> Orçamento com pessoal de engenharia</div>";
         script += "<div class='panel-body'>";
-        script += "<label>Nome: </label>";
+        script += "<label>Nome do Cliente: </label>";
         script += "<p>Ciclano da Silva.</p>";
-        script += "<label>Adicionar info</label>";
-        script += "<button class='btn btn-default' data-toggle='modal' data-target='#modalAddInfo'>Adicionar suas informações</button>";        
+        script += "<label>descrição:</label>";
+        script += "<p style='border: 1px solid #e6e6e6; text-align: justify; text-justify: inter-word; padding: 3px; ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>";
+        script += "<button class='btn btn-default' data-toggle='modal' data-target='#modalAddInfo'>Vizualizar</button>&nbsp;&nbsp;";
+        script += "<button class='btn btn-warning' data-toggle='modal' data-target='#modalAddInfo'>Editar</button>";
         script += "</div></div></td>";
 
     return script;
@@ -61,10 +63,12 @@ function fragmentHTML_container(num){
         fragment += "<div class='panel panel-success'>";
         fragment += "<div class='panel-heading'>Etapa 1 - pedido de Orçamento</div>";
         fragment += "<div class='panel-body'>";
-        fragment += "<label>Nome do Cliente:</label><p>Fulano Silva Santos</p>";
-        fragment += "<label>1º Contato: </label><p>Deotrano Afonso</p>";
+        fragment += "<label>Nome do Funcionário:</label><p>Fulano Silva Santos</p>";
+        fragment += "<label>Nome do Cliente: </label><p>Deotrano Afonso</p>";
+        fragment += "<label>descrição:</label>";
+        fragment += "<p style='border: 1px solid #e6e6e6; text-align: justify; text-justify: inter-word; padding: 3px; ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>";
         fragment += "<button class='btn btn-default' data-toggle='modal' data-target='#modalContatoInfo'> Informações </button>";
-        fragment += "</div></div></td> ";
+        fragment += "</div></div></td>";
 
         fragment += "<td style='padding: 30px;' id='etapa_td"+num+"'>";
         //fragment += "<button class='btn btn-success' id='add_etapa' onclick='addPassos("+num+")' ></button>";
