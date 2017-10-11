@@ -82,9 +82,9 @@
             }).fail(function(data){
                 window.location.href = 'index.html';
             });
-            }
+        }
 
-                
+        
         function mudarNavBar(){
             var paginaName = window.location.pathname;
             var loginBarra = "<li><a href='#' ><span class='glyphicon glyphicon-user' aria-hidden='true'></span>    Minha Conta</a></li>";
@@ -417,6 +417,78 @@
 
                       <label for="descricao">Descrição</label>
                       <textarea id="descricao" class="form-control" ></textarea>
+
+                    </div>
+                    
+                  </div>
+                  <div class="col-xs-2"></div>          
+                
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================== Modal Edit Info ====================================== -->
+
+      <div class="modal fade" id="modalEditInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Addicionar as Suas Informações.</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-8">
+                    <div class="form-group">
+                      <label for="titulo">Titulo</label>
+                      <input type="text" class="form-control" id="titulo" value="Marcos Nacimento de Melo" placeholder="Titulo" />
+
+                      <label for="descricao">Descrição</label>
+                      <textarea id="descricao" class="form-control"  >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                      </textarea>
+
+                    </div>
+                    
+                  </div>
+                  <div class="col-xs-2"></div>          
+                
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================== Modal visu Info ====================================== -->
+
+      <div class="modal fade" id="modalVizuInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Vizualizar Informações.</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-8">
+                    <div class="form-group">
+                      <label for="titulo">Responsável</label>
+                      <p>Felipe Trinker da Silva</p>
+
+                      <label for="descricao">Descrição</label>
+                      <p style='border: 1px solid #e6e6e6; text-align: justify; text-justify: inter-word; padding: 3px; ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 
                     </div>
                     
