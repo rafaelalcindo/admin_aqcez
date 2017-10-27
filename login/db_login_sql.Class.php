@@ -194,6 +194,17 @@ from usuario usu, usuario chefe where usu.usuario_usuario_id = '%u' and chefe.us
 		    }else{ return false; }
 		}
 
+
+		// ============================================== Cadastrar Noticias Permissão ==================================
+
+		public function VerificarPermissao($id){
+			$sql_veri   = sprintf("select usuario_permissao_cad as 'permissao' from usuario where usuario_id = %u ", $id);
+			$resu_query = $this->conexao->query($sql_veri); 
+			if($resu_query->num_rows > 0){
+				return $resu_query;
+			}else{ return false; }
+		}
+
 				
 
 	}

@@ -119,11 +119,11 @@
 			$recadosModel = new RecadosModels();
 			$noticiaGeral = array();
 
-			$noticiaGeral['titulo'] 		= $this->titulo;
-			$noticiaGeral['descricao']		= $this->descricao;
-			$noticiaGeral['texto']			= $this->texto;
-			$noticiaGeral['tipo']			= $this->tipo;
-			$noticiaGeral['data_publicacao']	= $this->data_publicacao;
+			$noticiaGeral['titulo'] 		 = $this->titulo;
+			$noticiaGeral['descricao']		 = $this->descricao;
+			$noticiaGeral['texto']			 = $this->texto;
+			$noticiaGeral['tipo']			 = $this->tipo;
+			$noticiaGeral['data_publicacao'] = $this->data_publicacao;
 
 			$resultado = $recadosModel->InserirNoticiasGerais($noticiaGeral);
 			if($resultado){ return true; }else{ return false; }

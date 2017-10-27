@@ -214,6 +214,25 @@
 			return $resu_noti;
 		}
 
+		// ==================================== PermissõesParaCadNoticias ===================================
+
+		public function permissaoCadNoticias($id){
+			$db_dados = new Connection_login();
+			$resultado = $db_dados->VerificarPermissao($id);
+			$permissao = $resultado->fetch_assoc();
+			if(!$permissao){
+				return false;
+			}else{
+				if($permissao['permissao'] == 256 || $permissao['permissao'] == 376){
+					return true;
+				}else{ return false; }
+			}
+
+		}
+
+
+		//========================================== Funções Helpers ======================================
+
 
 
 		function verificarEventoPermission($id_user){
@@ -247,6 +266,8 @@
 				 }
 			}
 		}
+
+
 
 		// ================================ Enviar Notificação push ================================
 

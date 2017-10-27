@@ -80,7 +80,7 @@ function cadastrarNoticiaDep(newsForm){
 		url: '../../controllers/recadosController.php/cadDep',
 		dataType: 'json',
 		success: function(data){
-			console.log(data.status);
+			
 			if(data.status == 'true'){
 				alert('deu certo');
 			}

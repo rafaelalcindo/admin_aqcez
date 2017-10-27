@@ -24,6 +24,7 @@ $request_type = isset($_REQUEST['login'])?   $_REQUEST['login']   : null;
 $login_usu 	  = isset($_REQUEST['usuario'])? $_REQUEST['usuario'] : null;
 $senha_usu	  = isset($_REQUEST['senha'])?   $_REQUEST['senha']   : null;
 $gcm_usu	  = isset($_REQUEST['gcm'])?	 $_REQUEST['gcm']	  : null;
+$id_usu		  = isset($_REQUEST['id'])?		 $_REQUEST['id']	  : null;
 
 switch ($request_type) {
 	case 'logarUsuario':
@@ -44,6 +45,10 @@ switch ($request_type) {
 
 	case 'registrarGCM':
 		registrarGCM($login_usu, $senha_usu, $gcm_usu);
+	break;
+
+	case 'veriPermissionNews':
+		verificaPermission($id_usu);
 	break;
 	
 	default:
@@ -109,6 +114,17 @@ function registrarGCM($login, $senha, $gcm){
 	if($resultado_gcm){ echo 'true'; }else{ echo 'false'; }
 }
 
+
+// ==================================== verificarPermissão Cad Notíicias =====================================
+
+function verificaPermission($id){
+	$usuario = new usuario();
+	$status = array();
+	$resultado = $usuario->permissaoCadNoticias($id);
+	if($resultado){ $status['status'] = 'true'; }else{ $status['status'] = 'false'; }
+	$resulJson = json_encode($status);
+	echo $resulJson;
+}
 
 
 
