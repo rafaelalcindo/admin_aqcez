@@ -43,15 +43,16 @@
 	});
 
 
-	$app->get('/cadGeral', function(Request $request, Response $response){
+	$app->post('/cadGeral', function(Request $request, Response $response){
 		$request_array = $request->getParsedBody();
+		$status = array();
 
 		$titulo 	= $request_array['titulo'];
 		$descricao  = $request_array['descricao'];
 		$tipo		= $request_array['tipo'];
-		$dep 		= $request_array['dep'];
+		//$dep 		= $request_array['dep'];
 		$texto		= $request_array['texto'];
-		$data 		= data("Y-m-d H:i:s");
+		$data 		= date("Y-m-d H:i:s");
 
 		$recadosGeral = new RecadoGeral();
 		$recadosGeral->setTitulo($titulo);
@@ -60,10 +61,46 @@
 		$recadosGeral->setTipo($tipo);
 		$recadosGeral->setDataPublicacao($data);
 
-
+		$resultado = $recadosGeral->InserirNoticaGeral();
+		if($resultado){ 
+			$status['status'] = 'true';
+		}else{  
+			$status['status'] ='false';
+		}
+		$statusjson = json_encode($status);
+		echo $statusjson;
 
 	});
 
+	$app->post('/cadDep', function(Request $request, Response $response){
+		$request_array = $request->getParsedBody();
+		$status = array();
+
+		$titulo 	= $request_array['titulo'];
+		$descricao  = $request_array['descricao'];
+		$tipo 		= $request_array['tipo'];
+		$dep 		= $request_array['dep'];
+		$texto 		= $request_array['texto'];
+		$data 		= date("Y-m-d H:i:s");
+
+		$recadosDep = new RecadoDep();
+		$recadosDep->setTitulo($titulo);
+		$recadosDep->setDescricao($descricao);
+		$recadosDep->setTexto($texto);
+		$recadosDep->setTipo($tipo);
+		$recadosDep->setNomeDep($dep);
+		$recadosDep->setDataPublicacao($data);
+
+		$resultado = $recadosDep->InserirNoticiaDep();
+		if($resultado){
+			$status['status'] = 'true';
+		}else{
+			$status['status'] = 'false';
+		}
+		$statusjson = json_encode($status);
+		echo $statusjson;
+
+	});
 
 
 	$app->run();

@@ -18,7 +18,8 @@
 
 	// ============================================= Notícias Gerais ==========================================
 		public function InserirNoticiasGerais($noticiasGerais){
-
+			$InserirNoticia = InserirNoticiaGeral($this->conexao, $noticiasGerais);
+			if($InserirNoticia){ return true; }else{ return false; }
 		}
 
 		public function PegarNoticiasPrimeiraPagina(){
@@ -36,6 +37,11 @@
 		public function PegarNoticiasPrimeiraPaginaDep(){
 			$pegarNoticiasDep = pegarNoticiaPrimeiraPaginaDep($this->conexao);
 			if($pegarNoticiasDep != false){ return $pegarNoticiasDep; }else{ return false; }
+		}
+
+		public function InserirNoticiasDep($noticiasDep){
+			$inserirNoticia = InserirNoticiasDep($this->conexao, $noticiasDep);
+			if($inserirNoticia){ return true; }else{ return false; }
 		}
 
 
@@ -57,6 +63,24 @@
 		}else{ return false; }
 	}
 
+	function InserirNoticiaGeral($conexao, $noticiaGeral){
+		$sql_insert = sprintf("insert into noticias 
+								(titulo_noticia, descricao_noticia, texto_noticia, 
+								data_publicacao_noticia,
+								noticiaTipo)
+								values 
+								(
+									'%s',
+								    '%s',
+								    '%s',
+								    '%s',
+								    '%s'
+								)", $noticiaGeral['titulo'], $noticiaGeral['descricao'],$noticiaGeral['texto'], $noticiaGeral['data_publicacao'], $noticiaGeral['tipo']);
+
+		$resu_insert = $conexao->query($sql_insert);
+		if($resu_insert){ return true; }else{ return false; }
+	}
+
 
 
 
@@ -73,3 +97,24 @@
 			return $resul_query;	
 		}else{ return false; }
 	}
+
+	function InserirNoticiasDep($conexao, $noticiasDep){
+		$sql_insert = sprintf("insert into noticias 
+									(titulo_noticia, descricao_noticia, texto_noticia, 
+									data_publicacao_noticia,
+									nomeDep_noticia,
+									noticiaTipo)
+									values 
+									(
+										'%s',
+									    '%s',
+									    '%s',
+									    '%s',
+									    '%s',
+									    '%s'
+									)",$noticiasDep['titulo'], $noticiasDep['descricao'], $noticiasDep['texto'], $noticiasDep['data_publicacao'], $noticiasDep['dep'], $noticiasDep['tipo'] );
+		$result_query = $conexao->query($sql_insert);
+		if($result_query){ return true; }else{ return false; }
+	}
+
+

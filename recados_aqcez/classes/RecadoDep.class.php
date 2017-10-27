@@ -6,6 +6,7 @@
 	{
 		private $nomeDep;
 		private $quem_cad;
+		private $tipo;
 		
 		function __construct()
 		{
@@ -56,6 +57,14 @@
 			return $this->nomeDep;
 		}
 
+		public function getTipo(){
+			return $this->tipo;
+		}
+
+		public function setTipo($tipo){
+			$this->tipo = $tipo;
+		}
+
 		// ========================================== pegando as últimas publicações ==================================================
 
 		public function PegarNoticiasDepPrimeiraPagina(){
@@ -82,6 +91,22 @@
 		}
 
 		public function PegarNoticiaDepPaginas($pagina){
+
+		}
+
+		public function InserirNoticiaDep(){
+			$recadosModel = new RecadosModels();
+			$noticiasDep  = array();
+
+			$noticiasDep['titulo'] 			= $this->titulo;
+			$noticiasDep['descricao'] 		= $this->descricao;
+			$noticiasDep['texto']			= $this->texto;
+			$noticiasDep['data_publicacao'] = $this->data_publicacao;
+			$noticiasDep['dep']				= $this->nomeDep;
+			$noticiasDep['tipo']			= $this->tipo;
+
+			$resultado = $recadosModel->InserirNoticiasDep($noticiasDep);
+			if($resultado){ return true; }else{ return false; }
 
 		}
 

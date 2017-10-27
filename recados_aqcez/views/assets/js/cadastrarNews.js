@@ -29,17 +29,15 @@ $(document).ready(function(){
 
 		if(tipo == 'dep'){
 			if(validacaoNews(data)){
-				//cadastrarNoticiaDep(data);
+				cadastrarNoticiaDep(data);
 			}else{ alert('Por favor, complete todo o formulário.'); }
 		}else{
 			if(validacaoNews(data)){
-				//cadastrarNoticia(data);
+				cadastrarNoticiaGeral(data);
 			}else{ alert('Por favor, complete todo o formulário.') }
 		}
 
 	});
-
-
 
 
 });
@@ -65,10 +63,10 @@ function cadastrarNoticiaGeral(newsForm){
 		processData: false,
 		contentType: false,
 		data: newsForm,
-		url: '',
+		url: '../../controllers/recadosController.php/cadGeral',
 		dataType: 'json',
-		sucess: function(data){
-
+		success: function(data){
+			console.log(data.status);
 		}
 	});
 }
@@ -79,10 +77,13 @@ function cadastrarNoticiaDep(newsForm){
 		processData: false,
 		contentType: false,
 		data: newsForm,
-		url: '',
+		url: '../../controllers/recadosController.php/cadDep',
 		dataType: 'json',
-		sucess: function(data){
-
+		success: function(data){
+			console.log(data.status);
+			if(data.status == 'true'){
+				alert('deu certo');
+			}
 		}
 	});
 }
