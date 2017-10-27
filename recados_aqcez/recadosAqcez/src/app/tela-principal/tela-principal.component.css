@@ -1,0 +1,22 @@
+.container{
+  background-color: #ffffff;
+  padding: 4%;
+  border-radius: 4px;
+  box-shadow: 7px 1px 50px #f2f2f2;
+}
+
+.bgWhite{
+  background-color: #ffffff;
+  border: 1px solid #595959;
+  border-radius: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.todo{
+  background-color: #595959;
+}
+
+#main_noticia{
+  margin-top: 10px;
+}

@@ -16,6 +16,10 @@
 			return $this->connection->query($sql);
 		}
 
+		public function closeConnection(){
+			return $this->connection->close();
+		}
+
 	}
 
 	

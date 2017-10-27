@@ -153,8 +153,8 @@ function addSessionAndCookie($login, $senha){
 	$_SESSION['login_usuario'] = $login;
 	$_SESSION['senha_usuario'] = $senha;
 
-	setcookie("login_usuario", $login, time() + 60 * 60 * 24 * 7);
-	setcookie("senha_usuario", $senha, time() + 60 * 60 * 24 * 7);
+	setcookie("login_usuario", $login, time() + 60 * 60 * 24 * 7,  "/");
+	setcookie("senha_usuario", $senha, time() + 60 * 60 * 24 * 7,  "/");
 
 }
 
