@@ -58,6 +58,7 @@ function validacaoNews(newsForm){
 }
 
 function cadastrarNoticiaGeral(newsForm){
+
 	$.ajax({
 		type: 'post',
 		processData: false,
@@ -65,10 +66,20 @@ function cadastrarNoticiaGeral(newsForm){
 		data: newsForm,
 		url: '../../controllers/recadosController.php/cadGeral',
 		dataType: 'json',
+		beforeSend: function(){
+			$('#btn_enviar').attr('disabled','disabled');
+		},
 		success: function(data){
 			console.log(data.status);
+			if(data.status){
+				alert('deu certo');
+			}
+		},
+		complete: function(){
+			location.reload();
 		}
 	});
+
 }
 
 function cadastrarNoticiaDep(newsForm){
@@ -79,11 +90,16 @@ function cadastrarNoticiaDep(newsForm){
 		data: newsForm,
 		url: '../../controllers/recadosController.php/cadDep',
 		dataType: 'json',
-		success: function(data){
-			
+		beforeSend: function(){
+			$('#btn_enviar').attr('disabled','disabled');
+		},
+		success: function(data){			
 			if(data.status == 'true'){
 				alert('deu certo');
 			}
+		},
+		complete: function(){
+			location.reload();
 		}
 	});
 }

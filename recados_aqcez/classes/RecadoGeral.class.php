@@ -1,7 +1,9 @@
 <?php
 	
 	require_once 'recados.class.php';
+	
 	require '../model/recados.model.php';
+	require '../../phpmailer/PHPMailerAutoload.php';
 	
 
 	class RecadoGeral extends Recados
@@ -115,6 +117,28 @@
 			
 		}
 
+		// ============================ pegar todos emails dos dep ============================
+
+		public function pegarTodosEmails(){
+
+			$db_dados = new RecadosModels();
+			$resultado = $db_dados->pegarTodosEmails();
+			$email_array = array();
+			if(!$resultado){
+				echo "false";
+				return false;
+			}else{
+				while($row = $resultado->fetch_assoc()){
+					$email_array[] = $row['email'];					
+				}
+
+				return $email_array;
+			}
+
+		}
+
+
+		// ============================= Inserir Notícias Geral =====================================
 		public function InserirNoticaGeral(){
 			$recadosModel = new RecadosModels();
 			$noticiaGeral = array();
@@ -127,6 +151,42 @@
 
 			$resultado = $recadosModel->InserirNoticiasGerais($noticiaGeral);
 			if($resultado){ return true; }else{ return false; }
+		}
+
+		// =========================== Mandar Email ============================================
+
+		public function sendEmailGeral($emails){
+
+			 $m = new PHPMailer;
+			 $m->CharSet = 'UTF-8';
+			 $m->isSMTP();
+			 $m->SMTPAuth = true;
+
+			 $m->Host = 'br566.hostgator.com.br';
+			 $m->Username = 'contato@goconstruct.com.br';
+			 $m->Password = 'Contato123*';
+			 $m->SMTPSecure = 'ssl';
+			 $m->Port = 465;
+
+			 $m->From = 'contato@goconstruct.com.br';
+  			 $m->FromName = 'Contato';
+
+  			 foreach ($emails as $key => $value) {
+  			 	$m->addAddress($value);
+  			 }
+
+  			 $m->isHTML(true);
+
+  			 $m->Subject = $this->titulo;
+  			 $m->Body 	 = $this->texto;
+  			 $m->AltBody = $this->descricao;
+
+  			 if($m->send()){
+		    	return true;
+			  }else{
+			  	return false;
+			  }
+
 		}
 
 	}

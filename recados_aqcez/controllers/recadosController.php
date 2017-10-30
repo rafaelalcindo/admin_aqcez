@@ -1,26 +1,32 @@
 <?php
+
 	
 	use \Psr\Http\Message\ServerRequestInterface as Request;
 	use \Psr\Http\Message\ResponseInterface as Response;
 
 	require '../vendor/autoload.php';
 
+	$configuration = [
+    'settings' => [
+        'displayErrorDetails' => true,
+        'addContentLengthHeader' => false
+	    ],
+	];
+
+	$c = new \Slim\Container($configuration);
+	$app = new \Slim\App($c);
+
 	require '../classes/RecadoGeral.class.php';
 	require '../classes/RecadoDep.class.php';
+	
 	header('Access-Control-Allow-Origin: *');
 	header('Content-Type: application/json');
 	date_default_timezone_set("America/Sao_Paulo");
 	session_start();
 
 
-	$configuration = [
-    'settings' => [
-        'displayErrorDetails' => true,
-	    ],
-	];
-
-	$c = new \Slim\Container($configuration);
-	$app = new \Slim\App($c);
+	
+	
 
 	$app->get('/recados/paginaprincipal', function(Request $request, Response $response){
 
@@ -50,7 +56,7 @@
 		$titulo 	= $request_array['titulo'];
 		$descricao  = $request_array['descricao'];
 		$tipo		= $request_array['tipo'];
-		//$dep 		= $request_array['dep'];
+		$dep 		= $request_array['dep'];
 		$texto		= $request_array['texto'];
 		$data 		= date("Y-m-d H:i:s");
 
@@ -60,6 +66,13 @@
 		$recadosGeral->setTexto($texto);
 		$recadosGeral->setTipo($tipo);
 		$recadosGeral->setDataPublicacao($data);
+		$emails = $recadosGeral->pegarTodosEmails();
+
+		$resul_email = $recadosGeral->sendEmailGeral($emails);
+
+		//echo $resul_email;
+
+		//exit;
 
 		$resultado = $recadosGeral->InserirNoticaGeral();
 		if($resultado){ 

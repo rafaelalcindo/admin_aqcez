@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 	require_once("../../db_connection.php");
 
@@ -42,6 +42,16 @@
 		public function InserirNoticiasDep($noticiasDep){
 			$inserirNoticia = InserirNoticiasDep($this->conexao, $noticiasDep);
 			if($inserirNoticia){ return true; }else{ return false; }
+		}
+
+		// ======================================= Pegar Emails para enviar ===============================
+
+		public function pegarTodosEmails(){
+			$sql_getEmails = sprintf("select usuario_email as 'email' from usuario");
+			$resu_query = $this->conexao->query($sql_getEmails);
+			if($resu_query->num_rows > 0){
+				return $resu_query;
+			}else{ return false; }
 		}
 
 

@@ -205,6 +205,16 @@ from usuario usu, usuario chefe where usu.usuario_usuario_id = '%u' and chefe.us
 			}else{ return false; }
 		}
 
+		// ========================================= Pegar todos emails de todos Dep ===================================
+
+		public function GetAllEmails(){
+			$sql_getEmails = sprintf("select usuario_email as 'email' from usuario");
+			$resu_query = $this->conexao->query($sql_getEmails);
+			if($resu_query->num_rows > 0){
+				return $resu_query;
+			}else{ return false; }
+		}
+
 				
 
 	}

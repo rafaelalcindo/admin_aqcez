@@ -231,6 +231,24 @@
 		}
 
 
+		// =============================== Pegar Email de todos do departamento ===============================
+
+		public function PegarTodosEmailsDepartamento(){
+			$db_dados = new Connection_login();
+			$resultado = $db_dados->GetAllEmails();
+			$email_array = array();
+			if(!$resultado){
+				return false;
+			}else{
+				while($row = $resultado->fetch_assoc()){
+					$email_array['email'] = $row['email'];
+				}
+
+				//echo print_r($email_array);
+			}
+		}
+
+
 		//========================================== Funções Helpers ======================================
 
 
@@ -266,6 +284,8 @@
 				 }
 			}
 		}
+
+
 
 
 
