@@ -264,6 +264,12 @@
 			return $resu_noti;
 		}
 
+		// ======================================= Cadastrar Usuário =======================================
+
+		public function cadastrarUsuario(){
+			$dd_iserirusuario = new Connection_login();
+		}
+
 		// ==================================== PermissõesParaCadNoticias ===================================
 
 		public function permissaoCadNoticias($id){
@@ -334,6 +340,7 @@
 				 }
 			}
 		}
+
 
 
 
