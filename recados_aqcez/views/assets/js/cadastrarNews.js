@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	//verificaLogin();
+	//	verificaLogin();
 
 	$('#div_dep').hide();
 
@@ -74,11 +74,13 @@ function cadastrarNoticiaGeral(newsForm){
 		success: function(data){
 			console.log(data.status);
 			if(data.status){
-				alert('deu certo');
+				limparCampos();
+				$('#modal_msg_cad').modal('show');
 			}
 		},
 		complete: function(){
-			location.reload();
+			$('#btn_enviar').removeAttr('disabled');
+			//location.reload();
 		}
 	});
 
@@ -97,11 +99,13 @@ function cadastrarNoticiaDep(newsForm){
 		},
 		success: function(data){			
 			if(data.status == 'true'){
-				alert('deu certo');
+				limparCampos();
+				$('#modal_msg_cad').modal('show');
 			}
 		},
 		complete: function(){
-			location.reload();
+			$('#btn_enviar').removeAttr('disabled');
+			//location.reload();
 		}
 	});
 }
@@ -155,4 +159,13 @@ function cadastrarNoticiaDep(newsForm){
             }
         }
     });
+}
+
+
+// ================================== limpa campos ======================================
+
+function limparCampos(){
+	$('#titulo').val('');
+	$('#descricao').val('');
+	tinymce.get('mytextarea').setContent('');
 }
