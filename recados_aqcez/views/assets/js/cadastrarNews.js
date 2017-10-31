@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	//verificaLogin();
+
 	$('#div_dep').hide();
 
 	
@@ -102,4 +104,55 @@ function cadastrarNoticiaDep(newsForm){
 			location.reload();
 		}
 	});
+}
+
+// =========================== ferifica Login =============================
+
+ function verificaLogin(){
+        $.ajax({
+            type: "POST",
+            url: "../../../login/controller.php?login=sessionUsuario",
+            dataType: "json",
+            success: function(data){
+
+                if(data != null && data != false){
+                    
+                    //$('#dropdown_login').children().remove();
+
+                    $('#id_user').val(data.id);
+                    
+                    //alert(data.id);
+                    //alert(data.nome);
+                    //alert(data.sobrenome);
+                    verificaPermissionCadNews(data.id);
+                    
+                    
+                    removeNavOptions(data.nome, data.sobrenome);
+                }else{
+                    window.location.href = 'index.html';
+                }
+
+            }
+        }).fail(function(data){
+            window.location.href = 'index.html';
+        });
+    }
+
+    function verificaPermissionCadNews($id){
+    
+    let id_data = new FormData();
+    id_data.append('id', $id);
+    $.ajax({
+        type: 'post',
+        url: '../../../login/controller.php?login=veriPermissionNews',
+        processData: false,
+        contentType: false,
+        data: id_data,
+        dataType: 'json',
+        success: function(data){
+            if(data.status == 'true'){
+                $('.dropMenuCad').show();
+            }
+        }
+    });
 }

@@ -2,7 +2,7 @@
 
   echo  "<nav class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
         <div class='navbar-header'>
-            <a class='navbar-brand' href='#'>Painel Administrativo</a>
+            <a class='navbar-brand' href='../../../painel_controle.html'>Painel Administrativo</a>
         </div>
 
         <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>

@@ -32,7 +32,7 @@
                             //alert(data.id);
                             //alert(data.nome);
                             //alert(data.sobrenome);
-                            
+                            verificaPermissionCadNews(data.id);
                             
                             removeNavOptions(data.nome, data.sobrenome);
                         }else{
@@ -58,3 +58,22 @@
             $('#nav_name_ident').children().remove();
             $('#nav_name_ident').append("Bem vindo "+nome+" "+sobrenome+" ");
         }
+
+function verificaPermissionCadNews($id){
+    
+    let id_data = new FormData();
+    id_data.append('id', $id);
+    $.ajax({
+        type: 'post',
+        url: '../../../login/controller.php?login=veriPermissionNews',
+        processData: false,
+        contentType: false,
+        data: id_data,
+        dataType: 'json',
+        success: function(data){
+            if(data.status != 'true'){
+                window.location.href = '../../../painel_controle.html';
+            }
+        }
+    });
+}

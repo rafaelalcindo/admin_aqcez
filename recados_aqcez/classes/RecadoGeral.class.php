@@ -139,6 +139,7 @@
 
 
 		// ============================= Inserir Notícias Geral =====================================
+		
 		public function InserirNoticaGeral(){
 			$recadosModel = new RecadosModels();
 			$noticiaGeral = array();
