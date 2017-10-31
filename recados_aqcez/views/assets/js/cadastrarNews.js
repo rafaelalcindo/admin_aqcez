@@ -30,7 +30,7 @@ $(document).ready(function(){
 		data.append('texto', texto);
 
 		if(tipo == 'dep'){
-			if(validacaoNews(data)){
+			if(validacaoNews(data)){				
 				cadastrarNoticiaDep(data);
 			}else{ alert('Por favor, complete todo o formulário.'); }
 		}else{

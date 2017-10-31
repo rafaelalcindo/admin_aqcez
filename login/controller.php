@@ -50,6 +50,10 @@ switch ($request_type) {
 	case 'veriPermissionNews':
 		verificaPermission($id_usu);
 	break;
+
+	case 'cadastrarUser':
+		cadastrarUsuario();
+	break;
 	
 	default:
 		# code...
@@ -126,6 +130,36 @@ function verificaPermission($id){
 	echo $resulJson;
 }
 
+// ================================== Cadastrar Usuário ===============================
+
+
+function cadastrarUsuario(){
+	$nome_user 		= isset($_POST['nome'])? 		$_POST['nome'] 		: '';
+	$sobrenome_user = isset($_POST['sobrenome'])?	$_POST['sobrenome'] : '';
+	$cargo_user		= isset($_POST['cargo'])?		$_POST['cargo']		: '';
+	$dep_user		= isset($_POST['dep'])?			$_POST['dep']		: '';
+	$nivel_user		= isset($_POST['nivel'])?		$_POST['nivel']		: '';
+	$login_user		= isset($_POST['login'])?		$_POST['login']		: '';
+	$senha_user		= isset($_POST['senha'])?		$_POST['senha']		: '';
+	$chefe_user		= isset($_POST['chefe'])?		$_POST['chefe']		: '';
+	$email_user		= isset($_POST['email'])?		$_POST['email']		: '';
+	$permissao_user = isset($_POST['permissao'])?	$_POST['permissao'] : '';
+
+	$usuarioCad = new Usuario();
+
+	$usuarioCad->setNome($nome_user);
+	$usuarioCad->setSobrenome($sobrenome);
+	$usuarioCad->setCargo($cargo_user);
+	$usuarioCad->setNivel($nivel_user);
+	$usuarioCad->setLogin($login_user);
+	$usuarioCad->setSenha($senha);
+	$usuarioCad->setChefe($chefe_user);
+	$usuarioCad->setDepartamento($dep_user);
+	$usuarioCad->setEmail($email);
+	$usuarioCad->setPermissao($permissao_user);
+
+}
+
 
 
 
@@ -182,8 +216,8 @@ function logoutSessionCookie(){
 	unset($_COOKIE['login_usuario']);
 	unset($_COOKIE['senha_usuario']);
 
-	setcookie("login_usuario","", time() -3600);
-	setcookie("senha_usuario","", time() -3600);
+	setcookie("login_usuario","", time() -3600, "/");
+	setcookie("senha_usuario","", time() -3600, "/");
 }
 
 function verificarUsuSession(){

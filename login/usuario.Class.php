@@ -9,6 +9,11 @@
 		private $nivel;
 		private $login;
 		private $senha;
+
+		private $chefe;
+		private $departamento;
+		private $email;
+		private $permissao;
 		
 		public function __construct(){
 
@@ -57,6 +62,51 @@
 		public function setLogin($login){
 			$this->login = $login;
 		}
+
+		public function setSenha($senha){
+			$this->senha = $senha;
+		}
+
+		public function getSenha(){
+			return $this->senha;
+		}
+
+
+		public function setChefe($chefe){
+			$this->chefe = $chefe;
+		}
+
+		public function getChefe(){
+			return $this->chefe;
+		}
+
+		public function setDepartamento($deporatamento){
+			$this->departamento = $deporatamento;
+		}
+
+		public function getDepartamento(){
+			return $this->departamento;
+		}
+
+		public function setEmail($email){
+			$this->email = $email;
+		}
+
+		public function getEmail(){
+			return $this->email;
+		}
+
+		public function setPermissao($permissao){
+			$this->permissao = $permissao;
+		}
+
+		public function getPermissao(){
+			return $this->permissao;
+		}
+
+
+
+		// ================================== Métodos de Ação =========================================================
 
 
 		public function verificaUsuario($login, $senha){

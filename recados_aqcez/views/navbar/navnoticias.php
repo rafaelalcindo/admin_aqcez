@@ -49,7 +49,7 @@
                     <li><a href='#'><i class='fa fa-user fa-fw'></i>Minha Conta</a>
                     </li>                    
                     <li class='divider'></li>
-                    <li><a href='login/controller.php?login=deslogar&pageName=index.html'><i class='fa fa-sign-out fa-fw'></i> Sair</a>
+                    <li><a href='../../../login/controller.php?login=deslogar&pageName=index.html'><i class='fa fa-sign-out fa-fw'></i> Sair</a>
                     </li>
                 </ul>
             </li>
