@@ -267,7 +267,24 @@
 		// ======================================= Cadastrar Usuário =======================================
 
 		public function cadastrarUsuario(){
-			$dd_iserirusuario = new Connection_login();
+
+			$dd_inserirusuario = new Connection_login();
+
+			$inserirUsuario = array();
+			$inserirUsuario['nome'] 	 	= $this->nome;
+			$inserirUsuario['sobrenome'] 	= $this->sobrenome;
+			$inserirUsuario['cargo']	 	= $this->cargo;
+			$inserirUsuario['nivel']	 	= $this->nivel;
+			$inserirUsuario['login']	 	= $this->login;
+			$inserirUsuario['senha']	 	= $this->senha;
+			$inserirUsuario['chefe']	 	= $this->chefe;
+			$inserirUsuario['dep'] 			= $this->departamento;
+			$inserirUsuario['email']		= $this->email;
+			$inserirUsuario['permissao']	= $this->permissao;
+
+			$resultado = $dd_inserirusuario->cadastrarUser($inserirUsuario);
+			if($resultado){ return true; }else{ return false; }
+
 		}
 
 		// ==================================== PermissõesParaCadNoticias ===================================

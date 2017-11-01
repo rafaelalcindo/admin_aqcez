@@ -30,12 +30,16 @@ $(document).ready(function(){
 		data.append('texto', texto);
 
 		if(tipo == 'dep'){
-			if(validacaoNews(data)){				
-				cadastrarNoticiaDep(data);
+			if(validacaoNews(data)){
+				if(validacaoCampos(data)){
+					cadastrarNoticiaDep(data);
+				}				
 			}else{ alert('Por favor, complete todo o formulário.'); }
 		}else{
 			if(validacaoNews(data)){
-				cadastrarNoticiaGeral(data);
+				if(validacaoCampos(data)){
+					cadastrarNoticiaGeral(data);
+				}				
 			}else{ alert('Por favor, complete todo o formulário.') }
 		}
 
@@ -57,6 +61,12 @@ function validacaoNews(newsForm){
 		}else{ return false; }
 	}else{ return false; }
 
+}
+
+function validacaoCampos(newsForm){
+	if(newsForm.get('titulo').length < 140 ){
+		return true;
+	}else{ alert('O campo Título só aceita 150 caracteres'); return false; }
 }
 
 function cadastrarNoticiaGeral(newsForm){

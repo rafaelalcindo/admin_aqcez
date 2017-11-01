@@ -208,7 +208,17 @@ from usuario usu, usuario chefe where usu.usuario_usuario_id = '%u' and chefe.us
 		// =========================================== Cadastrar Usuário =======================================
 
 		public function cadastrarUser($user){
+			
+			$stmt = $this->conexao->prepare("insert into usuario
+				(usuario_nome, usuario_sobrenome, usuario_cargo, usuario_dep, usuario_nivel, usuario_login, usuario_senha, usuario_usuario_id, 
+													usuario_email, usuario_permissao_cad)
+													values
+													(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
 
+			$stmt->bind_param('ssssissisi',$user['nome'], $user['sobrenome'], $user['cargo'], $user['dep'], $user['nivel'], $user['login'], $user['senha'], $user['chefe'], $user['email'], $user['permissao']);
+
+			$resultado = $stmt->execute();
+			if($resultado){ return true; }else{ return false; }
 		}
 				
 

@@ -134,29 +134,41 @@ function verificaPermission($id){
 
 
 function cadastrarUsuario(){
-	$nome_user 		= isset($_POST['nome'])? 		$_POST['nome'] 		: '';
-	$sobrenome_user = isset($_POST['sobrenome'])?	$_POST['sobrenome'] : '';
-	$cargo_user		= isset($_POST['cargo'])?		$_POST['cargo']		: '';
-	$dep_user		= isset($_POST['dep'])?			$_POST['dep']		: '';
-	$nivel_user		= isset($_POST['nivel'])?		$_POST['nivel']		: '';
-	$login_user		= isset($_POST['login'])?		$_POST['login']		: '';
-	$senha_user		= isset($_POST['senha'])?		$_POST['senha']		: '';
-	$chefe_user		= isset($_POST['chefe'])?		$_POST['chefe']		: '';
-	$email_user		= isset($_POST['email'])?		$_POST['email']		: '';
-	$permissao_user = isset($_POST['permissao'])?	$_POST['permissao'] : '';
+	$status = array();
+	
+	$nome_user 		= isset($_POST['nome'])? 			$_POST['nome'] 		: '';
+	$sobrenome_user = isset($_POST['sobrenome'])?		$_POST['sobrenome'] : '';
+	$cargo_user		= isset($_POST['cargo'])?			$_POST['cargo']		: '';
+	$dep_user		= isset($_POST['dep'])?				$_POST['dep']		: '';
+	$nivel_user		= isset($_POST['nivel'])?			$_POST['nivel']		: '';
+	$login_user		= isset($_POST['login_user'])?		$_POST['login_user']		: '';
+	$senha_user		= isset($_POST['senha_user'])?		$_POST['senha_user']		: '';
+	$chefe_user		= isset($_POST['chefe'])?			$_POST['chefe']		: '';
+	$email_user		= isset($_POST['email'])?			$_POST['email']		: '';
+	$permissao_user = isset($_POST['permissao'])?		$_POST['permissao'] : '';
 
 	$usuarioCad = new Usuario();
 
 	$usuarioCad->setNome($nome_user);
-	$usuarioCad->setSobrenome($sobrenome);
+	$usuarioCad->setSobrenome($sobrenome_user);
 	$usuarioCad->setCargo($cargo_user);
 	$usuarioCad->setNivel($nivel_user);
 	$usuarioCad->setLogin($login_user);
-	$usuarioCad->setSenha($senha);
+	$usuarioCad->setSenha($senha_user);
 	$usuarioCad->setChefe($chefe_user);
 	$usuarioCad->setDepartamento($dep_user);
-	$usuarioCad->setEmail($email);
+	$usuarioCad->setEmail($email_user);
 	$usuarioCad->setPermissao($permissao_user);
+	$resultado = $usuarioCad->cadastrarUsuario();
+
+	if($resultado){
+		$status['status'] = 'true';
+	}else{
+		$status['status'] = 'false';
+	}	
+
+	$statusJson = json_encode($status);
+	echo $statusJson;
 
 }
 

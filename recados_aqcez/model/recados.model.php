@@ -74,21 +74,17 @@
 	}
 
 	function InserirNoticiaGeral($conexao, $noticiaGeral){
-		$sql_insert = sprintf("insert into noticias 
+
+		$stmt = $conexao->prepare("insert into noticias 
 								(titulo_noticia, descricao_noticia, texto_noticia, 
 								data_publicacao_noticia,
 								noticiaTipo)
 								values 
-								(
-									'%s',
-								    '%s',
-								    '%s',
-								    '%s',
-								    '%s'
-								)", $noticiaGeral['titulo'], $noticiaGeral['descricao'],$noticiaGeral['texto'], $noticiaGeral['data_publicacao'], $noticiaGeral['tipo']);
+								( ?, ?, ?, ?, ? )");
+		$stmt->bind_param('sssss', $noticiaGeral['titulo'], $noticiaGeral['descricao'], $noticiaGeral['texto'], $noticiaGeral['data_publicacao'],   $noticiaGeral['tipo']);
 
-		$resu_insert = $conexao->query($sql_insert);
-		if($resu_insert){ return true; }else{ return false; }
+		$resultado = $stmt->execute();
+		if($resultado){ return true; }else{ return false; }
 	}
 
 
@@ -109,22 +105,20 @@
 	}
 
 	function InserirNoticiasDep($conexao, $noticiasDep){
-		$sql_insert = sprintf("insert into noticias 
+		//echo "<br/> array: ".print_r($noticiasDep);
+		$stmt = $conexao->prepare("insert into noticias 
 									(titulo_noticia, descricao_noticia, texto_noticia, 
 									data_publicacao_noticia,
 									nomeDep_noticia,
 									noticiaTipo)
 									values 
-									(
-										'%s',
-									    '%s',
-									    '%s',
-									    '%s',
-									    '%s',
-									    '%s'
-									)",$noticiasDep['titulo'], $noticiasDep['descricao'], $noticiasDep['texto'], $noticiasDep['data_publicacao'], $noticiasDep['dep'], $noticiasDep['tipo'] );
-		$result_query = $conexao->query($sql_insert);
-		if($result_query){ return true; }else{ return false; }
+									( ?, ?, ?, ?, ?, ? )");
+
+		$stmt->bind_param('ssssss', 	$noticiasDep['titulo'], $noticiasDep['descricao'], $noticiasDep['texto'], $noticiasDep['data_publicacao'], $noticiasDep['dep'], $noticiasDep['tipo'] );
+
+		$resultado = $stmt->execute();	
+		if($resultado){ return true; }else{ return false; }
+
 	}
 
 

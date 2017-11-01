@@ -78,7 +78,7 @@
             <div class="row" >
                 <div class="col-md-6" >
                     <h3>titulo:</h3>
-                    <input type="text" name="titulo" id="titulo" class="form-control" >
+                    <input type="text" name="titulo" id="titulo" class="form-control" maxlength='140' >
                 </div>
             </div>
 

@@ -96,6 +96,13 @@
 		$texto 		= $request_array['texto'];
 		$data 		= date("Y-m-d H:i:s");
 
+		/*echo "<br/>titulo : ".$titulo;
+		echo "<br/>descricao : ".$descricao;
+		echo "<br/>tipo : ".$tipo;
+		echo "<br/>dep : ".$dep;
+		echo "<br/>texto : ".$texto;
+		echo "<br/>data: ".$data;*/
+
 		$recadosDep = new RecadoDep();
 		$recadosDep->setTitulo($titulo);
 		$recadosDep->setDescricao($descricao);
