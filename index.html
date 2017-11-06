@@ -45,7 +45,7 @@
 				success: function(data){
 
 					if(data.logar == true){
-						if(data.nivel == 1 && data.position == 1){
+						if(data.nivel >= 1 && data.position >= 1){
 							window.location.href = 'painel_controle.html';
 						}else{
 							window.location.href = 'agenda.html';
