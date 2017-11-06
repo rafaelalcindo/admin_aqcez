@@ -23,7 +23,7 @@
 		}
 
 		public function PegarNoticiasPrimeiraPagina(){
-			$pegarNoticias = pegarNoticiiasPrimeiraPagina($this->conexao);
+			$pegarNoticias = pegarNoticiasPrimeiraPaginaGeral($this->conexao);
 			if($pegarNoticias != false){ return $pegarNoticias; }else{ return false; }
 		}
 
@@ -42,6 +42,11 @@
 		public function InserirNoticiasDep($noticiasDep){
 			$inserirNoticia = InserirNoticiasDep($this->conexao, $noticiasDep);
 			if($inserirNoticia){ return true; }else{ return false; }
+		}
+
+		public function PegarDepEmails($dep){
+			$pegarDepEmail = pegarEmailsDep($this->conexao ,$dep);
+			if($pegarDepEmail != false){ return $pegarDepEmail; }else{ return false; }
 		}
 
 		// ======================================= Pegar Emails para enviar ===============================
@@ -63,7 +68,7 @@
 
 	// ============================================= Notícias Gerais ================================
 
-	function pegarNoticiiasPrimeiraPagina($conexao){
+	function pegarNoticiasPrimeiraPaginaGeral($conexao){
 		$sql_prim_pagina = sprintf("select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'noticias',
 										data_publicacao_noticia as 'data_publicacao', img_noticia as 'imagem', anexo_noticia as 'anexo'
 										from noticias where noticiaTipo = 'noticiaGeral'");
@@ -120,6 +125,12 @@
 		$resultado = $stmt->execute();	
 		if($resultado){ return true; }else{ return false; }
 
+	}
+
+	function pegarEmailsDep($conexao, $dep){
+		$sql_emailDep = sprintf("select usuario_email as 'email' from usuario where usuario_dep = '%s' ", $dep);
+		$resul_query = $conexao->query($sql_emailDep);
+		if($resul_query){ return $resul_query; }else{ return false; }
 	}
 
 

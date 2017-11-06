@@ -173,13 +173,13 @@
 			 $m->SMTPAuth = true;
 
 			 $m->Host = 'br566.hostgator.com.br';
-			 $m->Username = 'contato@goconstruct.com.br';
-			 $m->Password = 'Contato123*';
+			 $m->Username = 'news@aqcez.com.br';
+			 $m->Password = 'News123*';
 			 $m->SMTPSecure = 'ssl';
 			 $m->Port = 465;
 
-			 $m->From = 'contato@goconstruct.com.br';
-  			 $m->FromName = 'Contato';
+			 $m->From = 'news@aqcez.com.br';
+  			 $m->FromName = 'News';
 
   			 foreach ($emails as $key => $value) {
   			 	$m->addAddress($value);

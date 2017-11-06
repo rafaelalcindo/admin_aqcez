@@ -118,6 +118,10 @@
 		$recadosDep->setNomeDep($dep);
 		$recadosDep->setQuemCad($nome, $sobrenome);
 		$recadosDep->setDataPublicacao($data);
+		
+		$emails = $recadosDep->pegarDepEmails($dep);
+
+		$resul_email = $recadosDep->sendEmailDep($emails);
 
 		$resultado = $recadosDep->InserirNoticiaDep();
 		if($resultado){
