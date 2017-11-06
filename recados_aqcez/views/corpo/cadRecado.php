@@ -65,7 +65,11 @@
 <body>
 
 <?php include "../navbar/navnoticias.php";	 ?>
+
 <input type="hidden" id="id_user" value="" >
+<input type="hidden" id="nome_user" value="">
+<input type="hidden" id="sobrenome_user" value="">
+<input type="hidden" id="email_user" value="">
 
 <div class="container">
     <div class="row">

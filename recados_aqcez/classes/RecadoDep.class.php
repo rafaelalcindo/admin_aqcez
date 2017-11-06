@@ -4,8 +4,7 @@
 
 	class RecadoDep extends Recados
 	{
-		private $nomeDep;
-		private $quem_cad;
+		private $nomeDep;		
 		private $tipo;
 		
 		function __construct()
@@ -47,6 +46,14 @@
 
 		public function getDataPublicacao(){
 			return $this->data_publicacao;
+		}
+
+		public function getQuemCad(){
+			return $this->quem_cad;
+		}
+
+		public function setQuemCad($nome, $sobrenome){
+			$this->quem_cad = $nome." ".$sobrenome;
 		}
 
 		public function setNomeDep($nomeDep){
@@ -104,6 +111,7 @@
 			$noticiasDep['data_publicacao'] = $this->data_publicacao;
 			$noticiasDep['dep']				= $this->nomeDep;
 			$noticiasDep['tipo']			= $this->tipo;
+			$noticiasDep['quem_cad']		= $this->quem_cad;
 
 			$resultado = $recadosModel->InserirNoticiasDep($noticiasDep);
 			if($resultado){ return true; }else{ return false; }

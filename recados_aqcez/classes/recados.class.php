@@ -8,6 +8,7 @@
 		protected $descricao;
 		protected $texto;
 		protected $data_publicacao;
+		protected $quem_cad;
 		
 		function __construct()
 		{

@@ -29,6 +29,7 @@
 
                             $('#id_user').val(data.id);
                             
+                            
                             //alert(data.id);
                             //alert(data.nome);
                             //alert(data.sobrenome);

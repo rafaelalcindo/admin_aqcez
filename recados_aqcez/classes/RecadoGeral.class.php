@@ -51,6 +51,14 @@
 			return $this->data_publicacao;
 		}
 
+		public function getQuemCad(){
+			return $this->quem_cad;
+		}
+
+		public function setQuemCad($nome, $sobrenome){
+			$this->quem_cad = $nome." ".$sobrenome;
+		}
+
 		public function setImagem($imagem){
 			$this->imagem = $imagem;
 		}
@@ -149,6 +157,7 @@
 			$noticiaGeral['texto']			 = $this->texto;
 			$noticiaGeral['tipo']			 = $this->tipo;
 			$noticiaGeral['data_publicacao'] = $this->data_publicacao;
+			$noticiaGeral['quem_cad']		 = $this->quem_cad;
 
 			$resultado = $recadosModel->InserirNoticiasGerais($noticiaGeral);
 			if($resultado){ return true; }else{ return false; }

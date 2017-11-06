@@ -18,6 +18,7 @@
 
 	require '../classes/RecadoGeral.class.php';
 	require '../classes/RecadoDep.class.php';
+
 	
 	header('Access-Control-Allow-Origin: *');
 	header('Content-Type: application/json');
@@ -58,6 +59,9 @@
 		$tipo		= $request_array['tipo'];
 		$dep 		= $request_array['dep'];
 		$texto		= $request_array['texto'];
+		$nome       = $request_array['nome'];
+		$sobrenome	= $request_array['sobrenome'];
+
 		$data 		= date("Y-m-d H:i:s");
 
 		$recadosGeral = new RecadoGeral();
@@ -66,6 +70,7 @@
 		$recadosGeral->setTexto($texto);
 		$recadosGeral->setTipo($tipo);
 		$recadosGeral->setDataPublicacao($data);
+		$recadosGeral->setQuemCad($nome, $sobrenome);
 		$emails = $recadosGeral->pegarTodosEmails();
 
 		$resul_email = $recadosGeral->sendEmailGeral($emails);
@@ -94,6 +99,8 @@
 		$tipo 		= $request_array['tipo'];
 		$dep 		= $request_array['dep'];
 		$texto 		= $request_array['texto'];
+		$nome       = $request_array['nome'];
+		$sobrenome	= $request_array['sobrenome'];
 		$data 		= date("Y-m-d H:i:s");
 
 		/*echo "<br/>titulo : ".$titulo;
@@ -109,6 +116,7 @@
 		$recadosDep->setTexto($texto);
 		$recadosDep->setTipo($tipo);
 		$recadosDep->setNomeDep($dep);
+		$recadosDep->setQuemCad($nome, $sobrenome);
 		$recadosDep->setDataPublicacao($data);
 
 		$resultado = $recadosDep->InserirNoticiaDep();

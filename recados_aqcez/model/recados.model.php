@@ -78,10 +78,10 @@
 		$stmt = $conexao->prepare("insert into noticias 
 								(titulo_noticia, descricao_noticia, texto_noticia, 
 								data_publicacao_noticia,
-								noticiaTipo)
+								noticiaTipo, quem_cad_noticia)
 								values 
-								( ?, ?, ?, ?, ? )");
-		$stmt->bind_param('sssss', $noticiaGeral['titulo'], $noticiaGeral['descricao'], $noticiaGeral['texto'], $noticiaGeral['data_publicacao'],   $noticiaGeral['tipo']);
+								( ?, ?, ?, ?, ?, ? )");
+		$stmt->bind_param('ssssss', $noticiaGeral['titulo'], $noticiaGeral['descricao'], $noticiaGeral['texto'], $noticiaGeral['data_publicacao'],   $noticiaGeral['tipo'], $noticiaGeral['quem_cad']);
 
 		$resultado = $stmt->execute();
 		if($resultado){ return true; }else{ return false; }
@@ -110,11 +110,12 @@
 									(titulo_noticia, descricao_noticia, texto_noticia, 
 									data_publicacao_noticia,
 									nomeDep_noticia,
-									noticiaTipo)
+									noticiaTipo,
+									quem_cad_noticia)
 									values 
-									( ?, ?, ?, ?, ?, ? )");
+									( ?, ?, ?, ?, ?, ?, ?)");
 
-		$stmt->bind_param('ssssss', 	$noticiasDep['titulo'], $noticiasDep['descricao'], $noticiasDep['texto'], $noticiasDep['data_publicacao'], $noticiasDep['dep'], $noticiasDep['tipo'] );
+		$stmt->bind_param('sssssss', 	$noticiasDep['titulo'], $noticiasDep['descricao'], $noticiasDep['texto'], $noticiasDep['data_publicacao'], $noticiasDep['dep'], $noticiasDep['tipo'], $noticiasDep['quem_cad'] );
 
 		$resultado = $stmt->execute();	
 		if($resultado){ return true; }else{ return false; }

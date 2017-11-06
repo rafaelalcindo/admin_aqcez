@@ -16,11 +16,14 @@ $(document).ready(function(){
 	});
 
 	$('#btn_enviar').click(function(){
-		let titulo    = $('#titulo').val();
-		let descricao = $('#descricao').val();
-		let tipo      = $('#select_tipo').val();
-		let dep 	  = $('#select_dep').val();
-		let texto 	  = tinymce.get('mytextarea').getContent();
+		let titulo    	   = $('#titulo').val();
+		let descricao 	   = $('#descricao').val();
+		let tipo      	   = $('#select_tipo').val();
+		let dep 	  	   = $('#select_dep').val();
+		let texto 	  	   = tinymce.get('mytextarea').getContent();
+		let nome_user 	   = $('#nome_user').val();
+		let sobrenome_user = $('#sobrenome_user').val();
+		let email_user	   = $('#email_user').val();
 
 		let data = new FormData();
 		data.append('titulo', titulo);
@@ -28,6 +31,10 @@ $(document).ready(function(){
 		data.append('tipo', tipo);
 		data.append('dep', dep);
 		data.append('texto', texto);
+		data.append('nome', nome_user);
+		data.append('sobrenome', sobrenome_user);
+		data.append('email', email_user);
+		//data.append('id_user', id_user);
 
 		if(tipo == 'dep'){
 			if(validacaoNews(data)){
@@ -134,6 +141,9 @@ function cadastrarNoticiaDep(newsForm){
                     //$('#dropdown_login').children().remove();
 
                     $('#id_user').val(data.id);
+                    $('#nome_user').val(data.nome);
+                    $('#sobrenome_user').val(data.sobrenome);
+                    $('#email_user').val(data.email);
                     
                     //alert(data.id);
                     //alert(data.nome);
@@ -143,7 +153,7 @@ function cadastrarNoticiaDep(newsForm){
                     
                     removeNavOptions(data.nome, data.sobrenome);
                 }else{
-                    window.location.href = 'index.html';
+                    window.location.href = '../../../index.html';
                 }
 
             }
