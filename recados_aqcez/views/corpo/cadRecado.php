@@ -108,6 +108,7 @@
                     <h3>Selecione o Departamento</h3>
                     <select class="form-control" id="select_dep" >
                         <option value="comercial" >Comercial</option>
+                        <option value="marketing" >Marketing</option>
                     </select>
                 </div>
             </div>

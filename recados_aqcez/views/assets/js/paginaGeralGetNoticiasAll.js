@@ -13,14 +13,19 @@ function PegarNoticiasGeraisPrimeiraPagina(){
 		success: function(data){
 			$.each(data, function(key, val){
 				if(key == 'geral'){
+					alert('entrou geral');
+					let count = 0;
 					$.each(val, function(key, val){
+						count++;
 						let notiGeral = ConstruirStringNoticiaGeral(val);
 						$('#geralNews').append(notiGeral);
-
+						if (count >= 5) {
+							$('#geralNews').append('<button type="button" class="btn btn-primary btn-lg">Visualizar mais</button> ');
+						}
 					});
 				}
 				if(key == 'dep'){
-					alert('entrou dep');
+					
 					$.each(val, function(key,val){
 						let notiDep = ConstruirStringNoticiaDep(val);
 						$('#depNews').append(notiDep);
@@ -46,7 +51,7 @@ function ConstruirStringNoticiaGeral(obj){
 	noticiaGeral += '<div class="card-body">';
 	noticiaGeral += "<h4 class='card-title'>"+obj.titulo+"</h4>";
 	noticiaGeral += "<h6 class='card-subtitle mb-2 text-muted'>"+obj.descricao+"</h6>";
-	noticiaGeral += "<p class='card-text'>"+obj.noticias+"</p>";
+	//noticiaGeral += "<p class='card-text'>"+obj.noticias+"</p>";
 	noticiaGeral += "<a href='cadaNoticia/noticiaGeral.php?geral="+obj.id+"' class='ard-link'>Ler mais</a>";
 	noticiaGeral += "</div></div><br/>";
 
@@ -60,7 +65,7 @@ function ConstruirStringNoticiaDep(obj){
 	noticiaDep += "<h5 class='mb-1'>"+obj.titulo+"</h5>";
 	noticiaDep += "<small>"+obj.descricao+"</small>";
 	noticiaDep += "</div>";
-	noticiaDep += "<p class='mb-1'>"+obj.texto+"</p>";
+	//noticiaDep += "<p class='mb-1'>"+obj.texto+"</p>";
 	noticiaDep += "</a>";
 	
 

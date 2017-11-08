@@ -31,6 +31,11 @@
 			
 		}
 
+		public function PegarNoticiaCada($id){
+			$pegarNoticiaCada = PegarNoticiaGeralCada($this->conexao, $id);
+			if($pegarNoticiaCada != false){ return $pegarNoticiaCada; }else{ return false; }
+		}
+
 
 		// ========================================= Notícias Dep ============================================
 
@@ -69,9 +74,9 @@
 	// ============================================= Notícias Gerais ================================
 
 	function pegarNoticiasPrimeiraPaginaGeral($conexao){
-		$sql_prim_pagina = sprintf("select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'noticias',
+		$sql_prim_pagina = sprintf(" select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'noticias',
 										data_publicacao_noticia as 'data_publicacao', img_noticia as 'imagem', anexo_noticia as 'anexo'
-										from noticias where noticiaTipo = 'noticiaGeral'");
+										from noticias where noticiaTipo = 'geral' order by id_noticias desc limit 5 ");
 		$resul_query = $conexao->query($sql_prim_pagina);
 		if($resul_query){
 			return $resul_query;
@@ -92,6 +97,12 @@
 		if($resultado){ return true; }else{ return false; }
 	}
 
+	function PegarNoticiaGeralCada($conexao, $id){
+		$sql_select_news = sprintf("select titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'texto', data_publicacao_noticia as 'data' from noticias where id_noticias = '%u' ",$id);
+		$resul_query = $conexao->query($sql_select_news);
+		if($resul_query){ return $resul_query; }else{ return false; }
+	}
+
 
 
 
@@ -99,9 +110,11 @@
 
 
 	function pegarNoticiaPrimeiraPaginaDep($conexao){
+
 		$sql_prim_dep = sprintf("select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'texto', data_publicacao_noticia as 'data',
 							nomeDep_noticia as 'nomeDep', noticiaTipo as 'tipo', quem_cad_noticia as 'quem_cad'
 							from noticias where nomeDep_noticia = 'marketing'");
+
 		$resul_query = $conexao->query($sql_prim_dep);
 
 		if($resul_query){

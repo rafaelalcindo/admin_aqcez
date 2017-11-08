@@ -57,10 +57,13 @@
               <a href="#" class="card-link">Ler mais</a>
 
             </div>
-          </div> -->
-         <!-- <br/>
+          </div> 
+          -->
+         <!--
+         <br/>
 
-          <button type="button" class="btn btn-outline-secondary">Visualizar mais</button> -->
+          <button type="button" class="btn btn-outline-secondary">Visualizar mais</button> 
+          -->
 
         </div>
       </div>
@@ -75,7 +78,8 @@
 
 
           <div class="list-group" id="depNews">
-            <!-- <a href="#"  class="list-group-item list-group-item-action flex-column align-items-start">
+            <!-- 
+            <a href="#"  class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ dep_new[0] }}</h5>
                 <small>{{ dep_new[1] }}</small>
@@ -87,9 +91,9 @@
 
           </div>
           <br/>
+
+
           <button type="button" class="btn btn-outline-secondary">Visualizar mais</button>
-
-
 
         </div>
       </div>

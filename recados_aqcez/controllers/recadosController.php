@@ -20,13 +20,12 @@
 	require '../classes/RecadoDep.class.php';
 
 	
-	header('Access-Control-Allow-Origin: *');
-	header('Content-Type: application/json');
+	@header('Access-Control-Allow-Origin: *');
+	@header('Content-Type: application/json');
 	date_default_timezone_set("America/Sao_Paulo");
-	session_start();
+	@session_start();
 
 
-	
 	
 
 	$app->get('/recados/paginaprincipal', function(Request $request, Response $response){
@@ -49,6 +48,7 @@
 		
 	});
 
+// ============================== Notícia Geral ========================================
 
 	$app->post('/cadGeral', function(Request $request, Response $response){
 		$request_array = $request->getParsedBody();
@@ -89,6 +89,25 @@
 		echo $statusjson;
 
 	});
+
+	$app->post('/pegarNoticiaCada', function(Request $request, Response $response){
+		$request_array = $request->getParsedBody();
+
+		$id_noticia = $request_array['id'];
+
+		$recadosGeral = new RecadoGeral();
+		$resultado_consulta = $recadosGeral->pegarNoticiaIndividual($id_noticia);
+
+		if($resultado_consulta != false){
+			echo $resultado_consulta;
+		}else{
+			echo "{'status' : 'false'}";
+		}
+
+	});
+
+
+	// ================================= Notícia Dep ======================================
 
 	$app->post('/cadDep', function(Request $request, Response $response){
 		$request_array = $request->getParsedBody();

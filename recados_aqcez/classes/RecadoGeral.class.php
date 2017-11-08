@@ -119,6 +119,31 @@
 			return $recadosAux;
 		}
 
+		// ============================ Pegar cada noticia individual ==========================
+
+		public function pegarNoticiaIndividual($id){
+			$recadosModel   = new RecadosModels();
+			$resultadoModel = $recadosModel->PegarNoticiaCada($id);
+
+			if($resultadoModel != false){
+				$recadosDados = array();
+				$resultado 	  = $resultadoModel->fetch_assoc();	
+				$recadosDados['titulo']    = $resultado['titulo'];
+				$recadosDados['descricao'] = $resultado['descricao'];
+				$recadosDados['texto']	   = $resultado['texto'];
+				$recadosDados['hora']	   = date('H:i:s' ,strtotime($resultado['data']) );
+				$recadosDados['data']	   = date('d/m/Y' ,strtotime($resultado['data']) );
+				$recadosDados['status']	   = 'true';
+
+				$resultadoJson = json_encode($recadosDados);
+				return $resultadoJson;
+			}else{
+				return false;
+			}
+
+
+		}
+
 		// ============================ Pegar noticias por paginação ============================
 
 		public function pegarNoticiaPaginacao($num_pagina){
