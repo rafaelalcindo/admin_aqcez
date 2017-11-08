@@ -52,7 +52,7 @@ function ConstruirStringNoticiaGeral(obj){
 	noticiaGeral += "<h4 class='card-title'>"+obj.titulo+"</h4>";
 	noticiaGeral += "<h6 class='card-subtitle mb-2 text-muted'>"+obj.descricao+"</h6>";
 	//noticiaGeral += "<p class='card-text'>"+obj.noticias+"</p>";
-	noticiaGeral += "<a href='cadaNoticia/noticiaGeral.php?geral="+obj.id+"' class='ard-link'>Ler mais</a>";
+	noticiaGeral += "<a href='noticiaGeral.php?geral="+obj.id+"' class='ard-link'>Ler mais</a>";
 	noticiaGeral += "</div></div><br/>";
 
 	return noticiaGeral;
@@ -60,7 +60,7 @@ function ConstruirStringNoticiaGeral(obj){
 
 function ConstruirStringNoticiaDep(obj){
 	
-	let noticiaDep = '<a href="#"  class="list-group-item list-group-item-action flex-column align-items-start">';
+	let noticiaDep = "<a href='noticiaGeral.php?geral="+obj.id+"'  class='list-group-item list-group-item-action flex-column align-items-start'>";
 	noticiaDep += '<div class="d-flex w-100 justify-content-between">';
 	noticiaDep += "<h5 class='mb-1'>"+obj.titulo+"</h5>";
 	noticiaDep += "<small>"+obj.descricao+"</small>";

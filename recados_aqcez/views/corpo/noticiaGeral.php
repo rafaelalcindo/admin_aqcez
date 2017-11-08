@@ -49,12 +49,23 @@
             <div class="col-md-8">
                 
                 <div class="Noticia"  >
-                    <h3 style="text-align: center;" >Ola Estamos em Reforma</h3>
-                    <p style="text-align: center; font-size: 12px;">Estamos fazendo uma breve reforma para o melhoramento da empresa</p>
+                    <h3 style="text-align: center;" id="titulo" ></h3>
+                    <p style="text-align: center; font-size: 12px;" id="descricao" ></p>
+                    <hr/>
 
-                    <p style="text-align: justify; margin-top: 30px;"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis id turpis in commodo. Curabitur suscipit vehicula aliquet. Nam faucibus ultricies ipsum in gravida. Ut mollis hendrerit justo quis dapibus. Aenean pretium lectus non elit imperdiet dictum. Integer eget consectetur justo, et sollicitudin elit. Phasellus gravida purus id justo ornare egestas. Pellentesque fermentum tortor a velit auctor, eu luctus lectus viverra. Vivamus vestibulum nisl consequat massa laoreet pretium.</p>
+                    <div id="texto" style="margin-top: 30px;" >
+                        
+                    </div>
+
+                    <!-- <p style="text-align: justify; margin-top: 30px;"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis id turpis in commodo. Curabitur suscipit vehicula aliquet. Nam faucibus ultricies ipsum in gravida. Ut mollis hendrerit justo quis dapibus. Aenean pretium lectus non elit imperdiet dictum. Integer eget consectetur justo, et sollicitudin elit. Phasellus gravida purus id justo ornare egestas. Pellentesque fermentum tortor a velit auctor, eu luctus lectus viverra. Vivamus vestibulum nisl consequat massa laoreet pretium.</p>
 
                     <p style="text-align: justify; margin-top: 30px;"> Nunc condimentum nunc in magna viverra rutrum. Duis non facilisis quam, sit amet rhoncus orci. Fusce feugiat tincidunt turpis sed aliquam. Nam et ultrices sapien. Pellentesque libero nisi, hendrerit a lectus in, ornare pulvinar mi. Sed porta sapien vel leo viverra fermentum. Cras ornare sem sit amet fringilla euismod. Nam sit amet nulla sit amet massa consequat commodo. Suspendisse eget vulputate urna, non consectetur urna. Sed sed porttitor leo, eget mollis nulla. Nulla accumsan, tortor vel volutpat condimentum, nulla sapien tincidunt nibh, quis placerat nisi neque ut mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras tristique turpis vitae sollicitudin posuere. Morbi ex tortor, euismod sit amet maximus et, dignissim vel mauris. Donec condimentum, magna vitae sodales auctor, nulla turpis egestas eros, blandit gravida turpis lorem sit amet nisl.</p>
+
+                    -->
+
+                    <hr/>
+
+                    <h4>Publicado em: <span id="data"></span> as <span id="hora"></span> </h4>
 
                 </div>
 

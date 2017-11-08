@@ -20,7 +20,11 @@ function iniciarPaginaNews(id){
 		dataType: 'json',
 		success: function(data){
 			if(data.status == 'true'){
-				alert('deu certo.');
+				$('#titulo').append(data.titulo);
+				$('#descricao').append(data.descricao);
+				$('#texto').append(data.texto);
+				$('#data').append(data.data);
+				$('#hora').append(data.hora);
 			}else{
 				alert('deu errado.');
 			}

@@ -26,7 +26,7 @@
 		public function pegarDadosUsuario($login, $senha){
 			$sql_get_user = sprintf("SELECT usuario_id as 'id', usuario_nome as 'nome', usuario_sobrenome as 'sobrenome',  
 					usuario_cargo as 'cargo', usuario_nivel as 'nivel', usuario_login as 'login', usuario_senha as 'senha',
-					usuario_posi_vend as 'position', usuario_email as 'email' 
+					usuario_posi_vend as 'position', usuario_email as 'email', usuario_dep as 'dep'
 					FROM usuario
 					where
 					usuario_login = '%s' and
