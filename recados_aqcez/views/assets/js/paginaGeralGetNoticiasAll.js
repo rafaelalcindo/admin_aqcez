@@ -1,26 +1,32 @@
 $(document).ready(function(){
-
-	PegarNoticiasGeraisPrimeiraPagina();
+	let dep_user = $('#dep_user').val();
+	PegarNoticiasGeraisPrimeiraPagina(dep_user);
 
 });
 
 
-function PegarNoticiasGeraisPrimeiraPagina(){
+function PegarNoticiasGeraisPrimeiraPagina(dep){
+	let user_data = new FormData();
+	user_data.append('dep_user', dep);
+
 	$.ajax({
-		type: 'get',
-		url: '../../controllers/recadosController.php/recados/paginaprincipal',
+		method: 'post',
+		processData: false,
+		contentType: false,
+		data: user_data,
+		url: '../../controllers/recadosController.php/recados/paginaprincipal',		
 		dataType: 'json',
 		success: function(data){
 			$.each(data, function(key, val){
 				if(key == 'geral'){
-					alert('entrou geral');
+					//alert('entrou geral');
 					let count = 0;
 					$.each(val, function(key, val){
 						count++;
 						let notiGeral = ConstruirStringNoticiaGeral(val);
 						$('#geralNews').append(notiGeral);
 						if (count >= 5) {
-							$('#geralNews').append('<button type="button" class="btn btn-primary btn-lg">Visualizar mais</button> ');
+							$('#geralNews').append('<button type="button" class="btn btn-warning btn-lg">Visualizar mais</button> ');
 						}
 					});
 				}

@@ -20,6 +20,7 @@
                 $.ajax({
                     type: "POST",
                     url: "../../../login/controller.php?login=sessionUsuario",
+                    async: false,
                     dataType: "json",
                     success: function(data){
 
@@ -28,7 +29,9 @@
                             //$('#dropdown_login').children().remove();
 
                             $('#id_user').val(data.id);
-                            
+                            $('#dep_user').val(data.dep);
+                            $('#nome_user').val(data.nome);
+                            $('#email_user').val(data.email);                            
                             
                             //alert(data.id);
                             //alert(data.nome);

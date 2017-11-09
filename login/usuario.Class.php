@@ -131,6 +131,7 @@
 				$usuario_dados['senha']		= $row['senha'];
 				$usuario_dados['position']  = $row['position'];
 				$usuario_dados['email']		= $row['email'];
+				$usuario_dados['dep']		= $row['dep'];
 			}
 			$usuario_dados['logar'] = true;
 			header("Content-Type: application/json");

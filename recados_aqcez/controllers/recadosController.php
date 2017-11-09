@@ -28,14 +28,19 @@
 
 	
 
-	$app->get('/recados/paginaprincipal', function(Request $request, Response $response){
+	$app->post('/recados/paginaprincipal', function(Request $request, Response $response){
 
+		$request_array = $request->getParsedBody();
+		$dep_user = $request_array['dep_user'];		
+		
+		
 		$noticias = array();
 		if(verificarUsuSession()){
 			$noticiaGeral = new RecadoGeral();
 			$noticiaDep   = new RecadoDep();
-			$noticias['geral'] = $noticiaGeral->pegarNoticiasPrimeiraPagina();
-			$noticias['dep']   = $noticiaDep->PegarNoticiasDepPrimeiraPagina();
+
+			$noticias['dep']   = $noticiaDep->PegarNoticiasDepPrimeiraPagina($dep_user);
+			$noticias['geral'] = $noticiaGeral->pegarNoticiasPrimeiraPagina();		
 
 			$noticiaJson = json_encode($noticias);
 			echo $noticiaJson;
@@ -105,6 +110,30 @@
 		}
 
 	});
+
+	// ============================ Pegar noticias por paginação inicio ============================
+
+	$app->post('/pegarTodasNoticias', function(Request $request, Response $response){
+		$request_array = $request->getParsedBody();
+		$pg_noticia = $request_array['pg_noticia'];
+
+		$recadosGeral = new RecadoGeral();
+		$resultado_consulta = $recadosGeral->pegarNoticiaPaginacao($pg_noticia);
+		if($resultado_consulta != false){
+			$resultado_json = json_encode($resultado_consulta);
+			echo $resultado_json;
+		}else{
+			echo "{'status' : 'false'}";
+		}
+	});
+
+	$app->get('/numPaginasNoticiaGeral', function(Request $request, Response $response){
+		$recadosGeral = new RecadoGeral();
+		$resultado = $recadosGeral->PegarNumPaginas();
+		if($resultado >=  0){ echo $resultado; }else{ echo '0'; }
+	});
+
+	// =========================== Fim Paginação ===============================================
 
 
 	// ================================= Notícia Dep ======================================

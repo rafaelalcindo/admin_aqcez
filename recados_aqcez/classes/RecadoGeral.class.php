@@ -128,9 +128,9 @@
 			if($resultadoModel != false){
 				$recadosDados = array();
 				$resultado 	  = $resultadoModel->fetch_assoc();	
-				$recadosDados['titulo']    = $resultado['titulo'];
-				$recadosDados['descricao'] = $resultado['descricao'];
-				$recadosDados['texto']	   = $resultado['texto'];
+				$recadosDados['titulo']    = utf8_encode($resultado['titulo']);
+				$recadosDados['descricao'] = utf8_encode($resultado['descricao']);
+				$recadosDados['texto']	   = utf8_encode($resultado['texto']);
 				$recadosDados['hora']	   = date('H:i:s' ,strtotime($resultado['data']) );
 				$recadosDados['data']	   = date('d/m/Y' ,strtotime($resultado['data']) );
 				$recadosDados['status']	   = 'true';
@@ -147,8 +147,51 @@
 		// ============================ Pegar noticias por paginação ============================
 
 		public function pegarNoticiaPaginacao($num_pagina){
-			
+			$start_from = ($num_pagina - 1) * 10;
+			$recadosModel   = new RecadosModels();
+			$resultadoModel = $recadosModel->PegarNoticiaPaginas($start_from);
+
+			if($resultadoModel != false){
+				$recadosDados = array();
+				$recadosAux   = array();
+
+				while($row = $resultadoModel->fetch_assoc()){
+					$recadosDados['id'] 			 = $row['id'];
+					$recadosDados['titulo'] 		 = utf8_encode($row['titulo']);
+					$recadosDados['descricao']		 = utf8_encode($row['descricao']);
+					$recadosDados['noticias']		 = utf8_encode($row['noticias']);
+					$recadosDados['data_publicacao'] = $row['data_publicacao'];
+					$recadosDados['imagem']			 = $row['imagem'];
+					$recadosDados['anexo']			 = $row['anexo'];
+					$recadosAux[] = $recadosDados;
+					unset($recadosDados);
+ 				}
+ 				
+ 				
+ 				return $recadosAux;
+
+			}else{ return false; }
+
 		}
+
+		public function PegarNumPaginas(){
+			$recadosModel = new RecadosModels();
+			$resultadoModel =  $recadosModel->PegarNumPaginas();
+			if($resultadoModel >= 0){ return $resultadoModel; }else{ return 0; }
+		}
+
+
+		// =================== Fim Paginação ===============================================
+
+
+
+
+
+
+
+
+
+
 
 		// ============================ pegar todos emails dos dep ============================
 

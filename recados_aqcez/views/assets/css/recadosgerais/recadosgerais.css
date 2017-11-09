@@ -1,0 +1,8 @@
+#grupo_dep{
+	margin-left: 30px;
+
+}
+
+a.list-group-item:focus, a.list-group-item:hover{
+	background-color: #ffcc80;
+}

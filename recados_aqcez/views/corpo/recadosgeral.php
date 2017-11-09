@@ -28,10 +28,12 @@
     <!-- Custom Fonts -->
     <link href="../../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="../assets/css/corpoGeral/corpoGeral.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/recadosgerais/recadosgerais.css">
 
     <script type="text/javascript" src="../../../js/jquery-1.12.4.min.js" ></script>
     <script type="text/javascript" src="../../../js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="../../../js/navGeral/navGeral.js" ></script>
+
     <script type="text/javascript" src="../assets/js/paginaGeralGetNoticiasAll.js" ></script>
 
 
@@ -41,6 +43,13 @@
 <?php include "../navbar/navnoticias.php";	 ?>
 
 <div class="container"  >
+
+  <input type="hidden" id="dep_user" name="dep_user" value="">
+  <input type="hidden" id="id_user" name="id_user" value="" >
+  <input type="hidden" id="nome_user" name="nome_user" value="">
+  <input type="hidden" id="email_user" name="email_user"  value="">
+
+
   <div class="row">
     <div class="bgWhite col-md-7"  >
 
@@ -49,7 +58,8 @@
       <div class="row justify-content-start" >
         <div class="col-md-11" id="geralNews">
 
-         <!-- <div class="card" id="main_noticia" style="width: 100%;" >
+         <!-- 
+         <div class="card" id="main_noticia" style="width: 100%;" >
             <div class="card-body">
               <h4 class="card-title">{{ noticia[0] }}</h4>
               <h6 class="card-subtitle mb-2 text-muted">{{ noticia[1] }}</h6>
@@ -71,7 +81,7 @@
 
     </div>
     &nbsp;
-    <div class="bgWhite col-md-4 ml-auto" >
+    <div class="bgWhite col-md-4 ml-auto" id="grupo_dep">
       <h3>Notícia de departamento</h3>
       <hr/>
       <div class="row justify-content-start" >
@@ -94,7 +104,7 @@
           <br/>
 
 
-          <button type="button" class="btn btn-outline-secondary">Visualizar mais</button>
+          <button type="button" class="btn btn-warning">Visualizar mais</button>
 
         </div>
       </div>

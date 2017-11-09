@@ -10,7 +10,7 @@ $(document).ready(function(){
 function iniciarPaginaNews(id){
 	let id_form = new FormData();
 	id_form.append('id',id);
-
+	
 	$.ajax({
 		method: 'post',
 		processData: false,

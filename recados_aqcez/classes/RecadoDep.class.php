@@ -76,9 +76,11 @@
 
 		// ========================================== pegando as últimas publicações ==================================================
 
-		public function PegarNoticiasDepPrimeiraPagina(){
-			$recadosModel = new RecadosModels();
-			$resultado = $recadosModel->PegarNoticiasPrimeiraPaginaDep();
+		public function PegarNoticiasDepPrimeiraPagina($dep){
+			
+			
+			$recadosModel = new RecadosModels();			
+			$resultado = $recadosModel->PegarNoticiasPrimeiraPaginaDep($dep);
 
 			$recadosDados = array();
 			$recadosAux   = array();

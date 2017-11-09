@@ -2,7 +2,9 @@
   background-color: #ffffff;
   padding: 4%;
   border-radius: 4px;
-  box-shadow: 7px 1px 50px #f2f2f2;
+ /* box-shadow: 7px 1px 50px #f2f2f2; */
+ box-shadow: 7px 1px 50px #ffd699;
+
 }
 
 .bgWhite{

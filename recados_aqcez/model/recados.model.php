@@ -27,9 +27,20 @@
 			if($pegarNoticias != false){ return $pegarNoticias; }else{ return false; }
 		}
 
+		// ================================ inicio Todoas paginas Geral =====================
 		public function PegarNoticiaPaginas($num_paginas){
 			
+			$pegarNoticias = PegarNoticiaPaginacaoGeral($this->conexao, $num_paginas);
+			if($pegarNoticias != false){ return  $pegarNoticias; }else{ return false; }
 		}
+
+		public function PegarNumPaginas(){
+			$pegarNumPaginas = PegarNumPaginas($this->conexao);
+			if($pegarNumPaginas >= 0){ return $pegarNumPaginas; }else{ return 0; }
+		}
+
+		// ============================= Fim Todoas as Paginas Geral =========================
+
 
 		public function PegarNoticiaCada($id){
 			$pegarNoticiaCada = PegarNoticiaGeralCada($this->conexao, $id);
@@ -39,8 +50,9 @@
 
 		// ========================================= Notícias Dep ============================================
 
-		public function PegarNoticiasPrimeiraPaginaDep(){
-			$pegarNoticiasDep = pegarNoticiaPrimeiraPaginaDep($this->conexao);
+		public function PegarNoticiasPrimeiraPaginaDep($dep){
+			
+			$pegarNoticiasDep = pegarNoticiaPrimeiraPaginaDep($this->conexao, $dep);
 			if($pegarNoticiasDep != false){ return $pegarNoticiasDep; }else{ return false; }
 		}
 
@@ -105,15 +117,46 @@
 
 
 
+	// ================================ inicio Todoas paginas Geral =====================
+
+	function PegarNoticiaPaginacaoGeral($conexao, $noticiaPag){
+		
+		$sqlNoticiaPg = sprintf("select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'noticias', data_publicacao_noticia as 'data_publicacao', img_noticia as 'imagem', anexo_noticia as 'anexo'
+					from noticias where noticiaTipo = 'geral' order by id_noticias desc limit %u, 10", $noticiaPag);
+
+		$resul_query = $conexao->query($sqlNoticiaPg);
+		if($resul_query){ return $resul_query; }else{ return false; }
+	}
+
+	function PegarNumPaginas($conexao){
+		$sqlNumPages = sprintf("select * from noticias where noticiaTipo = 'geral' order by id_noticias desc");
+		$resul_query = $conexao->query($sqlNumPages);
+		if($resul_query->num_rows > 0){
+			$total_records = $resul_query->num_rows;
+			$total_pages = ceil($total_records/10);	
+			return $total_pages;
+		}else{
+			return 0;
+		}
+	}
+
+	// ============================= Fim Todoas as Paginas Geral =========================
+
+
+
+
+
+
 
 	// ============================================= Notícias Dep ====================================
 
 
-	function pegarNoticiaPrimeiraPaginaDep($conexao){
-
+	function pegarNoticiaPrimeiraPaginaDep($conexao, $dep){
+		
+		
 		$sql_prim_dep = sprintf("select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', texto_noticia as 'texto', data_publicacao_noticia as 'data',
 							nomeDep_noticia as 'nomeDep', noticiaTipo as 'tipo', quem_cad_noticia as 'quem_cad'
-							from noticias where nomeDep_noticia = 'marketing'");
+		from noticias where noticiaTipo = 'dep' and nomeDep_noticia = '%s' order by id_noticias desc limit 5", $dep);
 
 		$resul_query = $conexao->query($sql_prim_dep);
 
@@ -139,6 +182,8 @@
 		if($resultado){ return true; }else{ return false; }
 
 	}
+
+
 
 	function pegarEmailsDep($conexao, $dep){
 		$sql_emailDep = sprintf("select usuario_email as 'email' from usuario where usuario_dep = '%s' ", $dep);
