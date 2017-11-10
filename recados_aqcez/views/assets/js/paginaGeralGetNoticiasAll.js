@@ -26,7 +26,7 @@ function PegarNoticiasGeraisPrimeiraPagina(dep){
 						let notiGeral = ConstruirStringNoticiaGeral(val);
 						$('#geralNews').append(notiGeral);
 						if (count >= 5) {
-							$('#geralNews').append('<button type="button" class="btn btn-warning btn-lg">Visualizar mais</button> ');
+							$('#geralNews').append("<a  href='todasnoticiasgeral.php' class='btn btn-warning btn-lg'>Visualizar mais</a> ");
 						}
 					});
 				}

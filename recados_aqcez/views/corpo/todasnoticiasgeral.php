@@ -52,8 +52,12 @@
                 <hr/>
 
                 <div class="list-group" id="painel_noticias">
-
-                  
+                    <div class="listagem_noticia" >
+                        
+                    </div>
+                    <div class="listagem_paginacao" >
+                        
+                    </div>                  
 
                 </div>
 
