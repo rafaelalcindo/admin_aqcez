@@ -66,6 +66,15 @@
 			if($pegarDepEmail != false){ return $pegarDepEmail; }else{ return false; }
 		}
 
+		// ===================================== Inicio todas paginas Dep ==============================
+
+		public function PegarTodasNoticiaPaginaDep($num_pagina, $dep){
+			$pegarNoticias = PegarNoticiaPaginacaoDep($this->conexao, $num_pagina, $dep);
+			if($pegarNoticias != false){ return $pegarNoticias; }else{ return false; }
+		}
+
+		// =============================== Fim Todas paginas Dep ==================================
+
 		// ======================================= Pegar Emails para enviar ===============================
 
 		public function pegarTodosEmails(){
@@ -192,3 +201,15 @@
 	}
 
 
+// ================================ inicio Todoas paginas Dep =====================
+
+	function PegarNoticiaPaginacaoDep($conexao, $noticiapag, $dep){
+		$sqlNoticiaPg = sprintf("select id_noticias as 'id', titulo_noticia as 'titulo', descricao_noticia as 'descricao', 
+texto_noticia as 'noticias', data_publicacao_noticia as 'data_publicacao', img_noticia as 'imagem', anexo_noticia as 'anexo'
+					from noticias where noticiaTipo = 'dep' and nomeDep_noticia = '%s' order by id_noticias desc limit %u, 10", $dep, $noticiapag);
+
+		$resul_query = $conexao->query($sqlNoticiaPg);
+		if($resul_query){ return $resul_query; }else{ return false; }
+	}
+
+// ============================= Fim Todoas as Paginas Dep =========================

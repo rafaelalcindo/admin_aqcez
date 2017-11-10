@@ -122,6 +122,36 @@
 
 		}
 
+		// ============================ Pegar noticias por paginação ============================
+
+		public function pegarNoticiaPaginacaoDep($num_pagina, $dep){
+			$start_from   = ($num_pagina - 1) * 10;
+			$recadosModel = new RecadosModels();
+			$resultadoModel = $recadosModel->PegarTodasNoticiaPaginaDep($num_pagina, $dep);
+
+			if($resultadoModel != false){
+				$recadosDados = array();
+				$recadosAux	  = array();
+
+				while ($row = $resultadoModel->fetch_assoc()) {
+					$recadosDados['id'] 			 = $row['id'];
+					$recadosDados['titulo'] 		 = utf8_encode($row['titulo']);
+					$recadosDados['descricao']		 = utf8_encode($row['descricao']);
+					$recadosDados['noticias']		 = utf8_encode($row['noticias']);
+					$recadosDados['data_publicacao'] = $row['data_publicacao'];
+					$recadosDados['imagem']			 = $row['imagem'];
+					$recadosDados['anexo']			 = $row['anexo'];
+					$recadosAux[] = $recadosDados;
+					unset($recadosDados);
+				}
+
+				return $recadosAux;
+
+			}else{ return false; }
+		}
+
+		// ================================ Fim Paginação ===================================
+
 
 		// ============================ pegar todos emails dos dep ============================
 

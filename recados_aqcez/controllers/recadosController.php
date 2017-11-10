@@ -111,7 +111,7 @@
 
 	});
 
-	// ============================ Pegar noticias por paginação inicio ============================
+	// ============================ Pegar noticias por paginação inicio Geral ============================
 
 	$app->post('/pegarTodasNoticias', function(Request $request, Response $response){
 		$request_array = $request->getParsedBody();
@@ -133,7 +133,7 @@
 		if($resultado >=  0){ echo $resultado; }else{ echo '0'; }
 	});
 
-	// =========================== Fim Paginação ===============================================
+	// =========================== Fim Paginação Geral ===============================================
 
 
 	// ================================= Notícia Dep ======================================
@@ -181,6 +181,28 @@
 		echo $statusjson;
 
 	});
+
+	// ============================ Pegar noticias por paginação inicio Dep ============================
+
+	$app->post('/pegarTodasNoticiasDep',  function(Request $request, Response $response){
+
+		$request_array = $request->getParsedBody();
+		$pg_noticia    = $request_array['pg_noticia'];
+		$dep_noticia   = $request_array['dep_noticia'];
+
+		$recadosDep = new RecadoDep();
+		$resultado_consulta = $recadosDep->pegarNoticiaPaginacaoDep($pg_noticia, $dep_noticia);
+		if($resultado_consulta != false){
+			$resultado_json = json_encode($resultado_consulta);
+			echo $resultado_json;
+		}else{
+			echo "{'status' : 'false'}";
+		}
+
+	});
+
+
+	// =========================== Fim Paginação Dep ===============================================
 
 
 	$app->run();
