@@ -952,7 +952,7 @@
 			*/
 
 
-			if(titulo_event.trim() != '' && desc_event.trim() != '' && data_event.trim() != '' && hora_event_ini.trim() != '' && hora_event_fim.trim() != '' && quem_vai.trim() != ''){
+			if(titulo_event.trim() != '' && desc_event.trim() != '' && data_event.trim() != '' && hora_event_ini.trim() != '' && quem_vai.trim() != ''){
 				$.ajax({
 					type: 'POST',
 					url: "sys_agenda/controller.php?agenda=salvarAgenda&titulo_event="+titulo_event+"&desc_event="+desc_event+"&data_event="+data_event+"&hora_event_ini="+hora_event_ini+"&hora_event_fim="+hora_event_fim+"&quem_vai="+quem_vai+"&info_event="+info_event+"&resp_cad="+resp_cad+"&tel_contato="+tel_contato+"&nome_contato="+nome_contato+"&end_contato="+end_contato+"&email_contato="+email_contato+"&cargo_contato="+cargo_contato+"&enviar_presenta="+present_contato,
