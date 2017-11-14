@@ -218,6 +218,21 @@ function descricaoEvento(){
 
 
 
+// =================================== Relatórios da Agenda ==================
+
+
+function listarReuniaoPorData(){
+
+	$data_ini = isset($_REQUEST['data_ini'])? $_REQUEST['data_ini'] : null ;
+	$data_fim = isset($_REQUEST['data_fim'])? $_REQUEST['data_fim'] : null ;
+
+	
+
+}
+
+
+
+
 
 
 

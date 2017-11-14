@@ -301,6 +301,21 @@
 		}
 
 
+		// ==================================== Relatorio agenda ====================================
+
+
+		public function ListarReuniaoMarcado($data){
+			$db_nomes = new connection_agenda();
+
+			$result   = $db_nomes->pegarNomesDepComercio();
+
+			while($row = $result->fetch_assoc()){
+
+			}
+
+		}
+
+
 
 		// selecionar Cor
 		

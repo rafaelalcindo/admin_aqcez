@@ -39,6 +39,7 @@
 <body>
 
 <?php include "../navbar/navnoticias.php";	 ?>
-
-
+    
+    
+    
 </body>

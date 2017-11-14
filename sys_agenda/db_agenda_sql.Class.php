@@ -53,6 +53,13 @@
 			$deleteAgenda = DeletingCalendar($this->conexao ,$id_cale);
 			if($deleteAgenda){ return true; }else{ return false; }
 		}
+
+		// ============================================= Relatorios de Agenda ==================================
+
+		public function pegarNomesDepComercio(){
+			$pegarNomeComercio = pegarNomesComercial($this->conexao);
+			if($pegarNomeComercio){ return $pegarNomeComercio; }else{ false; }
+		}
 		
 	}
 
@@ -182,6 +189,22 @@
 		}else{ return false; }
 
 	}
+
+
+//================================================= listar relatorios agenda =============================================
+
+
+	function pegarNomesComercial($conexao){
+		$sql_nomes 	 = sprintf("select usuario_nome as 'nome', usuario_sobrenome as 'sobrenome' from usuario where usuario_cargo = 'vendedor'");
+		$resul_query = $conexao->query($sql_nomes);
+		if($resul_query->num_rows > 0){ return $resul_query; }else{ return false; }
+	}
+
+
+
+
+
+
 
 
 	function DeletingCalendar($conexao ,$id_cale){
