@@ -70,6 +70,11 @@
 			$listarData = listarDatasSelecionada($this->conexao, $data);
 			if($listarData){ return $listarData; }else{ return false; }
 		}
+
+		public function ListarEventosCadaPessoa($data, $nome){
+			$listarEvento = listarEventosCadaPessoa($this->conexao, $data, $nome);
+			if($listarEvento){ return $listarEvento; }else{ return false; }
+		}
 		
 	}
 
@@ -219,6 +224,14 @@
 	function listarDatasSelecionada($conexao, $data){
 		$sql_datas  = sprintf("select distinct calendario_data as 'data' from calendario where calendario_data >= '%s' and calendario_data <= '%s' order by calendario_data asc;",$data[0], $data[1]);
 		$resu_query = $conexao->query($sql_datas);
+		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
+	}
+
+	function listarEventosCadaPessoa($conexao, $data, $nome){
+		$sql_Evento = sprintf("select c.calendario_titulo as 'titulo', u.usuario_nome as 'nome' from calendario c, usuario u, usuario_has_calendario uc 
+						where c.calendario_id = uc.calendario_calendario_id and u.usuario_id	= uc.usuario_usuario_id and
+						c.calendario_data = '%s' and u.usuario_nome = '%s' ",$data, $nome);
+		$resu_query = $conexao->query($sql_Evento);
 		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
 	}
 

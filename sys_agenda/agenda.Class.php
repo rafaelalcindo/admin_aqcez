@@ -307,9 +307,19 @@
 		public function ListarReuniaoMarcado($data){
 			$db_relatos = new connection_agenda();
 			$resultNomes   	 = $db_relatos->pegarNomesDepComercio();
+
 			$nomes_array 	 = array();
 			$nomes_array_aux = array();
-			
+
+			$datas_array	 = array();
+			$datas_array_aux = array();
+
+			$titulo_array     = array();
+			$titulo_array_aux = array();
+ 			
+			$final_array	 = array();
+			$final_array_nome	 = array();
+
 			if($data[1] == null ){
 				$resultDatas = $db_relatos->ListarDataSelecionada($data);
 			}else{
@@ -317,21 +327,49 @@
 			}
 
 			if($resultNomes != false && $resultDatas != false){
+
 				while($row = $resultNomes->fetch_assoc()){
 					$nomes_array['nome'] 	  = $row['nome'];
 					$nomes_array['sobrenome'] = $row['sobrenome'];
 					$nomes_array_aux[] = $nomes_array;
 					unset($nomes_array);
 				}
-				echo "<br/>Resultado array: ".print_r($nomes_array_aux);
-				exit;
+
+				while($row02 = $resultDatas->fetch_assoc()){
+					$datas_array['data'] = $row02['data'];
+					$datas_array_aux[]   = $datas_array;
+					unset($datas_array);
+				}
+
+				foreach ($datas_array_aux as $key01 => $value01) {
+					
+					foreach ($nomes_array_aux as $key02 => $value02) {
+						//echo "<br/>valor01: ".$value01['data'];
+						//echo "<br/>valor02: ".$value02['nome'];
+						
+						$resulReuni = $db_relatos->ListarEventosCadaPessoa($value01['data'], $value02['nome']);
+						if($resulReuni != false){
+							$final_array_nome[$value02['nome']] = '';
+							while($row03 = $resulReuni->fetch_assoc()){
+								$final_array_nome[$value02['nome']]  .= $row03['titulo'].",";								
+								
+							}							
+							
+						}
+						$final_array[$value01['data']] = $final_array_nome;
+					}
+					
+				}				
+
+				return $final_array;
+				
 			}else{ return false; }
 
 		}
 
 
 
-		// selecionar Cor
+  // ======================================= selecionar Cor ====================================================================
 		
 		
 

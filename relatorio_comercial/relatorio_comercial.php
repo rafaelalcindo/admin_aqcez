@@ -68,7 +68,7 @@
                 
             </div>
             <div class="col-md-8" > 
-                <table class="table table-bordered" >
+                <table class="table table-bordered" id="relatorio" >
                     <tr>
                         <th>Data</th>
                         <th>Millena</th>

@@ -239,6 +239,10 @@ function listarReuniaoPorData(){
 
 	$relatorioVisitas = new Agenda();
 	$resultado = $relatorioVisitas->ListarReuniaoMarcado($data);
+	if($resultado != false){
+		$resultadoJson = json_encode($resultado);
+		echo $resultadoJson;
+	}
 
 }
 
