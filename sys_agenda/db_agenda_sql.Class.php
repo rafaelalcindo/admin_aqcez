@@ -60,6 +60,16 @@
 			$pegarNomeComercio = pegarNomesComercial($this->conexao);
 			if($pegarNomeComercio){ return $pegarNomeComercio; }else{ false; }
 		}
+
+		public function ListarDataSelecionada($data){
+			$listarData = listarDataSelecionada($this->conexao, $data);
+			if($listarData){ return $listarData; }else{ false; }
+		}
+
+		public function ListarDatasSelecionada($data){
+			$listarData = listarDatasSelecionada($this->conexao, $data);
+			if($listarData){ return $listarData; }else{ return false; }
+		}
 		
 	}
 
@@ -198,6 +208,18 @@
 		$sql_nomes 	 = sprintf("select usuario_nome as 'nome', usuario_sobrenome as 'sobrenome' from usuario where usuario_cargo = 'vendedor'");
 		$resul_query = $conexao->query($sql_nomes);
 		if($resul_query->num_rows > 0){ return $resul_query; }else{ return false; }
+	}
+
+	function listarDataSelecionada($conexao,$data){
+		$sql_datas  = sprintf("select distinct calendario_data as 'data' from calendario where calendario_data > '%s' order by calendario_data asc;",$data[0]);
+		$resu_query = $conexao->query($sql_datas);
+		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
+	}
+
+	function listarDatasSelecionada($conexao, $data){
+		$sql_datas  = sprintf("select distinct calendario_data as 'data' from calendario where calendario_data >= '%s' and calendario_data <= '%s' order by calendario_data asc;",$data[0], $data[1]);
+		$resu_query = $conexao->query($sql_datas);
+		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
 	}
 
 

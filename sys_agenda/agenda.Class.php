@@ -305,13 +305,27 @@
 
 
 		public function ListarReuniaoMarcado($data){
-			$db_nomes = new connection_agenda();
-
-			$result   = $db_nomes->pegarNomesDepComercio();
-
-			while($row = $result->fetch_assoc()){
-
+			$db_relatos = new connection_agenda();
+			$resultNomes   	 = $db_relatos->pegarNomesDepComercio();
+			$nomes_array 	 = array();
+			$nomes_array_aux = array();
+			
+			if($data[1] == null ){
+				$resultDatas = $db_relatos->ListarDataSelecionada($data);
+			}else{
+				$resultDatas = $db_relatos->ListarDatasSelecionada($data);				
 			}
+
+			if($resultNomes != false && $resultDatas != false){
+				while($row = $resultNomes->fetch_assoc()){
+					$nomes_array['nome'] 	  = $row['nome'];
+					$nomes_array['sobrenome'] = $row['sobrenome'];
+					$nomes_array_aux[] = $nomes_array;
+					unset($nomes_array);
+				}
+				echo "<br/>Resultado array: ".print_r($nomes_array_aux);
+				exit;
+			}else{ return false; }
 
 		}
 

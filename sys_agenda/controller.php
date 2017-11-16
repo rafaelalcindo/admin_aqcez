@@ -45,6 +45,9 @@ switch ($requestType) {
 		apagarEvento();
 	break;
 
+	case 'relatorioVisitas':
+		listarReuniaoPorData();
+	break;
 		
 	default:
 		# code...
@@ -226,7 +229,16 @@ function listarReuniaoPorData(){
 	$data_ini = isset($_REQUEST['data_ini'])? $_REQUEST['data_ini'] : null ;
 	$data_fim = isset($_REQUEST['data_fim'])? $_REQUEST['data_fim'] : null ;
 
-	
+	$data = array();
+	$data[0] = FomartarDataMysql($data_ini);
+	if($data_fim != null){
+		$data[1] = FomartarDataMysql($data_fim);
+	}else{
+		$data[1] = null;
+	}
+
+	$relatorioVisitas = new Agenda();
+	$resultado = $relatorioVisitas->ListarReuniaoMarcado($data);
 
 }
 
