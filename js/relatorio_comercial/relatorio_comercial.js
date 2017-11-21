@@ -20,7 +20,7 @@ function getRelatorio(data_ini, data_fim){
 		processData: false,
 		contentType: false,
 		data: data,
-		url: '',
+		url: '../sys_agenda/controller.php?agenda=relatorioVisitas',
 		async: false,
 		dataType: "json",
 		success: function(data){

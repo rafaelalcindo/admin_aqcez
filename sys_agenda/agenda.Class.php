@@ -20,6 +20,7 @@
 		private $telContato;
 		private $nomeContato;
 		private $endContato;
+		private $convidado;
 
 		private $cargoContato;
 		private $emailContato;
@@ -142,6 +143,14 @@
 			return $this->endContato;
 		}
 
+		public function setConvidado($convidado){
+			$this->convidado = $convidado;
+		}
+
+		public function getConvidado(){
+			return $this->convidado;
+		}
+
 		public function setCargoContato($cargoContato){
 			$this->cargoContato = $cargoContato;
 		}
@@ -186,9 +195,9 @@
 			$agenda['cargo_contato']   = $this->cargoContato;
 			$agenda['email_contato']   = $this->emailContato;
 			$agenda['enviar_presenta'] = $this->enviarPresentacao;
-			
+			$agenda['convidado']	   = $this->convidado;
 
-			
+
 			//echo "Agenda: ".print_r($agenda);
 			$resuAgenda = $db_agenda->salvarAgenda($agenda, $usuario);
 			if($resuAgenda){
@@ -234,7 +243,13 @@
 			$info_array  = array();
 			$info_agenda['result'] = true;
 
+			$resul_convidados = getConvidadosReuni($id_cale, $db_cale_info);
+			if($resul_convidados != false){
+				$convidados = $resul_convidados;
+			}else{ $convidados = false; }
+
 			while($row = $cale_info->fetch_assoc()){
+
 				$info_agenda['nome'] 	  	  = utf8_encode(utf8_decode($row['nome']));
 				$info_agenda['sobrenome'] 	  = utf8_encode(utf8_decode($row['sobrenome']));
 				$info_agenda['cargo'] 	  	  = utf8_encode(utf8_decode($row['cargo']));
@@ -253,9 +268,14 @@
 				$info_agenda['cargo_contato'] = utf8_encode(utf8_decode($row['cargo_contato']));
 				$info_agenda['email_contato'] = utf8_encode(utf8_decode($row['email_contato']));
 				$info_agenda['presentacao']	  = $row['presentacao'];
+				$info_agenda['convidados']	  = $convidados;
+
 				$info_array[] = $info_agenda;
 				unset($info_agenda);
 			}
+
+
+
 			//echo "array: ".print_r($info_agenda);
 			return $info_array;
 
@@ -403,6 +423,28 @@
 		}else if($info == 'go_construct'){
 			return 'Go Construct';
 		}
+	}
+
+	// ======================================== Info Calendario Convidados ============================================
+
+
+	function getConvidadosReuni($id_cale, $obj_info){
+
+		$array_convidados = array();
+		$array_convidadosAux = array();
+
+		$resultado = $obj_info->getConvidadosAgenda($id_cale);
+
+		if($resultado != false){
+			while($row = $resultado->fetch_assoc()){
+				$array_convidadosAux['nome'] 	  = $row['nome'];
+				$array_convidadosAux['sobrenome'] = $row['sobrenome'];
+				$array_convidados[] =  $array_convidadosAux;
+			}
+
+			return $array_convidados;
+		}else{ return false; }
+
 	}
 
 	

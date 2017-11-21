@@ -242,6 +242,23 @@
 			}// fim do else dados pessoais marcar reuni
 		}
 
+		public function getNomeConvidadoReuni(){
+			$db_dados 	= new Connection_login();
+			$dados_vend = $db_dados->getDadosVendedoresSelect();
+			$dadosVendHelp 	 = array();
+			$dadosVendedores = array();
+
+			while( $row = $dados_vend->fetch_assoc()){
+				$dadosVendHelp['id'] 		= $row['id'];
+				$dadosVendHelp['nome']  	= utf8_encode($row['nome']);
+				$dadosVendHelp['sobrenome'] = utf8_decode($row['sobrenome']);
+				$dadosVendedores[] = $dadosVendHelp;
+				unset($dadosVendHelp);
+			}
+
+			return $dadosVendedores;
+		}
+
 		public function registrarGCM($login, $senha, $gcm){
 			$db_inserGcm = new Connection_login();
 			$resul_insert = $db_inserGcm->salvarRegistroGCM($login, $senha, $gcm);

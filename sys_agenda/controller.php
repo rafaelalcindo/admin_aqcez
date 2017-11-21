@@ -28,6 +28,10 @@ switch ($requestType) {
 		pegarNomesReuni();
 	break;
 
+	case 'pegarNomeConvidadoReuni':
+		pegarNomesConvidadosReuni();
+	break;
+
 	case 'pegarEventosCalendario':
 		pegarEventosCalendario();
 	break;
@@ -66,6 +70,7 @@ function gravarAgenda(){
 	$hora_event_fim   = isset($_REQUEST['hora_event_fim'])? 	$_REQUEST['hora_event_fim'] 	: null;
 	$ResponsavelEvent = isset($_REQUEST['quem_vai'])?		    $_REQUEST['quem_vai'] 			: null;
 	$responsavelCad   = isset($_REQUEST['resp_cad'])?			$_REQUEST['resp_cad']	 		: null;
+	$convidado  	  = isset($_REQUEST['convidado'])?			$_REQUEST['convidado']			: null;
 
 	$telContato		  = isset($_REQUEST['tel_contato'])?		$_REQUEST['tel_contato']		: null;
 	$nome_contato	  = isset($_REQUEST['nome_contato'])?		$_REQUEST['nome_contato']		: null;
@@ -74,7 +79,9 @@ function gravarAgenda(){
 	$email_contato	  = isset($_REQUEST['email_contato'])?		$_REQUEST['email_contato']		: null;
 	$enviarPresent    = isset($_REQUEST['enviar_presenta'])?	$_REQUEST['enviar_presenta']	: null;
 
-
+	//echo "Array: ".print_r(json_decode($convidado));
+	$convidado = json_decode($convidado);
+	//exit;
 
     $data_mod = FomartarDataMysql($data_event);
 			   
@@ -85,6 +92,7 @@ function gravarAgenda(){
 	$agenda->setData($data_mod);
 	$agenda->setHoraIni($hora_event_ini);
 	$agenda->setHoroFim($hora_event_fim);
+	$agenda->setConvidado($convidado);
 
 	$agenda->setTelContato($telContato);
 	$agenda->setNomeContato($nome_contato);
@@ -181,7 +189,13 @@ function nomesVendedoresCalendario(){
 	echo $listaVendJson;
 }
 
-// Pegar os nomes para marcar reuni
+
+
+
+
+
+
+//======================== Pegar os nomes para marcar reuni ========================================================
 
 function pegarNomesReuni(){
 	$id_user = isset($_REQUEST['idUser'])? $_REQUEST['idUser'] : null;
@@ -191,6 +205,19 @@ function pegarNomesReuni(){
 	$listaJson = json_encode($listaVendJson);
 	echo $listaJson;
 }
+
+function pegarNomesConvidadosReuni(){
+	$usuario 	   = new Usuario();
+	$listaVendJson = $usuario->getNomeConvidadoReuni();
+	$listaJson = json_encode($listaVendJson);
+	echo $listaJson;
+}
+
+
+
+
+
+
 
 // Visualizar os eventos
 function descricaoEvento(){
@@ -207,7 +234,8 @@ function descricaoEvento(){
 	if($permission){
 		$agenda = new Agenda();
 		$file_json_array = array();
-		$file_json_array = $agenda->getCalenInfo($idcalenEvent,$editar);		
+		$file_json_array = $agenda->getCalenInfo($idcalenEvent,$editar);
+
 		$file_json 		 = json_encode($file_json_array);
 		//echo "File Json: ".$file_json;
 		echo $file_json;

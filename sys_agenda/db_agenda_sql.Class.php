@@ -21,6 +21,17 @@
 			$getLastId = InsertAgendaAndGetId($agenda, $this->conexao);
 			if($getLastId != false){
 				$resu_ligar = LigarAgendaUsuario($getLastId, $usuario, $this->conexao);
+
+				if(isset($agenda['convidado']) && ($agenda['convidado']  != null || $agenda['convidado'] != '')) {
+
+											
+					foreach ($agenda['convidado'] as $key => $value) {
+						
+						LigarAgendaConvidado($value, $getLastId, $this->conexao);
+					}
+					//$resu02_ligar = LigarAgendaUsuario($getLastId, $agenda, $this->conexao);
+				} 
+
 				if($resu_ligar){
 					return true;
 				}else{ return false; }
@@ -35,6 +46,7 @@
 			}else{ return false; }
 		}
 
+	//================= Pagar info Agenda =================================
 		public function getDescAgenda($id_calen){
 			$getDescAgenda = getDescEventAgendaSQL($this->conexao, $id_calen);
 			if($getDescAgenda != false){
@@ -42,6 +54,14 @@
 			}else{ return false; }			
 		}
 
+		public function getConvidadosAgenda($id_calen){
+			$getConvAgenda = getConvidadosAgenda($id_calen, $this->conexao);
+			if($getConvAgenda != false){
+				return $getConvAgenda;
+			}else{ return false; }
+		}
+
+// =================== Editar Agenda ============================
 		public function editarAgenda($agenda){
 			$getEditedAgenda = atualizarAgenda($this->conexao, $agenda);
 			if($getEditedAgenda){
@@ -92,7 +112,13 @@
 			if($resu_ligar){
 				return true;
 			}else{ return false; }
-		}
+	}
+
+	function LigarAgendaConvidado($id_user, $id_agenda, $conexao){
+		$sql_convidados = sprintf("insert into covidados_reuniao (usuario_id, calendario_id) values('%u', '%u')",$id_user, $id_agenda);
+		$resu_ligar = $conexao->query($sql_convidados);
+		if($resu_ligar){ return true; }else{ return false; }
+	}
 
 	function InsertAgendaAndGetId($agenda, $conexao){
 			//echo "<br/>agenda: ".print_r($agenda);
@@ -170,6 +196,7 @@
 		}else{ return false;}
 	}
 
+	//============================================== Eventos Agenda ===============================================
 	
 	function getEventoAgendaSQL($conexao){
 		$sql_get_all_event = sprintf("select calendario_id as 'id', calendario_titulo as 'titulo', calendario_desc as 'desc', calendario_info as 'info' ,calendario_data as 'data', 
@@ -204,6 +231,15 @@
 		}else{ return false; }
 
 	}
+
+	function getConvidadosAgenda($id_cale, $conexao){
+		$sql_convidados = sprintf("select usu.usuario_nome as 'nome', usu.usuario_sobrenome as 'sobrenome' from usuario usu, covidados_reuniao conv
+where usu.usuario_id = conv.usuario_id and conv.calendario_id = '%u' ",$id_cale);
+		$resu_event = $conexao->query($sql_convidados);
+		if($resu_event->num_rows > 0){ return $resu_event; }else{ return false; }
+	}
+
+
 
 
 //================================================= listar relatorios agenda =============================================
