@@ -7,6 +7,7 @@ header('Access-Control-Allow-Headers: X-Requested-With, Content-Type');
 
 require('../login/usuario.Class.php');
 require('agenda.Class.php');
+require '../phpmailer/PHPMailerAutoload.php';
 
 @header('Content-Type: application/json');
 
@@ -16,6 +17,7 @@ $requestType = isset($_REQUEST['agenda'])? $_REQUEST['agenda'] : null;
 
 
 switch ($requestType) {
+	
 	case 'salvarAgenda':
 		 gravarAgenda();
 	break;
@@ -104,6 +106,14 @@ function gravarAgenda(){
 	$usuario 	   = new Usuario();
 	$usuario_array = $usuario->puxarDadosUsuarioId($ResponsavelEvent);
 	$usuario_array['respCad'] = $responsavelCad;
+	$convidado_emails = $usuario->pegarEmailsPorIds($convidado);
+
+	//echo "emails listados: ".print_r($convidado_emails);
+
+	enviarEmailConvidados($convidado_emails, $agenda);
+
+	
+
 	$usuario_push = $usuario->enviarNotificationPush($ResponsavelEvent);
 	//$agenda->setUsuario($usuario_array);		
 	$resu_final = $agenda->unirAgendaUsuario($usuario_array);
@@ -125,6 +135,7 @@ function editarEvento(){
 	$hora_evento_edi_fim = isset($_REQUEST['hora_event_fim_edit'])? $_REQUEST['hora_event_fim_edit'] : null;
 	$responEvento_edit   = isset($_REQUEST['quem_vai_edit'])? 		$_REQUEST['quem_vai_edit'] 		 : null;
 	$idCalenEvent        = isset($_REQUEST['cale_event'])?			$_REQUEST['cale_event'] 		 : null;
+	$convidado_edit 	 = isset($_REQUEST['convidado_edit'])?		$_REQUEST['convidado_edit']		 : null;
 
 	$telContato_edit	  = isset($_REQUEST['tel_contato_edit'])?		$_REQUEST['tel_contato_edit']		: null;
 	$nome_contato_edit	  = isset($_REQUEST['nome_contato_edit'])?		$_REQUEST['nome_contato_edit']		: null;
@@ -132,6 +143,8 @@ function editarEvento(){
 	$cargo_contato_edit	  = isset($_REQUEST['cargo_contato_edit'])?		$_REQUEST['cargo_contato_edit']	    : null;
 	$email_contato_edit	  = isset($_REQUEST['email_edit'])?				$_REQUEST['email_edit']				: null;
 	$enviarPresent_edit   = isset($_REQUEST['apresent_edit'])?			$_REQUEST['apresent_edit']			: null;
+
+	$convidado = json_decode($convidado_edit);
 
 	$data_mod = FomartarDataMysql($data_evento_edit);
 
@@ -143,6 +156,7 @@ function editarEvento(){
 	$agenda->setHoraIni($hora_evento_edi_ini);
 	$agenda->setHoroFim($hora_evento_edi_fim);
 	$agenda->setIdCalen($idCalenEvent);
+	$agenda->setConvidado($convidado);
 
 	$agenda->setTelContato($telContato_edit);
 	$agenda->setNomeContato($nome_contato_edit);
@@ -150,7 +164,6 @@ function editarEvento(){
 	$agenda->setCargoContato($cargo_contato_edit);
 	$agenda->setEmailContato($email_contato_edit);
 	$agenda->setEnviarPresentacao($enviarPresent_edit);
-
 
 
 	$resu_editar = $agenda->alterCalen($idCalenEvent, $responEvento_edit);
@@ -235,12 +248,10 @@ function descricaoEvento(){
 		$agenda = new Agenda();
 		$file_json_array = array();
 		$file_json_array = $agenda->getCalenInfo($idcalenEvent,$editar);
-
 		$file_json 		 = json_encode($file_json_array);
-		//echo "File Json: ".$file_json;
 		echo $file_json;
 	}else{
-		$agenda = new Agenda();
+		$agenda    = new Agenda();
 		$file_json = $agenda->ErrorPermission();
 		echo $file_json;
 	}
@@ -301,4 +312,42 @@ function listarReuniaoPorData(){
 function FomartarDataMysql($data){
 	$dataMod = DateTime::createFromFormat('d/m/Y',$data);
 	return $dataMod->format('Y-m-d');
+}
+
+// ------------------------------------ Helper enviar email --------------------------------
+
+// =============================== Enviar email convidados
+
+function enviarEmailConvidados($emails, $obj){
+
+			 $m = new PHPMailer;
+			 $m->CharSet = 'UTF-8';
+			 $m->isSMTP();
+			 $m->SMTPAuth = true;
+
+			 $m->Host = 'br566.hostgator.com.br';
+			 $m->Username = 'news@aqcez.com.br';
+			 $m->Password = 'News123*';
+			 $m->SMTPSecure = 'ssl';
+			 $m->Port = 465;
+
+			 $m->From = 'news@aqcez.com.br';
+  			 $m->FromName = 'News';
+
+  			 foreach ($emails as $key => $value) {
+  			 	$m->addAddress($value);
+  			 }
+
+  			 $m->isHTML(true);
+
+  			 $m->Subject = "Convite de reunião";
+  			 $m->Body 	 = "Você foi convidado a participar da reunião ".$obj->getTitulo()." que acontecerá no dia ".$obj->getData()." as ".$obj->getHoraIni() ;
+  			 $m->AltBody = '';
+
+  			 if($m->send()){
+		    	return true;
+			  }else{
+			  	return false;
+			  }
+
 }

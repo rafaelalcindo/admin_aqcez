@@ -160,6 +160,7 @@
 				$dados_usuario['nivel'] 	= $row['nivel'];
 				$dados_usuario['login'] 	= $row['login'];
 				$dados_usuario['gcm']		= $row['gcm'];
+				$dados_usuario['email']		= $row['email'];
 			}
 			return $dados_usuario;
 		}
@@ -281,6 +282,34 @@
 			
 			$resu_noti = $db_dados->enviarNotificationPush($dados_usuario);			
 			return $resu_noti;
+		}
+
+		public function enviarNotificationPushDinamica($id_user, $menssagem){
+			$db_dados 		= new Connection_login();
+			$dados_user		= $db_dados->getDadosUsuarioId($id_user);
+			$dados_usuario = array();
+			while($row = $dados_user->fetch_assoc()){
+				$dados_usuario['id'] 		= $row['id'];
+				$dados_usuario['nome']		= $row['nome'];
+				$dados_usuario['sobrenome'] = $row['sobrenome'];
+				$dados_usuario['cargo']		= $row['cargo'];
+				$dados_usuario['nivel']		= $row['nivel'];
+				$dados_usuario['login']		= $row['login'];
+				$dados_usuario['gcm']		= $row['gcm'];
+			}
+			$resu_noti = $db_dados->EnviarNotificationPushDinamica($dados_usuario, $menssagem);
+			return $resu_noti;
+		}
+
+		public function pegarEmailsPorIds($ids){
+			$db_dados 		= new Connection_login();
+			$emails 		= array();
+			foreach ($ids as $key => $value) {
+				$resultado = $db_dados->getDadosUsuarioId($value);
+				$result    = $resultado->fetch_assoc();
+				$emails[]  = $result['email'];
+			}
+			return $emails;
 		}
 
 		// ======================================= Cadastrar Usuário =======================================

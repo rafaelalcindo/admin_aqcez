@@ -96,7 +96,7 @@
 		public function getDadosUsuarioId($id){
 			$sql_get_dadosId = sprintf("SELECT usuario_id as 'id', usuario_nome as 'nome', usuario_sobrenome as 'sobrenome',  
 					usuario_cargo as 'cargo', usuario_nivel as 'nivel', usuario_login as 'login', usuario_senha as 'senha',
-					usuario_cod_gcm as 'gcm'
+					usuario_cod_gcm as 'gcm', usuario_email as 'email'
 					FROM usuario where usuario_id = '%u' ", $id);
 			$resu_consuId = $this->conexao->query($sql_get_dadosId);
 			if($resu_consuId->num_rows > 0){
@@ -192,6 +192,10 @@ from usuario usu, usuario chefe where usu.usuario_usuario_id = '%u' and chefe.us
 		    if($resu_array->success){
 		    	return true;
 		    }else{ return false; }
+		}
+
+		public function EnviarNotificationPushDinamica($usuario, $messagem){
+			
 		}
 
 

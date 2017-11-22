@@ -202,6 +202,8 @@
 								if(val.editar){
 									//alert(val.editar);
 									//alert('Tem permissao para editar');
+									var btn_duplicar = "<button type='button' id='duplicar_evento' onclick='duplicarEvento("+id_user+", "+event.id+")'  class='btn btn-info' >Duplicar</button> "
+
 									var btn_deletar  = "<button type='button' id='deletar_evento' onclick='deletarEvento("+id_user+", "+event.id+")' class='btn btn-danger'>Deletar</button>";
 									var btn_editar   = "<button type='button' id='editar_evento' onclick='editarEvento("+id_user+", "+event.id+")' class='btn btn-success espacoBotoes'>Editar</button>";
 									var btn_fechar   = '<button type="button" class="btn btn-default espacoBotoes" id="btn_fechar_modal_visu" data-dismiss="modal">Fechar</button>';
@@ -211,6 +213,7 @@
 									$('#cale_id').remove();
 									$('#btn_fechar_modal_visu').remove();
 									$('#div_modal_botoes').append(input_hidden_idcale);
+									$('#div_modal_botoes').append(btn_duplicar);
 									$('#div_modal_botoes').append(btn_deletar);
 									$('#div_modal_botoes').append(btn_editar);
 									$('#div_modal_botoes').append(btn_fechar);
@@ -264,6 +267,7 @@
 		}
 
 		function limparInfo(){
+
 			$('.nomeInfo').empty();
 			$('.sobrenomeInfo').empty();
 			$('.cargoInfo').empty();
@@ -279,6 +283,8 @@
 			$('.endereco_contato').empty();
 			$('.tel_contato').empty();
 			$('.email_contato').empty();
+			$('.info_convidado').empty();
+
 		}
 
 		function getDataHoje(){
@@ -345,6 +351,10 @@
 					}
 				});
 			});
+		}
+
+		function duplicarEvento(id_user, id_cale){
+			$('#modal_duplicar').modal('show');
 		}
 
 		function seleCategoria(categoria){
@@ -760,8 +770,9 @@
 	        	   
 	        	   <hr>
 	        	   <div class="row">
-	        	   	 <div class="col-xs-6" ></div>
-	        	   	 <div class="col-xs-6" id="div_modal_botoes" >
+	        	   	 <div class="col-xs-5" ></div>
+	        	   	 <div class="col-xs-7" id="div_modal_botoes" >
+
 	        	   	 	<button type="button" class="btn btn-default" id="btn_fechar_modal_visu" data-dismiss="modal">Fechar</button>
 	        			<!-- <button type="button" id="addEvento" class="btn btn-primary">Salvar</button> -->
 	        	   	 </div>
@@ -784,8 +795,8 @@
 	  <!-- =============================================  Editar Modal ================================================ -->
 
 
-	  <div class="modal fade" id="modal_editar_cale" tabindex="-1" role="dialog" aria-labelledby="modal_editar_cale">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal fade" id="modal_editar_cale" tabindex="-2" role="dialog" aria-labelledby="modal_editar_cale">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -795,7 +806,7 @@
 
 
 	        <div class="row">
-	        	<div class="col-xs-6" >
+	        	<div class="col-xs-4" >
 	        	   <div class="form-group">	        	   		
 	        	   		<label for="titulo_event">Nome do Evento:</label>
 	        			<input type="text" class="form-control" value="" id='titulo_event_edit' />
@@ -826,7 +837,7 @@
 
 	        	   </div>
 	        	   
-	        	   <div class="col-xs-6">
+	        	   <div class="col-xs-4">
 	        	   		<div class="form-group">
 	        	   			<label for="nome_contato">Nome do Contato:</label>
 	        	   			<input type="text" class="form-control" id="nome_contato_edit" />
@@ -862,25 +873,35 @@
 
 
 	        	   <br/>
-	        	   <hr>        	   
+
+	        	   <div class="col-xs-4">
+        	   			<div class="form-group">
+        	   				<h3 align="center">Quem Vai</h3>
+			        			<div class="row">
+			        				<div class="col-xs-2"></div>
+			        				<div class="col-xs-8">
+			        					<select id="quem_vai_edit" class="form-control">
+			        						<option value=""> - </option>					
+			        					</select>
+			        				</div>			        					
+	        					</div>
+        	   			</div>
+
+        	   			<div class="row" >
+    	   					<div class="col-xs-2" ></div>
+    	   					<div class="col-xs-8" id="convidado_edit" style='text-align: justify;' >
+    	   						<h3 align="left" >Convidar</h3>
+    	   					</div>
+
+    	   				</div>
+        	   		</div>
+	        	         	   
 	        		
 	        	</div>
-	        	<div class="row">
-	        	   		<div class="col-xs-6">
-	        	   			<div class="form-group">
-	        	   				<h3 align="center">Quem Vai</h3>
-				        			<div class="row">
-				        				<div class="col-xs-2"></div>
-				        				<div class="col-xs-8">
-				        					<select id="quem_vai_edit" class="form-control">
-				        						<option value=""> - </option>					
-				        					</select>
-				        				</div>			        					
-		        					</div>
-	        	   			</div>
-	        	   		</div>
 
-	        	   		<!-- <div class="col-xs-6">
+
+	        	<!-- <div class="row">
+	        	   		<div class="col-xs-6">
 	        	   			<div class="form-group">
 	        	   				<h3 align="center">Convidado</h3>
 				        			<div class="row">
@@ -892,22 +913,14 @@
 				        				</div>			        					
 		        					</div>
 	        	   			</div>
-	        	   		</div> -->
-
-	        	   </div>
+	        	   		</div> 
+	        	   </div> -->
 
 
 	        	   <div class="row" >
 	        	   		<div class="col-xs-12" >
 	        	   			<div class="form-group">
-	        	   				
-	        	   				<div class="row" >
-	        	   					<div class="col-xs-2" ></div>
-	        	   					<div class="col-xs-8" id="convidado_edit" style='text-align: justify;' >
-	        	   						<h3 align="left" >Convidar</h3>
-	        	   					</div>
 
-	        	   				</div>
 	        	   			</div>
 	        	   		</div>
 	        	   </div>
@@ -928,6 +941,35 @@
 	      
 	    </div>
 	  </div>
+
+	  <!-- ======================================= Duplicar Evento ====================================== -->
+
+	  <div class="modal fade" id="modal_duplicar" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Duplicar Evento</h4>
+	      </div>
+	      <div class="modal-body">
+	        
+	      	<div class="row">
+	      		<div class="col-md-10">
+	      			<h3>Duplicar o Evento</h3>
+	      			<input type="text" id="dataDuplicar" name="dataDuplicar" class="form-control">
+	      		</div>
+	      	</div>
+
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary">Salvar</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>	        
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
 
 	  <div class="modal fade bs-example-modal-sm" tabindex="-1" id="modal_excluir" role="dialog" aria-labelledby="mySmallModalLabel">
 		  <div class="modal-dialog modal-sm" role="document">
@@ -967,6 +1009,10 @@
 				});	
 
 				$('#dataEvento_edit').datetimepicker({
+					format: 'DD/MM/YYYY'
+				});
+
+				$('#dataDuplicar').datetimepicker({
 					format: 'DD/MM/YYYY'
 				});
 

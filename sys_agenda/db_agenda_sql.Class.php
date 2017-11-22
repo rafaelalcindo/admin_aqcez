@@ -64,6 +64,13 @@
 // =================== Editar Agenda ============================
 		public function editarAgenda($agenda){
 			$getEditedAgenda = atualizarAgenda($this->conexao, $agenda);
+
+			if(isset($agenda['convidado']) && ($agenda['convidado'] != null || $agenda['convidado'] != '' )){
+				foreach ($agenda['convidado'] as $key => $value) {
+					AtualizarAgendaCalendario($value, $convidado['cale_id'], $this->conexao);
+				}
+			}
+
 			if($getEditedAgenda){
 				return true;
 			}else{ return false; }
@@ -152,6 +159,8 @@
 			}else{ return false; }
 	}
 
+	// ------------------------------------------------------ Editar Agenda -------------------------------------------------------------
+
 	function atualizarAgenda($conexao, $agenda){
 		$cor_update    = getColorMeans($agenda['info']);
 		
@@ -194,6 +203,20 @@
 		if($resu_upAgeUsu){
 			return true;
 		}else{ return false;}
+	}
+
+	function AtualizarAgendaCalendario($id_user, $id_agenda, $conexao){
+		$sql_deleteConvidado = sprintf("delete from covidados_reuniao where calendario_id = '%u' ",$id_agenda);
+		$resul_del = $conexao->query($sql_deleteConvidado);
+		if($resul_del){
+			$sql_updateConvidado = sprintf("insert into covidados_reuniao (usuario_id, calendario_id) values('%u', '%u')",$id_user, $id_agenda);
+			$resul_update = $conexao->query($sql_updateConvidado);
+			if($resul_update->num_rows > 0){
+				return true;
+			}else{ return false; }
+		}else{
+			return false;
+		}
 	}
 
 	//============================================== Eventos Agenda ===============================================

@@ -305,8 +305,11 @@
 			$agenda['cargo_contato']   = $this->cargoContato;
 			$agenda['email_contato']   = $this->emailContato;
 			$agenda['enviar_presenta'] = $this->enviarPresentacao;
+			$agenda['convidado']	   = $this->convidado;
 
 			$resu_alter_cale = $db_agenda_edit->editarAgenda($agenda);
+			
+			
 			if($resu_alter_cale){
 				return true;
 			}else{ return false; }
