@@ -47,6 +47,10 @@ switch ($requestType) {
 		editarEvento();
 	break;
 
+	case 'duplicarEvento':
+		duplicarEvento();
+	break;
+
 	case 'apagarCalendario':
 		apagarEvento();
 	break;
@@ -95,7 +99,6 @@ function gravarAgenda(){
 	$agenda->setHoraIni($hora_event_ini);
 	$agenda->setHoroFim($hora_event_fim);
 	$agenda->setConvidado($convidado);
-
 	$agenda->setTelContato($telContato);
 	$agenda->setNomeContato($nome_contato);
 	$agenda->setEndContato($end_contato);	
@@ -149,6 +152,7 @@ function editarEvento(){
 	$data_mod = FomartarDataMysql($data_evento_edit);
 
 	$agenda = new Agenda();
+
 	$agenda->setTitulo($nome_evento_edit);
 	$agenda->setDescricao($desc_evento_edit);
 	$agenda->setInfo($info_evento_edit);
@@ -172,6 +176,20 @@ function editarEvento(){
 	}else{ echo 'false'; }
 	
 
+}
+
+function duplicarEvento(){
+	$id_cale  = isset($_REQUEST['id_cale'])? $_REQUEST['id_cale'] : null;
+	$data 	  = isset($_REQUEST['data'])? 	 $_REQUEST['data']	  : null;
+
+	
+	$agenda = new Agenda();
+	$agenda->setIdCalen($id_cale);
+	$data_modi  = FomartarDataMysql($data);
+
+	$resultado = $agenda->DuplicarCalendario($data_modi);
+	$resultadoJson = json_encode($resultado);
+	echo $resultado;
 }
 
 function apagarEvento(){

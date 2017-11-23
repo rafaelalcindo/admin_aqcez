@@ -207,7 +207,9 @@
 									var btn_deletar  = "<button type='button' id='deletar_evento' onclick='deletarEvento("+id_user+", "+event.id+")' class='btn btn-danger'>Deletar</button>";
 									var btn_editar   = "<button type='button' id='editar_evento' onclick='editarEvento("+id_user+", "+event.id+")' class='btn btn-success espacoBotoes'>Editar</button>";
 									var btn_fechar   = '<button type="button" class="btn btn-default espacoBotoes" id="btn_fechar_modal_visu" data-dismiss="modal">Fechar</button>';
-									var input_hidden_idcale = "<input type='hidden' id='cale_id' value="+event.id+" />";							
+									var input_hidden_idcale = "<input type='hidden' id='cale_id' value="+event.id+" />";
+
+									$('#duplicar_evento').remove();
 									$('#editar_evento').remove();
 									$('#deletar_evento').remove();
 									$('#cale_id').remove();
@@ -217,6 +219,7 @@
 									$('#div_modal_botoes').append(btn_deletar);
 									$('#div_modal_botoes').append(btn_editar);
 									$('#div_modal_botoes').append(btn_fechar);
+									
 								}else{
 									//alert('vc nao pode editar');
 									$('#editar_evento').remove();
@@ -355,6 +358,7 @@
 
 		function duplicarEvento(id_user, id_cale){
 			$('#modal_duplicar').modal('show');
+			$('#duplicarIdCale').val(id_cale);
 		}
 
 		function seleCategoria(categoria){
@@ -952,7 +956,7 @@
 	        <h4 class="modal-title">Duplicar Evento</h4>
 	      </div>
 	      <div class="modal-body">
-	        
+	        <input type="hidden" id="duplicarIdCale" value="" >
 	      	<div class="row">
 	      		<div class="col-md-10">
 	      			<h3>Duplicar o Evento</h3>
@@ -962,7 +966,7 @@
 
 	      </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-primary">Salvar</button>
+	      	<button type="button" class="btn btn-primary"  id="duplicar_evento">Salvar</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>	        
 	      </div>
 	    </div>
@@ -1163,6 +1167,8 @@
 	</script>
 
 	<script type="text/javascript">
+
+
 		$(document).ready(function(){
 			$('#EditarEvento').click(function(){
 
@@ -1206,6 +1212,14 @@
 
 
 			});
+
+
+
+			$('#duplicar_evento').click(function(){
+				
+			});
+
+
 		});
 	</script>
 

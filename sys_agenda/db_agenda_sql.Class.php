@@ -81,7 +81,32 @@
 			if($deleteAgenda){ return true; }else{ return false; }
 		}
 
-		// ============================================= Relatorios de Agenda ==================================
+		public function duplicarAgendaPuxarDados($id_cale){
+			$dupli_agenda = DuplicarAgendaPuxarDados($id_cale, $this->conexao);
+			if($dupli_agenda){ return $dupli_agenda; }else{ return false; }
+		}
+
+		public function duplicarAgendaPuxarConvidado($id_cale){
+			$dupli_convidados = DuplicarAgendaPuxarConvidados($id_cale, $this->conexao);
+			if($dupli_convidados != false){ return $dupli_convidados; }else{ return false; }
+		}
+
+		public function dublicarDadosAgenda($duplicar, $convidados){
+			$dupli_Insert = dublicarDadosAgendaInsert($duplicar, $this->conexao);
+
+			if($dupli_Insert != false){
+				$dupli_InsertLigar = dublicarDadosAgendaInsertLigar($duplicar['usuario_id'], $dupli_Insert, $this->conexao);
+				if($dupli_InsertLigar){
+					foreach ($convidados as $key => $value) {
+						dublicarDadosAgendaInsertConvidado($dupli_Insert, $value, $this->conexao);
+					}
+					return true;
+				}else{ return false; }
+
+			}else{ return false; }
+		}
+
+// ============================================= Relatorios de Agenda ==================================
 
 		public function pegarNomesDepComercio(){
 			$pegarNomeComercio = pegarNomesComercial($this->conexao);
@@ -217,6 +242,71 @@
 		}else{
 			return false;
 		}
+	}
+
+	function DuplicarAgendaPuxarDados($id_cale, $conexao){
+		$sql_puxarDupli = sprintf("select 
+					cale.calendario_titulo as 'titulo', cale.calendario_desc as 'desc', cale.calendario_hora_inicio as 'hora_ini', 
+					cale.calendario_hora_fim as 'hora_fim', cale.calendario_color as 'cor', cale.calendario_color_sign as 'cor_sign',
+					cale.calendario_info as 'info', cale.tel_contato as 'tel_contato', cale.nome_contato as 'contato', cale.end_contato as 'endereco', cale.cargo_contato as 'cargo',
+					cale.email_contato as 'email', cale.enviar_presentacao as 'presentacao', uhc.usuario_usuario_id as 'usuario_id'
+					from calendario cale, usuario_has_calendario uhc
+					where
+					cale.calendario_id = uhc.calendario_calendario_id and
+					cale.calendario_id = '%u' ",$id_cale);
+		$resul_puxar = $conexao->query($sql_puxarDupli);
+		if($resul_puxar->num_rows > 0){ return $resul_puxar; }else{ return false; }
+
+	}
+
+	function DuplicarAgendaPuxarConvidados($id_cale, $conexao){
+		$sql_ConvidadoDupli = sprintf("select usuario_id from covidados_reuniao where calendario_id = '%u' ",$id_cale);
+		$resultado = $conexao->query($sql_ConvidadoDupli);
+		if($resultado->num_rows > 0){ return $resultado; }else{ return false; }
+	}
+
+	function dublicarDadosAgendaInsert($duplicar, $conexao){
+		$stmt_duplicar = sprintf("insert into calendario (calendario_titulo, calendario_desc, calendario_data, calendario_hora_inicio, calendario_hora_fim,
+			calendario_color, calendario_color_sign, calendario_info, tel_contato, nome_contato, end_contato, cargo_contato, 
+			email_contato, enviar_presentacao )
+
+			values
+
+			( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s') ", 
+			$duplicar['titulo'],
+			$duplicar['desc'],
+			$duplicar['data'],
+			$duplicar['hora_ini'],
+			$duplicar['hora_fim'],
+			$duplicar['cor'],
+			$duplicar['cor_sign'],
+			$duplicar['info'],
+			$duplicar['tel_contato'],
+			$duplicar['contato'],
+			$duplicar['endereco'],
+			$duplicar['cargo'],
+			$duplicar['email'],
+			$duplicar['presentacao'] );
+
+		$resu_dupli   = $conexao->query($stmt_duplicar);
+		$resu_last_id = $conexao->insert_id;
+
+		if($resu_dupli){
+			return $resu_last_id;
+		}else{ return false; }
+	}
+
+	function dublicarDadosAgendaInsertLigar($id_user, $id_cale, $conexao){
+		$sql_agendaInsert = sprintf("insert into usuario_has_calendario (usuario_usuario_id, calendario_calendario_id) values ('%u', '%u' ) ", 
+			$id_user, $id_cale);
+		$resultadoInsertLigar = $conexao->query($sql_agendaInsert);
+		if($resultadoInsertLigar){ return true; }else{ return false; }
+	}
+
+	function dublicarDadosAgendaInsertConvidado($id_cale, $convidado, $conexao){
+		$sql_insertDupliConvidados = sprintf("insert into covidados_reuniao (usuario_id, calendario_id) values('%u', '%u') ",$convidado, $id_cale);
+		$resultado = $conexao->query($sql_insertDupliConvidados);
+		if($resultado){ return true; }else{ return false; }
 	}
 
 	//============================================== Eventos Agenda ===============================================
