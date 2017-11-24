@@ -187,9 +187,9 @@ function duplicarEvento(){
 	$agenda->setIdCalen($id_cale);
 	$data_modi  = FomartarDataMysql($data);
 
-	$resultado = $agenda->DuplicarCalendario($data_modi);
+	$resultado['status'] = $agenda->DuplicarCalendario($data_modi);
 	$resultadoJson = json_encode($resultado);
-	echo $resultado;
+	echo $resultadoJson;
 }
 
 function apagarEvento(){
@@ -250,7 +250,9 @@ function pegarNomesConvidadosReuni(){
 
 
 
-// Visualizar os eventos
+// ================================ Visualizar os eventos ===============================
+
+
 function descricaoEvento(){
 	$id_user      = isset($_REQUEST['id_user'])? 	   $_REQUEST['id_user'] 	  : null;
 	$idcalenEvent = isset($_REQUEST['calendEventId'])? $_REQUEST['calendEventId'] : null;

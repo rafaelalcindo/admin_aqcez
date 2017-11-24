@@ -34,7 +34,7 @@
 
 				if($resu_ligar){
 					return true;
-				}else{ return false; }
+				}else{  return false; }
 			}else{ return false; }
 
 		}
@@ -87,23 +87,45 @@
 		}
 
 		public function duplicarAgendaPuxarConvidado($id_cale){
+			
 			$dupli_convidados = DuplicarAgendaPuxarConvidados($id_cale, $this->conexao);
 			if($dupli_convidados != false){ return $dupli_convidados; }else{ return false; }
 		}
 
-		public function dublicarDadosAgenda($duplicar, $convidados){
+		public function dublicarDadosAgenda($duplicar){
 			$dupli_Insert = dublicarDadosAgendaInsert($duplicar, $this->conexao);
 
 			if($dupli_Insert != false){
 				$dupli_InsertLigar = dublicarDadosAgendaInsertLigar($duplicar['usuario_id'], $dupli_Insert, $this->conexao);
+
 				if($dupli_InsertLigar){
+					return $dupli_Insert;	
+				}else{ return 0; }
+
+				
+
+				/*if($dupli_InsertLigar){
 					foreach ($convidados as $key => $value) {
 						dublicarDadosAgendaInsertConvidado($dupli_Insert, $value, $this->conexao);
 					}
 					return true;
-				}else{ return false; }
+				}else{ return false; }*/
+
+
 
 			}else{ return false; }
+		}
+
+		public function duplicarConvidadosAgenda($id_cale, $convidados){
+			
+				foreach ($convidados as $key => $value) {
+					$resultado = dublicarDadosAgendaInsertConvidado($id_cale, $value, $this->conexao);
+					if(!$resultado){
+						return false;
+					}
+				}
+				return true;
+			
 		}
 
 // ============================================= Relatorios de Agenda ==================================

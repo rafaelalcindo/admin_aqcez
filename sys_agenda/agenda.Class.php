@@ -306,25 +306,34 @@
 
 				$puxarDadosAux['data'] = $data;
 
-				$resultado02  = $db_cale_dupli->duplicarAgendaPuxarConvidado($this->idCalen);
-				if($resultado02!=false){
-					$puxarConvidados    = array();
-					$puxarConvidadosAux = array();
-					while($row = $resultado02->fetch_assoc()){
-						$puxarConvidadosAux = $row['usuario_id'];
-						$puxarConvidados[] = $puxarConvidadosAux;
-						unset($puxarConvidadosAux);
-					}
-
-					//echo "pegar resu02: ".print_r($puxarConvidados);
-					//exit;
-					$resultado03 = $db_cale_dupli->dublicarDadosAgenda($puxarDadosAux, $puxarConvidados);
-					if($resultado03){ return true; }else{ return false; }
+				$resultado02 = $db_cale_dupli->dublicarDadosAgenda($puxarDadosAux);
+				if($resultado02 > 0){ 
 
 
-				}else{ return false; }			
 
-			}else{ return false; }
+					$resultado03 = $db_cale_dupli->duplicarAgendaPuxarConvidado($this->idCalen);
+					if($resultado03!=false){
+						$puxarConvidados    = array();
+						$puxarConvidadosAux = array();
+						while($row = $resultado03->fetch_assoc()){
+							$puxarConvidadosAux = $row['usuario_id'];
+							$puxarConvidados[] = $puxarConvidadosAux;
+							unset($puxarConvidadosAux);
+						}
+						$resultado04 = $db_cale_dupli->duplicarConvidadosAgenda($resultado02, $puxarConvidados);
+						if($resultado04){
+							return true;
+						}else{ return false; }
+
+					}else{ return true; }			
+
+
+				}else{ return false; }
+
+
+
+				
+			}else{ echo "erro resultado 01"; return false; }
 
 		}
 
