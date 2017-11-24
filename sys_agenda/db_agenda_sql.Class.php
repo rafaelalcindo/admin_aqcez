@@ -420,6 +420,9 @@ where usu.usuario_id = conv.usuario_id and conv.calendario_id = '%u' ",$id_cale)
 		$resul_deleteLig = $conexao->query($sql_delete_lig);
 		if($resul_deleteLig){
 
+			$sql_delete_conv = sprintf("delete from covidados_reuniao where calendario_id = '%u' ", $id_cale);
+			$resu_del_conv   = $conexao->query($sql_delete_conv);
+
 			$sql_delete_cale = sprintf("delete  from calendario where calendario_id = '%u' ",$id_cale);
 			$resu_delete_cale = $conexao->query($sql_delete_cale);
 			if($resu_delete_cale){

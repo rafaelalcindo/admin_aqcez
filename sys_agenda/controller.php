@@ -109,12 +109,13 @@ function gravarAgenda(){
 	$usuario 	   = new Usuario();
 	$usuario_array = $usuario->puxarDadosUsuarioId($ResponsavelEvent);
 	$usuario_array['respCad'] = $responsavelCad;
-	$convidado_emails = $usuario->pegarEmailsPorIds($convidado);
+
+	if(is_array($convidado)){
+		$convidado_emails = $usuario->pegarEmailsPorIds($convidado);
+		enviarEmailConvidados($convidado_emails, $agenda);
+	}	
 
 	//echo "emails listados: ".print_r($convidado_emails);
-
-	enviarEmailConvidados($convidado_emails, $agenda);
-
 	
 
 	$usuario_push = $usuario->enviarNotificationPush($ResponsavelEvent);
