@@ -24,7 +24,7 @@ $(document).ready(function(){
 				dataType: 'json',
 				success: function(data){
 					if(data.status){
-						//console.log('Deu certo');
+						console.log('Deu certo');
 						location.reload();
 					}else{
 						console.log('Deu algum erro');
