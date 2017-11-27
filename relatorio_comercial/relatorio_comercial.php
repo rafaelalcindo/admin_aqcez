@@ -33,6 +33,7 @@
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js" ></script>
     <script type="text/javascript" src="../js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="../js/navGeral/navGeralOriginal.js" ></script>
+    <script type="text/javascript" src="../js/relatorio_comercial/relatorio_comercial.js" ></script>
    
 
 </head>
@@ -69,27 +70,34 @@
             </div>
             <div class="col-md-8" > 
                 <table class="table table-bordered" id="relatorio" >
-                    <tr>
-                        <th>Data</th>
-                        <th>Millena</th>
-                        <th>reikarou</th>
-                        <th>braian</th>
-                        <th>Calton</th>
-                    </tr>
-                    <tr>
-                        <td>23/11/2017</td>
-                        <td> Reunião com a DP,<br/> reuniaõ com mac </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> reunião com a C&A </td>
-                    </tr>
-                    <tr>
-                        <td>26/11/2017</td>
-                        <td> - </td>
-                        <td> Maria o Mario, <br/>reunião amanha </td>
-                        <td> Teste de Categoria </td>
-                        <td> reunião com a C&A 02 </td>
-                    </tr>
+                    <thead>
+                        <tr id="relatorio_nome" >
+                            <th>Data</th>
+                            <!-- <th>Millena</th>
+                            <th>reikarou</th>
+                            <th>braian</th>
+                            <th>Calton</th> -->
+                        </tr>
+                    </thead>
+
+                    <tbody id="corpo">
+                        <!-- <tr>
+                            <td>23/11/2017</td>
+                            <td> Reunião com a DP,<br/> reuniaõ com mac </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> reunião com a C&A </td>
+                        </tr>
+                        <tr>
+                            <td>26/11/2017</td>
+                            <td> - </td>
+                            <td> Maria o Mario, <br/>reunião amanha </td>
+                            <td> Teste de Categoria </td>
+                            <td> reunião com a C&A 02 </td>
+                        </tr> -->
+                    </tbody>
+                    
+                   
                     <tr>
                         <td> <h4 >Total </h4> </td>
                         <td> <h4> 2 </h4> </td>

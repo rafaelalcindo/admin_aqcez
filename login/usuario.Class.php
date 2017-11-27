@@ -208,6 +208,26 @@
 		}
 
 
+		public  function getDadosVendedoresComercial(){
+			$db_dados = new Connection_login();
+			$dadosListaVendedor = $db_dados->getDadosVendedoresComercial();
+			$dadosVendedores  = array();
+			$dadosVendHelp	  = array();
+
+			while($row = $dadosListaVendedor->fetch_assoc()){
+				$dadosVendHelp['id'] 		  = $row['id'];
+				$dadosVendHelp['nome']		  = utf8_encode($row['nome']);
+				$dadosVendHelp['sobrenome']   = utf8_encode($row['sobrenome']);				
+				$dadosVendedores[] = $dadosVendHelp;
+				unset($dadosVendHelp);
+			}
+
+			$dadosVendJson = json_encode($dadosVendedores);
+			unset($dadosVendedores);
+			return $dadosVendJson;
+
+		}
+
 
 		public function getNomeMarcReuni($id_user){
 			$db_dados = new Connection_login();

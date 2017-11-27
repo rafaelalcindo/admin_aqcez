@@ -58,6 +58,10 @@ switch ($requestType) {
 	case 'relatorioVisitas':
 		listarReuniaoPorData();
 	break;
+
+	case 'ReuniaoRelatorioNomeVend':
+		ReuniaoRelatorioNomeVend();
+	break;
 		
 	default:
 		# code...
@@ -131,16 +135,15 @@ function gravarAgenda(){
 
 
 function editarEvento(){
-	$nome_evento_edit 	 = isset($_REQUEST['titulo_event_edit'])?   $_REQUEST['titulo_event_edit']   : null;
-	$desc_evento_edit 	 = isset($_REQUEST['desc_event_edit'])?     $_REQUEST['desc_event_edit']     : null;
-	$info_evento_edit 	 = isset($_REQUEST['info_event_edit'])?     $_REQUEST['info_event_edit']     : null;
-	$data_evento_edit    = isset($_REQUEST['data_event_edit'])?     $_REQUEST['data_event_edit']     : null;
-	$hora_evento_edi_ini = isset($_REQUEST['hora_event_ini_edit'])? $_REQUEST['hora_event_ini_edit'] : null;
-	$hora_evento_edi_fim = isset($_REQUEST['hora_event_fim_edit'])? $_REQUEST['hora_event_fim_edit'] : null;
-	$responEvento_edit   = isset($_REQUEST['quem_vai_edit'])? 		$_REQUEST['quem_vai_edit'] 		 : null;
-	$idCalenEvent        = isset($_REQUEST['cale_event'])?			$_REQUEST['cale_event'] 		 : null;
-	$convidado_edit 	 = isset($_REQUEST['convidado_edit'])?		$_REQUEST['convidado_edit']		 : null;
-
+	$nome_evento_edit 	  = isset($_REQUEST['titulo_event_edit'])?   $_REQUEST['titulo_event_edit']   : null;
+	$desc_evento_edit 	  = isset($_REQUEST['desc_event_edit'])?     $_REQUEST['desc_event_edit']     : null;
+	$info_evento_edit 	  = isset($_REQUEST['info_event_edit'])?     $_REQUEST['info_event_edit']     : null;
+	$data_evento_edit     = isset($_REQUEST['data_event_edit'])?     $_REQUEST['data_event_edit']     : null;
+	$hora_evento_edi_ini  = isset($_REQUEST['hora_event_ini_edit'])? $_REQUEST['hora_event_ini_edit'] : null;
+	$hora_evento_edi_fim  = isset($_REQUEST['hora_event_fim_edit'])? $_REQUEST['hora_event_fim_edit'] : null;
+	$responEvento_edit    = isset($_REQUEST['quem_vai_edit'])? 		$_REQUEST['quem_vai_edit'] 		 : null;
+	$idCalenEvent         = isset($_REQUEST['cale_event'])?			$_REQUEST['cale_event'] 		 : null;
+	$convidado_edit 	  = isset($_REQUEST['convidado_edit'])?		$_REQUEST['convidado_edit']		 : null;
 	$telContato_edit	  = isset($_REQUEST['tel_contato_edit'])?		$_REQUEST['tel_contato_edit']		: null;
 	$nome_contato_edit	  = isset($_REQUEST['nome_contato_edit'])?		$_REQUEST['nome_contato_edit']		: null;
 	$end_contato_edit	  = isset($_REQUEST['end_contato_edit'])?		$_REQUEST['end_contato_edit']		: null;
@@ -289,22 +292,34 @@ function listarReuniaoPorData(){
 	$data_ini = isset($_REQUEST['data_ini'])? $_REQUEST['data_ini'] : null ;
 	$data_fim = isset($_REQUEST['data_fim'])? $_REQUEST['data_fim'] : null ;
 
+	//echo "<br/>data ini: ".$data_ini;
+	//echo "<br/>data fim: ".$data_fim;	
+
 	$data = array();
-	$data[0] = FomartarDataMysql($data_ini);
+	$data[0] = $data_ini;
 	if($data_fim != null){
-		$data[1] = FomartarDataMysql($data_fim);
+		$data[1] = $data_fim;
 	}else{
 		$data[1] = null;
 	}
 
 	$relatorioVisitas = new Agenda();
-	$resultado = $relatorioVisitas->ListarReuniaoMarcado($data);
+	$resultado 		  = $relatorioVisitas->ListarReuniaoMarcado($data);
+
 	if($resultado != false){
 		$resultadoJson = json_encode($resultado);
 		echo $resultadoJson;
 	}
 
 }
+
+function ReuniaoRelatorioNomeVend(){
+	$nomeComercial = new Usuario();
+	$resultado = $nomeComercial->getDadosVendedoresComercial();
+	echo $resultado;
+}
+
+
 
 
 

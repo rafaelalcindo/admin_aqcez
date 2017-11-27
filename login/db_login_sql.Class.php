@@ -51,6 +51,15 @@
 			}
 		}
 
+		public function getDadosVendedoresComercial(){
+			$sql_get_sellers = sprintf("select usuario_id as 'id', usuario_nome as 'nome', usuario_sobrenome as 'sobrenome' from usuario 
+					where usuario_nivel <= 3 and usuario_nivel > 1 and usuario_dep = 'comercial' ");
+			$resu_consu = $this->conexao->query($sql_get_sellers);
+			if($resu_consu->num_rows > 0){
+				return $resu_consu;
+			}else{ return false; }
+		}
+
 		public function getDadosVendedoresSelect(){
 
 			$sql_get_sellers = sprintf("select usuario_id as 'id', usuario_nome as 'nome', usuario_sobrenome as 'sobrenome' from usuario where usuario_nivel <= 3  and usuario_nivel > 1 ");
