@@ -23,6 +23,8 @@ $(document).ready(function(){
 
 	getNomesComercial();
 
+	let id_user = $('#id_user').val();
+	verificaPermissaoVisurelatorio(id_user);
 
 });
 
@@ -157,6 +159,26 @@ function FormatarData(data){
 
 	let novoFormato = dia+"/"+mes+"/"+ano;	
 	return novoFormato;
+}
+
+// ======================================= Verificar autorizacao ==================================
+
+function verificaPermissaoVisurelatorio(id){
+	let id_data = new FormData();
+    id_data.append('id', id);
+    $.ajax({
+        type: 'post',
+        url: '../login/controller.php?login=verificaPermissaoRelatorioComericial',
+        processData: false,
+        contentType: false,
+        data: id_data,
+        dataType: 'json',
+        success: function(data){
+            if(data.status){
+               
+            }else{ window.location.href = "../painel_controle.html"; }
+        }
+    });
 }
 
 //=========================================== Limpar dados ==================================================

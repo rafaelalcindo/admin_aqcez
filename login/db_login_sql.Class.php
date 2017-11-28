@@ -218,6 +218,14 @@ from usuario usu, usuario chefe where usu.usuario_usuario_id = '%u' and chefe.us
 			}else{ return false; }
 		}
 
+		public function verificaPermissaoVisuRelatorio($id){
+			$sql_veri   = sprintf("select * from usuario where usuario_posi_vend = 1 and (usuario_permissao_cad = 256 or usuario_permissao_cad = 257) and usuario_id = %u ",$id);
+			$resu_query = $this->conexao->query($sql_veri);
+			if($resu_query->num_rows > 0){
+				return true;
+			}else{ return false; }
+		}
+
 		// =========================================== Cadastrar Usuário =======================================
 
 		public function cadastrarUser($user){

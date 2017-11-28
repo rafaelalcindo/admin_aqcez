@@ -51,9 +51,15 @@ switch ($request_type) {
 		verificaPermission($id_usu);
 	break;
 
+	case 'verificaPermissaoRelatorioComericial':
+		verificaPermissaoRelatorioComericial($id_usu);
+	break;
+
 	case 'cadastrarUser':
 		cadastrarUsuario();
 	break;
+
+	
 	
 	default:
 		# code...
@@ -126,6 +132,21 @@ function verificaPermission($id){
 	$status = array();
 	$resultado = $usuario->permissaoCadNoticias($id);
 	if($resultado){ $status['status'] = 'true'; }else{ $status['status'] = 'false'; }
+	$resulJson = json_encode($status);
+	echo $resulJson;
+}
+
+// =================================== Verifica Permissão visu Relatorio Comercial ===========================
+
+function verificaPermissaoRelatorioComericial($id){
+	$usuario = new Usuario();
+	$status  = array();
+	$resultado = $usuario->permissaoVisuRelaComercial($id);
+	if($resultado){
+		$status['status'] = $resultado;
+	}else{
+		$status['status'] = $resultado;
+	}
 	$resulJson = json_encode($status);
 	echo $resulJson;
 }

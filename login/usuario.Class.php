@@ -371,6 +371,16 @@
 
 		}
 
+		// ================================== Permissao para Ver Relatorio Comercial =======================
+
+		public function permissaoVisuRelaComercial($id){
+			$db_dados = new Connection_login();
+			$resultado = $db_dados->verificaPermissaoVisuRelatorio($id);
+			if($resultado){
+				return true;
+			}else{ return false; }
+		}
+
 
 		// =============================== Pegar Email de todos do departamento ===============================
 

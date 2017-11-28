@@ -48,7 +48,7 @@
             });
 
             $('#pn_notacao').click(function(){
-                window.location.href = 'status.php';
+                window.location.href = 'relatorio_comercial/relatorio_comercial.php';
             });
 
             $('#pn_Lista').click(function(){
@@ -56,6 +56,7 @@
             });
 
             $('.dropMenuCad').hide();
+            $('#pn_notacao').hide();
 
         });
 
@@ -76,6 +77,7 @@
                             //alert(data.nome);
                             //alert(data.sobrenome);
                             verificaPermissionCadNews(data.id);
+                            verificaPermissaoVisuComercial(data.id)
                             
                             
                             removeNavOptions(data.nome, data.sobrenome);
@@ -118,6 +120,25 @@
                     if(data.status == 'true'){
                         $('.dropMenuCad').show();
                     }
+                }
+            });
+        }
+
+        function verificaPermissaoVisuComercial(id){
+            let id_data = new FormData();
+            id_data.append('id', id);
+            $.ajax({
+                type: 'post',
+                url: 'login/controller.php?login=verificaPermissaoRelatorioComericial',
+                processData: false,
+                contentType: false,
+                data: id_data,
+                dataType: 'json',
+                success: function(data){
+                    if(data.status){
+                        
+                        $('#pn_notacao').show();
+                    }else{ $('#pn_notacao').hide(); }
                 }
             });
         }
@@ -283,18 +304,18 @@
                             </div>
                         </div>
                         -->
-
-                      <!--  <div class="col-xs-1"></div>
+                        
+                        <div class="col-xs-1"></div>
                         <div class="col-xs-3" id="pn_notacao" style="display: inline-grid; cursor: pointer;">
                             <div class="pn_topo" style="width: 100%; height: 70px; border-radius: 4px; background-color: white; ">
-                                <h3 style="float: right; margin-right: 4%;">Anotações</h3>
+                                <h3 style="float: right; margin-right: 4%;">Relatório</h3>
                                 <div style="width: 40%; height: 70px; border-radius: 4px; background-color: #4d4dff; ">
                                     <img src="img/anotation.png" alt="anotacao" style="height: 60px; width: 60px; margin-left: 15%; margin-top: 5%;" id="img_calendar" />
                                 </div>
                                                       
                             </div>
                         </div>
-
+                        <!--
                         <div class="col-xs-1"></div>
                         <div class="col-xs-3" id="pn_Lista" style="display: inline-grid; cursor: pointer;">
                             <div class="pn_topo" style="width: 100%; height: 70px; border-radius: 4px; background-color: white; ">
