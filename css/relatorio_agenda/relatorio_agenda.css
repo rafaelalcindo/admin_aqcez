@@ -11,3 +11,8 @@
 .espaco{
 	margin-top: 90px;
 }
+
+#table_footer > td{
+	text-align: center;
+	padding: 10px;
+}

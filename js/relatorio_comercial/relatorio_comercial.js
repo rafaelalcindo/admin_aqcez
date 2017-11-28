@@ -5,9 +5,21 @@ $(document).ready(function(){
 		let data_ini = $('#data_ini').val();
 		let data_fim = $('#data_fim').val();
 
-		getRelatorio(data_ini, data_fim);
+		LimparDadosTabela();
+
+		if(data_ini.trim() != ''){
+			getRelatorio(data_ini, data_fim);
+		}else{
+			let currentDate = new Date();
+			let day   = currentDate.getDate();
+			let month = currentDate.getMonth()+1;
+			let year  = currentDate.getFullYear();
+			let formatar = year+"-"+month+"-"+day;
+			data_ini = formatar;			
+			getRelatorio(data_ini, data_fim);
+		}		
 		
-	});
+	});	
 
 	getNomesComercial();
 
@@ -74,7 +86,7 @@ function getNomesComercial(){
 // Construido os tds do TBody
 function constructBody(data, item){
 	
-	$('#corpo').append("<tr> <td>"+data+"</td> "+constructTds(item)+" </tr>");
+	$('#corpo').append("<tr> <td>"+FormatarData(data)+"</td> "+constructTds(item)+" </tr>");
 	//console.log(item);
 	
 	$.each(item, function(key, val){
@@ -121,7 +133,7 @@ function CalcuQuantEventos(data){
 			td_val += '<td>';
 			$.each(data, function(i, item){
 				if(val == item.nome){
-					td_val += "<h4>"+item.qtd_reuni+"</h4>";
+					td_val += "<h3>"+item.qtd_reuni+"</h3>";
 				}else{
 
 				}
@@ -133,4 +145,23 @@ function CalcuQuantEventos(data){
 
 	$('#table_footer').append(td_val);
 
+}
+
+//================================================Formatar Data ============================================
+
+function FormatarData(data){
+	let novaData = new Date(data);
+	let dia = novaData.getDate();
+	let mes = novaData.getMonth()+1;
+	let ano = novaData.getFullYear();
+
+	let novoFormato = dia+"/"+mes+"/"+ano;	
+	return novoFormato;
+}
+
+//=========================================== Limpar dados ==================================================
+
+function LimparDadosTabela(){
+	$('#table_footer').children().remove();
+	$('#corpo').children().remove();
 }
