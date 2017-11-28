@@ -62,6 +62,10 @@ switch ($requestType) {
 	case 'ReuniaoRelatorioNomeVend':
 		ReuniaoRelatorioNomeVend();
 	break;
+
+	case 'ListarQuantReuni':
+		ListarQuantReuni();
+	break;
 		
 	default:
 		# code...
@@ -317,6 +321,26 @@ function ReuniaoRelatorioNomeVend(){
 	$nomeComercial = new Usuario();
 	$resultado = $nomeComercial->getDadosVendedoresComercial();
 	echo $resultado;
+}
+
+function ListarQuantReuni(){
+	$data_ini = isset($_REQUEST['data_ini'])? $_REQUEST['data_ini'] : null;
+	$data_fim = isset($_REQUEST['data_fim'])? $_REQUEST['data_fim']	: null;
+
+	$data = array();
+	$data[0] = $data_ini;
+	if($data_fim != null){
+		$data[1] = $data_fim;
+	}else{
+		$data[1] = null;
+	}
+
+	$CountReuniao = new Agenda();
+	$resultado    = $CountReuniao->listarQntReuni($data);
+	if($resultado != false){
+		$resultadoJson = json_encode($resultado);
+		echo $resultadoJson;
+	}
 }
 
 

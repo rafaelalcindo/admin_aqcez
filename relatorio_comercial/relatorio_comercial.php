@@ -98,12 +98,14 @@
                     </tbody>
                     
                    
-                    <tr>
-                        <td> <h4 >Total </h4> </td>
+                    <tr id="table_footer"> 
+                        <!-- <td> <h4 >Total </h4> </td>
                         <td> <h4> 2 </h4> </td>
                         <td> <h4> 2 </h4> </td>
                         <td> <h4> 1 </h4> </td>
-                        <td> <h4> 2 </h4> </td>
+                        <td> <h4> 2 </h4> </td> -->
+
+                        
                     </tr>
                 </table>
             </div>

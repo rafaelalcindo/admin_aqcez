@@ -448,21 +448,40 @@
 
 		public function listarQntReuni($data){
 			$db_data_qtd   = new connection_agenda();
-			$resultado_qtd = $db_data_qtd->ListarQuantDataSelecionada($data);
-			$qtd_data 	  = array();
-			$qtd_data_aux = array();
 
-			if($resultado_qtd != false){
-				while($row = $resultado_qtd->fetch_assoc()){
-					$qtd_data_aux['nome'] 		= $row['nome'];
-					$qtd_data_aux['qtd_reuni']  = $row['qtd_reuni'];
-					$qtd_data[] $qtd_data_aux;
-					unset($qtd_data_aux);
-				}
+			
 
-				return $qtd_data;
+			if($data[1] == null){
+				$resultado_qtd = $db_data_qtd->ListarQuantDataSelecionada($data);
+				$qtd_data 	  = array();
+				$qtd_data_aux = array();
 
-			}else{ return false; }
+				if($resultado_qtd != false){
+					while($row = $resultado_qtd->fetch_assoc()){
+						$qtd_data_aux['nome'] 		= $row['nome'];
+						$qtd_data_aux['qtd_reuni']  = $row['qtd_reuni'];
+						$qtd_data[] = $qtd_data_aux;
+						unset($qtd_data_aux);
+					}
+
+					return $qtd_data;
+
+				}else{ return false; }
+			}else{
+				$resultado_qtd = $db_data_qtd->ListarCountDatasSelecionadas($data);
+				$qtd_data 	   = array();
+				$qtd_data_aux  = array();
+
+				if($resultado_qtd != false){
+					while($row = $resultado_qtd->fetch_assoc()){
+						$qtd_data_aux['nome'] 	   = $row['nome'];
+						$qtd_data_aux['qtd_reuni'] = $row['qtd_reuni'];
+						$qtd_data[] = $qtd_data_aux;
+						unset($qtd_data_aux);
+					}
+					return $qtd_data;
+				}else{  return false; }
+			}			
 			
 		}
 

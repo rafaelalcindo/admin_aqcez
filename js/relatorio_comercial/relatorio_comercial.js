@@ -37,6 +37,19 @@ function getRelatorio(data_ini, data_fim){
 			
 		}
 	});
+
+	$.ajax({
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		data: data,
+		url: '../sys_agenda/controller.php?agenda=ListarQuantReuni',
+		async: false,
+		dataType: "json",
+		success: function(data){
+			CalcuQuantEventos(data);
+		}
+	});
 }
 
 function getNomesComercial(){
@@ -97,4 +110,27 @@ function constructTds(item){
 	});
 
 	return td_val;
+} 
+
+function CalcuQuantEventos(data){
+	let td_val = "<td><h3>Total</h3></td>";
+	$('#relatorio_nome th').each(function(){
+		let val = $(this).attr('id');
+
+		if(val !== undefined){
+			td_val += '<td>';
+			$.each(data, function(i, item){
+				if(val == item.nome){
+					td_val += "<h4>"+item.qtd_reuni+"</h4>";
+				}else{
+
+				}
+			});
+
+			td_val += "</td>";
+		}
+	});
+
+	$('#table_footer').append(td_val);
+
 }

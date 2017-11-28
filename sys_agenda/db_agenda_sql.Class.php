@@ -142,7 +142,12 @@
 
 		public function ListarQuantDataSelecionada($data){
 			$listarData = listarCountDataSelecionada($this->conexao, $data);
-			if($listarData){ return $listarData }else{ return false; }
+			if($listarData){ return $listarData; }else{ return false; }
+		}
+
+		public function ListarCountDatasSelecionadas($data){
+			$listarData = listarCountDatasSelecionadas($this->conexao, $data);
+			if($listarData){ return $listarData; }else{ return false; }
 		}
 
 		public function ListarDatasSelecionada($data){
@@ -403,6 +408,16 @@ where usu.usuario_id = conv.usuario_id and conv.calendario_id = '%u' ",$id_cale)
 				user.usuario_id    = uhc.usuario_usuario_id and
 				cale.calendario_id = uhc.calendario_calendario_id and 
 				cale.calendario_data >= '%s'  and user.usuario_dep = 'comercial' group by user.usuario_nome ", $data[0]);
+		$resu_query = $conexao->query($sql_count_reuni);
+		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
+	}
+
+	function listarCountDatasSelecionadas($conexao, $data){
+		$sql_count_reuni = sprintf("select distinct user.usuario_nome as 'nome', count(*) as 'qtd_reuni' from calendario cale, usuario user, usuario_has_calendario uhc
+				where 
+				user.usuario_id    = uhc.usuario_usuario_id and
+				cale.calendario_id = uhc.calendario_calendario_id and 
+				cale.calendario_data >= '%s' and cale.calendario_data <= '%s' and user.usuario_dep = 'comercial' group by user.usuario_nome ",$data[0], $data[1]);
 		$resu_query = $conexao->query($sql_count_reuni);
 		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
 	}
