@@ -431,7 +431,7 @@
 							//echo "<br/>num rows if: ".$resulReuni->num_rows;
 							$final_array_nome[$value02['nome']] = '';
 							while($row03 = $resulReuni->fetch_assoc()){
-								$final_array_nome[$value02['nome']]  .= utf8_encode($row03['titulo'])." | ";								
+								$final_array_nome[$value02['nome']]  .= $row03['titulo']." | ";								
 								
 							}							
 							$final_array[$value01['data']] = $final_array_nome;

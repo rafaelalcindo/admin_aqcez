@@ -311,6 +311,7 @@ function listarReuniaoPorData(){
 	$resultado 		  = $relatorioVisitas->ListarReuniaoMarcado($data);
 
 	if($resultado != false){
+		//echo "<br/>: ".print_r($resultado);
 		$resultadoJson = json_encode($resultado);
 		echo $resultadoJson;
 	}

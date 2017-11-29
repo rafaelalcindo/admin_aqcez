@@ -397,7 +397,7 @@ where usu.usuario_id = conv.usuario_id and conv.calendario_id = '%u' ",$id_cale)
 	}
 
 	function listarDataSelecionada($conexao,$data){
-		$sql_datas  = sprintf("select distinct calendario_data as 'data' from calendario where calendario_data > '%s' order by calendario_data asc;",$data[0]);
+		$sql_datas  = sprintf("select distinct calendario_data as 'data' from calendario where calendario_data >= '%s' order by calendario_data asc;",$data[0]);
 		$resu_query = $conexao->query($sql_datas);
 		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
 	}

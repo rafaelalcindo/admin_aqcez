@@ -26,6 +26,15 @@ $(document).ready(function(){
 	let id_user = $('#id_user').val();
 	verificaPermissaoVisurelatorio(id_user);
 
+
+	//mudando o menu de acordo com a pagina
+
+	$('#sair_menu').removeAttr('href');		
+	$('#sair_menu').attr('href','../login/controller.php?login=deslogar&pageName=index.html');
+
+	$('#nav_voltar_painel').removeAttr('href');
+	$('#nav_voltar_painel').attr('href', '../painel_controle.html');
+
 });
 
 
