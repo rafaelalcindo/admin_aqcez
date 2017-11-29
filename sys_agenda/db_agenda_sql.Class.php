@@ -435,6 +435,8 @@ where usu.usuario_id = conv.usuario_id and conv.calendario_id = '%u' ",$id_cale)
 						where c.calendario_id = uc.calendario_calendario_id and u.usuario_id	= uc.usuario_usuario_id and
 						c.calendario_data = '%s' and u.usuario_nome = '%s' ",$data, $nome);
 		$resu_query = $conexao->query($sql_Evento);
+		//echo "<br/>listar data: ".$data." Nome: ".$nome;
+		//echo "<br/>resu_query: ".$resu_query->num_rows;
 		if($resu_query->num_rows > 0){ return $resu_query; }else{ return false; }
 	}
 

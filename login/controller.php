@@ -58,8 +58,6 @@ switch ($request_type) {
 	case 'cadastrarUser':
 		cadastrarUsuario();
 	break;
-
-	
 	
 	default:
 		# code...

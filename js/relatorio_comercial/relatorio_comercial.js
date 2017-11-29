@@ -88,7 +88,8 @@ function getNomesComercial(){
 // Construido os tds do TBody
 function constructBody(data, item){
 	
-	$('#corpo').append("<tr> <td>"+FormatarData(data)+"</td> "+constructTds(item)+" </tr>");
+	//$('#corpo').append("<tr> <td>"+FormatarData(data)+"</td> "+constructTds(item)+" </tr>");
+	$('#corpo').append("<tr> <td>"+data+"</td> "+constructTds(item)+" </tr>");
 	//console.log(item);
 	
 	$.each(item, function(key, val){
