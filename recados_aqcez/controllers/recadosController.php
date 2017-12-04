@@ -57,6 +57,7 @@
 
 	$app->post('/cadGeral', function(Request $request, Response $response){
 		$request_array = $request->getParsedBody();
+	    //echo "request: ".var_dump($request);
 		$status = array();
 
 		$titulo 	= $request_array['titulo'];
@@ -66,6 +67,19 @@
 		$texto		= $request_array['texto'];
 		$nome       = $request_array['nome'];
 		$sobrenome	= $request_array['sobrenome'];
+		$arquivo    = isset($_FILES['file01'])? $_FILES['file01'] : null;
+		
+		//echo "<br/>count: ".count($arquivo['name']);
+		
+		/*if(is_array($arquivo)){
+			foreach ($arquivo['name'] as $name => $value) {
+				echo "<br/>key: ".$name;
+				echo "</br> array_files: ".print_r($arquivo['name'][$name]);
+			}
+		}*/
+
+		
+		
 
 		$data 		= date("Y-m-d H:i:s");
 
@@ -78,7 +92,7 @@
 		$recadosGeral->setQuemCad($nome, $sobrenome);
 		$emails = $recadosGeral->pegarTodosEmails();
 
-		$resul_email = $recadosGeral->sendEmailGeral($emails);
+		$resul_email = $recadosGeral->sendEmailGeral($emails, $arquivo);
 
 		//echo $resul_email;
 
@@ -149,6 +163,8 @@
 		$texto 		= $request_array['texto'];
 		$nome       = $request_array['nome'];
 		$sobrenome	= $request_array['sobrenome'];
+		$arquivo    = isset($_FILES['file01'])? $_FILES['file01'] : null;
+
 		$data 		= date("Y-m-d H:i:s");
 
 		/*echo "<br/>titulo : ".$titulo;
@@ -169,7 +185,7 @@
 		
 		$emails = $recadosDep->pegarDepEmails($dep);
 
-		$resul_email = $recadosDep->sendEmailDep($emails);
+		$resul_email = $recadosDep->sendEmailDep($emails, $arquivo);
 
 		$resultado = $recadosDep->InserirNoticiaDep();
 		if($resultado){

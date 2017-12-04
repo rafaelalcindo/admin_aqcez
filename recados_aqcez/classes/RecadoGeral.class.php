@@ -233,7 +233,7 @@
 
 		// =========================== Mandar Email ============================================
 
-		public function sendEmailGeral($emails){
+		public function sendEmailGeral($emails, $arquivo){
 
 			 $m = new PHPMailer;
 			 $m->CharSet = 'UTF-8';
@@ -252,6 +252,21 @@
   			 foreach ($emails as $key => $value) {
   			 	$m->addAddress($value);
   			 }
+
+  			 if(is_array($arquivo)){
+  			 	
+  			 	foreach ($arquivo['name'] as $name => $value) {
+  			 		$file_name   = explode(".", $arquivo['name'][$name]);
+  			 		$allowed_ext = array('gif','jpg','jpeg','png','pdf','rar','zip','doc','docx','pps','ppsx', 'ppt','xls','xml','xlsx');
+  			 		if(in_array($file_name[1], $allowed_ext)){
+  			 			$sourcePath = $arquivo['tmp_name'][$name];
+  			 			$sourceName = $arquivo['name'][$name];
+  			 			$m->AddAttachment($sourcePath, $sourceName);
+  			 		}
+  			 	}
+  			 }
+
+  			 //exit;
 
   			 $m->isHTML(true);
 

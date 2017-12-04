@@ -77,61 +77,101 @@
             
             
         </div>
-        <div class="col-md-8" >
 
-            <div class="row" >
-                <div class="col-md-6" >
-                    <h3>titulo:</h3>
-                    <input type="text" name="titulo" id="titulo" class="form-control" maxlength='140' >
-                </div>
-            </div>
-
-            <div class="row" >                
-                <div class="col-md-8" >
-                    <h3>Descrição:</h3>
-                    <input type="text" name="descricao" id="descricao" class="form-control" >
-                </div>                
-            </div>
-
-            <div class="row" >
-                <div class="col-md-8" >
-                    <h3>Selecione o tipo de mensagem.</h3>
-                    <select class="form-control" id="select_tipo" >
-                        <option value="geral" >Geral</option>
-                        <option value="dep" >Departamento</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row" id="div_dep" >
-                <div class="col-md-8" >
-                    <h3>Selecione o Departamento</h3>
-                    <select class="form-control" id="select_dep" >
-                        <option value="comercial" >Comercial</option>
-                        <option value="marketing" >Marketing</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row" >
-                <div class="col-md-8" >
-                    <h3>Digite o seu texto:</h3>
-                    <textarea id="mytextarea"></textarea>
-                </div>
-            </div>
-
-            <br/>
-
-            <div class="row">
-                <div class="col-md-8">
-                    <button type="button" id="btn_enviar" class="btn btn-primary btn-lg" >Enviar</button>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-2" >
+        <form action="" id="cad_noticias" method="post" enctype="multipart/form-data" >
             
-        </div>
+            
+            <div class="col-md-8" >
+
+                <div class="row" >
+                    <div class="col-md-6" >
+                        <h3>titulo:</h3>
+                        <input type="text" name="titulo" id="titulo" class="form-control" maxlength='140' >
+                    </div>
+                </div>
+
+                <div class="row" >                
+                    <div class="col-md-8" >
+                        <h3>Descrição:</h3>
+                        <input type="text" name="descricao" id="descricao" class="form-control" >
+                    </div>                
+                </div>
+
+                <div class="row" >
+                    <div class="col-md-8" >
+                        <h3>Selecione o tipo de mensagem.</h3>
+                        <select class="form-control" id="select_tipo" >
+                            <option value="geral" >Geral</option>
+                            <option value="dep" >Departamento</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" id="div_dep" >
+                    <div class="col-md-8" >
+                        <h3>Selecione o Departamento</h3>
+                        <select class="form-control" id="select_dep" >
+                            <option value="comercial" >Comercial</option>
+                            <option value="marketing" >Marketing</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="col-md-8" >
+                        <h3>Digite o seu texto:</h3>
+                        <textarea id="mytextarea"></textarea>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-12" id="div_add_file" >
+                        <!-- <input type="file" id="file_upload" name="file[]" multiple> -->
+                        
+                    </div>            
+
+                </div>
+
+                <br/>
+
+                <div class="row" >
+                    <div class="col-md-8" id="div_btn_add_file">
+                        <button type="button" id="btn_add_file" class="btn btn-info" >
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                             Arquivo
+                        </button>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                          <div class="alert alert-danger" id="erro_file_extension" role="alert">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Error:</span>
+                              <p>tipos de arquivos invalidos para Upload, por favor selecione um arquivo coms as extenções abaixo:</p>
+                              <p>gif, jpg, jpeg, pn, pdf, rar, zip, doc, docx, pps, ppsx, ppt, xls, xml, xlsx</p>
+                          </div>                    
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-8">
+                       <!--  <button type="button" id="btn_enviar" class="btn btn-primary btn-lg" >Enviar</button> -->
+                       <input type="submit" name="enviar" value="Enviar" class="btn btn-primary btn-lg" >
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-2" >
+                
+            </div>
+
+        </form>
     </div>
 </div>
 
