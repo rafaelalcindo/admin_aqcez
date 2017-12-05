@@ -190,6 +190,17 @@ function cadastrarNoticiaGeral(newsForm){
 		dataType: 'json',
 		beforeSend: function(){
 			$('#btn_enviar').attr('disabled','disabled');
+			$.blockUI({ 
+				message: '<h2>Um momento, estamos processando seus dados...</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
 		},
 		success: function(data){
 			console.log(data.status);
@@ -200,6 +211,7 @@ function cadastrarNoticiaGeral(newsForm){
 		},
 		complete: function(){
 			$('#btn_enviar').removeAttr('disabled');
+			$.unblockUI();
 			//location.reload();
 		}
 	});
@@ -216,6 +228,17 @@ function cadastrarNoticiaDep(newsForm){
 		dataType: 'json',
 		beforeSend: function(){
 			$('#btn_enviar').attr('disabled','disabled');
+			$.blockUI({ 
+				message: '<h2>Um momento, estamos processando seus dados...</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
 		},
 		success: function(data){			
 			if(data.status == 'true'){
@@ -225,6 +248,7 @@ function cadastrarNoticiaDep(newsForm){
 		},
 		complete: function(){
 			$('#btn_enviar').removeAttr('disabled');
+			$.unblockUI();
 			//location.reload();
 		}
 	});

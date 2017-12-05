@@ -33,6 +33,7 @@
     <script type="text/javascript" src="../../../js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="../../../js/navGeral/navGeral.js" ></script>
     <script type="text/javascript" src="../../../js/tinymce/tinymce.min.js" ></script>
+    <script type="text/javascript" src="../../../js/jquery.blockUI.js" ></script>
 
     <script type="text/javascript" src="../assets/js/cadastrarNews.js" ></script>
 

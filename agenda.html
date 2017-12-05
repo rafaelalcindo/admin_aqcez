@@ -13,10 +13,12 @@
 	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="js/datapicker/jquery.ui.timepicker.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.blockUI.js" ></script>
 
 	<script src='js/fullcalendar/lib/moment.min.js'></script>	
 	<script src='js/fullcalendar/fullcalendar.min.js'></script>
 	<script src='js/fullcalendar/locale/pt-br.js'></script>
+
 	
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -1134,12 +1136,29 @@
 					type: 'POST',
 					url: "sys_agenda/controller.php?agenda=salvarAgenda&titulo_event="+titulo_event+"&desc_event="+desc_event+"&data_event="+data_event+"&hora_event_ini="+hora_event_ini+"&hora_event_fim="+hora_event_fim+"&quem_vai="+quem_vai+"&info_event="+info_event+"&resp_cad="+resp_cad+"&tel_contato="+tel_contato+"&nome_contato="+nome_contato+"&end_contato="+end_contato+"&email_contato="+email_contato+"&cargo_contato="+cargo_contato+"&enviar_presenta="+present_contato+"&convidado="+arrayConvidadoJson,
 					dataType: 'text',
+					beforeSend: function(){
+						$('#myModal').modal('hide');
+						$.blockUI({ 
+							message: '<h2>Processando...</h2>',
+							css: { 
+				            border: 'none', 
+				            padding: '15px', 
+				            backgroundColor: '#000', 
+				            '-webkit-border-radius': '10px', 
+				            '-moz-border-radius': '10px', 
+				            opacity: .5, 
+				            color: '#fff' 
+				        } });
+					},
 					success: function(data){
 						if(data == 'true'){							
-							$('#myModal').modal('hide');
+							
 							LimparCadastro();
 							location.reload();						
 						}
+					},
+					complete: function(){
+						$.unblockUI();
 					}
 				});
 			}else{
@@ -1198,11 +1217,28 @@
 						type: 'POST',
 						url: "sys_agenda/controller.php?agenda=alterarAgenda&titulo_event_edit="+titulo_event+"&desc_event_edit="+desc_event+"&info_event_edit="+tipo_event+"&data_event_edit="+data_event+"&hora_event_ini_edit="+hora_ini+"&hora_event_fim_edit="+hora_fim+"&quem_vai_edit="+quem_vai+"&cale_event="+id_cale+"&email_edit="+email_contato+"&tel_contato_edit="+tel_contato+"&nome_contato_edit="+nome_contato+"&cargo_contato_edit="+cargo_contato+"&end_contato_edit="+end_contato+"&apresent_edit="+apresen_cont,
 						dataType: 'text',
+						beforeSend: function(){
+							$('#modal_editar_cale').modal('hide');
+							$.blockUI({ 
+								message: '<h2>Processando...</h2>',
+								css: { 
+					            border: 'none', 
+					            padding: '15px', 
+					            backgroundColor: '#000', 
+					            '-webkit-border-radius': '10px', 
+					            '-moz-border-radius': '10px', 
+					            opacity: .5, 
+					            color: '#fff' 
+					        } });
+						}, 
 						success: function(data){
 							if(data == 'true'){
-								$('#modal_editar_cale').modal('hide');
+								
 								location.reload();
 							}
+						},
+						complete: function(){
+							$.unblockUI();
 						}
 
 					});
