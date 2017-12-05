@@ -34,6 +34,7 @@
     <script type="text/javascript" src="../js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="../js/navGeral/navGeralOriginal.js" ></script>
     <script type="text/javascript" src="../js/relatorio_comercial/relatorio_comercial.js" ></script>
+    <script type="text/javascript" src="../js/jquery.blockUI.js"></script>
    
 
 </head>

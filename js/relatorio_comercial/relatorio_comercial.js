@@ -51,6 +51,19 @@ function getRelatorio(data_ini, data_fim){
 		url: '../sys_agenda/controller.php?agenda=relatorioVisitas',
 		async: false,
 		dataType: "json",
+		beforeSend: function(){
+			$.blockUI({ 
+				message: '<h2>Buscando Dados</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
+		},
 		success: function(data){
 		 	
 				$.each(data,function(i, item){					
@@ -58,6 +71,9 @@ function getRelatorio(data_ini, data_fim){
 					constructBody(i, item);
 				});
 			
+		},
+		complete: function(){
+			$.unblockUI();
 		}
 	});
 
