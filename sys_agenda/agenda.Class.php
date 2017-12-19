@@ -217,8 +217,8 @@
 			$agenda_array_format = array();
 			while($row = $agenda_calendario->fetch_assoc()){
 				$agenda_array['id']    			 = $row['id'];
-				$agenda_array['title'] 			 = utf8_encode(utf8_decode($row['titulo']));
-				$agenda_array['desc'] 			 = utf8_encode(utf8_decode($row['desc']));
+				$agenda_array['title'] 			 = utf8_encode($row['titulo']);
+				$agenda_array['desc'] 			 = utf8_encode($row['desc']);
 				$agenda_array['info'] 			 = $row['info'];
 				$agenda_array['start'] 			 = $row['data']."T".$row['inicio'];
 				$agenda_array['end']   			 = $row['data']."T".$row['fim'];
@@ -248,35 +248,43 @@
 				$convidados = $resul_convidados;
 			}else{ $convidados = false; }
 
+			/*mb_internal_encoding("UTF-8"); 
+			mb_http_output( "iso-8859-1" );  
+			ob_start("mb_output_handler");   
+			header("Content-Type: text/html; charset=ISO-8859-1",true); */
+			
 			while($row = $cale_info->fetch_assoc()){
 
-				$info_agenda['nome'] 	  	  = utf8_encode(utf8_decode($row['nome']));
-				$info_agenda['sobrenome'] 	  = utf8_encode(utf8_decode($row['sobrenome']));
-				$info_agenda['cargo'] 	  	  = utf8_encode(utf8_decode($row['cargo']));
-				$info_agenda['titulo'] 	  	  = utf8_encode(utf8_decode($row['titulo']));
+				$info_agenda['nome'] 	  	  = utf8_encode($row['nome']);
+				$info_agenda['sobrenome'] 	  = utf8_encode($row['sobrenome']);
+				$info_agenda['cargo'] 	  	  = utf8_encode($row['cargo']);
+				$info_agenda['titulo'] 	  	  = utf8_encode($row['titulo']);
 				$info_agenda['nivel'] 	  	  = $row['nivel'];
-				$info_agenda['desc']      	  = utf8_encode(utf8_decode($row['desc']));
-				$info_agenda['info']      	  = ajustarInfo($row['info']);
+				$info_agenda['desc']      	  = utf8_encode($row['desc'] );
+				$info_agenda['info']      	  = utf8_encode( ajustarInfo($row['info']) );
 				$info_agenda['data'] 	  	  = $row['data'];
 				$info_agenda['h_inicio']  	  = $row['h_inicio'];
 				$info_agenda['h_fim']     	  = $row['h_fim'];
 				$info_agenda['color'] 	  	  = isset($row['color'])? $row['color'] : 'pink';
 				$info_agenda['editar']    	  = $editar;
-				$info_agenda['tel_contato']   = $row['tel_contato'];
-				$info_agenda['nome_contato']  = utf8_encode(utf8_decode($row['nome_contato']));
-				$info_agenda['end_contato']   = utf8_encode(utf8_decode($row['end_contato']));
-				$info_agenda['cargo_contato'] = utf8_encode(utf8_decode($row['cargo_contato']));
-				$info_agenda['email_contato'] = utf8_encode(utf8_decode($row['email_contato']));
-				$info_agenda['presentacao']	  = $row['presentacao'];
+				$info_agenda['tel_contato']   = utf8_encode($row['tel_contato']);
+				$info_agenda['nome_contato']  = utf8_encode($row['nome_contato']);
+				$info_agenda['end_contato']   = utf8_encode($row['end_contato'] );
+				$info_agenda['cargo_contato'] = utf8_encode($row['cargo_contato']);
+				$info_agenda['email_contato'] = utf8_encode($row['email_contato']) ;
+				$info_agenda['presentacao']	  = utf8_encode($row['presentacao']);
 				$info_agenda['convidados']	  = $convidados;
+
+				//echo "end Contato: ".utf8_decode($row['end_contato'])."<br/>";
 
 				$info_array[] = $info_agenda;
 				unset($info_agenda);
 			}
 
 
+			//$info_array = array_map("htmlentities", $info_array);
+			//echo "array: ".print_r($info_array);
 
-			//echo "array: ".print_r($info_agenda);
 			return $info_array;
 		}
 
@@ -515,6 +523,7 @@
 			}
 	}
 
+
 	function ajustarInfo($info){
 		if($info == 'Pessoal'){
 			return 'Pessoal';
@@ -541,8 +550,8 @@
 
 		if($resultado != false){
 			while($row = $resultado->fetch_assoc()){
-				$array_convidadosAux['nome'] 	  = $row['nome'];
-				$array_convidadosAux['sobrenome'] = $row['sobrenome'];
+				$array_convidadosAux['nome'] 	  = utf8_encode($row['nome']);
+				$array_convidadosAux['sobrenome'] = utf8_encode($row['sobrenome']);
 				$array_convidados[] =  $array_convidadosAux;
 			}
 

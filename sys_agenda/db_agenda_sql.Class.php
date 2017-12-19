@@ -188,6 +188,7 @@
 			//echo "<br/>agenda: ".print_r($agenda);
 			//$color = getColorMeans($agenda['desc']);
 			//exit();
+
 			$sql_agenda = sprintf("insert into calendario
 			(calendario_titulo, calendario_desc, calendario_data, calendario_hora_inicio, calendario_hora_fim, calendario_color, calendario_info, tel_contato, nome_contato, end_contato, cargo_contato, email_contato, enviar_presentacao)
 			values
@@ -205,6 +206,13 @@
 			$agenda['cargo_contato'],
 			$agenda['email_contato'],
 			$agenda['enviar_presenta']);
+
+			$conexao->set_charset("utf8");
+			$conexao->query("SET NAMES 'utf8'");
+			$conexao->query('SET character_set_connection=utf8');
+			$conexao->query('SET character_set_client=utf8');
+			$conexao->query('SET character_set_results=utf8');
+
 
 			$resu_agenda =  $conexao->query($sql_agenda);
 			$resu_last_id = $conexao->insert_id;
@@ -298,6 +306,7 @@
 	}
 
 	function dublicarDadosAgendaInsert($duplicar, $conexao){
+		$conexao->set_charset("utf8");
 		$stmt_duplicar = sprintf("insert into calendario (calendario_titulo, calendario_desc, calendario_data, calendario_hora_inicio, calendario_hora_fim,
 			calendario_color, calendario_color_sign, calendario_info, tel_contato, nome_contato, end_contato, cargo_contato, 
 			email_contato, enviar_presentacao )

@@ -274,9 +274,11 @@ function descricaoEvento(){
 
 	if($permission){
 		$agenda = new Agenda();
+		header('Content-Type: application/json; charset=utf-8');
 		$file_json_array = array();
 		$file_json_array = $agenda->getCalenInfo($idcalenEvent,$editar);
-		$file_json 		 = json_encode($file_json_array);
+
+		$file_json 		 =  json_encode($file_json_array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		echo $file_json;
 	}else{
 		$agenda    = new Agenda();
