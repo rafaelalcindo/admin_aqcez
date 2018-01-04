@@ -73,6 +73,35 @@ $app->post('/contatos/salvar', function(Request $request, Response $response){
 
 });
 
+$app->post('/contatos/editar', function(Request $request, Response $response){
+
+	$request_array	  = $request->getParsedBody();
+	$id_contato		  = $request_array['id_contato'];
+	$nome_empresa 	  = $request_array['nome_emp'];
+	$nome_contato	  = $request_array['nome_contato'];
+	$tel_contato	  = $request_array['tel_contato'];
+	$end_contato	  = $request_array['end_contato'];
+	$status_contato   = $request_array['status_contato'];
+	$retorno_contato  = $request_array['retorno_contato'];
+	$sinal_fechamento = $request_array['sinal_fechamento'];
+	
+
+	$contatos = new Contatos();
+	$contatos->setIdContato($id_contato);
+	$contatos->setNomeEmpresa($nome_empresa);
+	$contatos->setNomeContato($nome_contato);
+	$contatos->setTelContato($tel_contato);
+	$contatos->setEndContato($end_contato);
+	$contatos->setStatusContato($status_contato);
+	$contatos->setRetornoContato($retorno_contato);
+	$contatos->setSinalFechamento($sinal_fechamento);
+	
+
+	$resultado = $contatos->editarContato($contatos);
+	if($resultado){ echo 'true'; }else{ echo 'false'; }
+
+});
+
 
 
 $app->run();

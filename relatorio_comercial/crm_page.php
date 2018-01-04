@@ -54,8 +54,6 @@
                   <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Contatos</a></li>
                     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Hoje</a></li>
-                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-                    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
                   </ul>
 
                   <!-- Tab panes -->
@@ -142,8 +140,7 @@
                         </table>
 
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="messages">3</div>
-                    <div role="tabpanel" class="tab-pane" id="settings">4</div>
+                    
                   </div>
 
                   <hr/>

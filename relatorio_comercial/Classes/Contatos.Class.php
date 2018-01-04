@@ -5,6 +5,7 @@
 	
 	class Contatos extends ContatoQuery
 	{
+		private $id_contato;
 		private $nome_empresa;
 		private $nome_contato;
 		private $tel_contato;
@@ -21,6 +22,14 @@
 
 		function __destruct(){
 
+		}
+
+		public function setIdContato($id_contato){
+			$this->id_contato = $id_contato;
+		}
+
+		public function getIdContato(){
+			return $this->id_contato;
 		}
 
 		public function setNomeEmpresa($nome_empresa){
@@ -96,6 +105,14 @@
 			$sql_query   = parent::savarContatoQuery($obj);
 			$db_contatos = new model_connection_contato();
 			$resultado   = $db_contatos->Inserir($sql_query);
+			if($resultado){ return true; }else{ return false; }
+		}
+
+		public function editarContato($obj){
+			$sql_query   = parent::editarContato($obj);
+			
+			$db_contatos = new model_connection_contato();
+			$resultado	 = $db_contatos->Editar($sql_query);			
 			if($resultado){ return true; }else{ return false; }
 		}
 
