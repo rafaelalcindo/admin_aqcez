@@ -44,7 +44,8 @@
 		}
 
 		public function Excluir($sql){
-
+			$resultado = $this->conexao->query($sql);
+			if($resultado){ return true; }else{ return false; }
 		}
 
 	}

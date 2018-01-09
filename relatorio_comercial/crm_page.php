@@ -29,6 +29,7 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/relatorio_agenda/relatorio_agenda.css" rel="stylesheet" type="text/css" >
     <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" >
+    <link href="assets/css/crm_page.css" rel="stylesheet" type="text/css">
     
 
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js" ></script>
@@ -44,7 +45,7 @@
 
 <?php include "../navbar/navnoticias.php"; ?>
 <input type="hidden" id="id_user" value="">
-    <div class="container" >
+    <div class="container2" >
          <h2>Lista de Contatos</h2>
          <hr/>
 
@@ -62,13 +63,21 @@
                         <table class="table table-bordered table-hover" >
                             <thead >
                                 <tr>
+                                    <th>Data</th>
                                     <th>Empresa</th>
-                                    <td>Contato</th>
-                                    <td>Telefone</th>
-                                    <td>Endereço</th>
-                                    <th>Status</th>
-                                    <th>Retorno</th>
-                                    <th>Sinal</th>
+                                    <th>Nome Contato</th>
+                                    <th>Telefone</th>
+                                    <th>Projeto</th>
+                                    <th>Turn Key</th>
+                                    <th>Interiores</th>
+                                    <th>Mobiliario</th>
+                                    <th>Total</th>
+                                    <th>Situação</th>
+                                    <th>Motivo</th>
+                                    <th>Probabilidade</th>
+                                    <th>Ações</th>
+                                    
+                                    
                                 </tr>                                
                             </thead>
                             <tbody id="table_body_todos">
@@ -103,13 +112,19 @@
                         <table class="table table-bordered table-hover" >
                             <thead >
                                 <tr>
+                                    <th>Data</th>
                                     <th>Empresa</th>
-                                    <td>Contato</th>
-                                    <td>Telefone</th>
-                                    <td>Endereço</th>
-                                    <th>Status</th>
-                                    <th>Retorno</th>
-                                    <th>Sinal</th>
+                                    <th>Nome Contato</th>
+                                    <th>Telefone</th>
+                                    <th>Projeto</th>
+                                    <th>Turn Key</th>
+                                    <th>Interiores</th>
+                                    <th>Mobiliario</th>
+                                    <th>Total</th>
+                                    <th>Situação</th>
+                                    <th>Motivo</th>
+                                    <th>Probabilidade</th>
+                                    <th>Ações</th>
                                 </tr>                                
                             </thead>
                             <tbody id="table_body_hoje">
@@ -146,6 +161,15 @@
                   <hr/>
 
                   <button type="button" class="btn btn-primary" id="btn_modal_contato" data-toggle="modal" data-target="#modal_cad">Adicionar Contato</button>
+
+                  <!-- <button type="button" class="btn btn-success" >
+                      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                  </button>
+
+                  <button type="button" class="btn btn-danger" >
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>  -->
+                  
             </div>             
          </div>
     </div>
@@ -175,26 +199,57 @@
                     <label>Telefone do Contato</label>
                     <input type="text" class="form-control" placeholder="Telefone de Contato" id="cad_telefone" name="cad_telefone" >
 
-                </div>
-                <div class="col-sm-6">
                     <label>Endereço do Contato</label>
                     <input type="text" class="form-control" placeholder="Endereço" id="cad_endereco" name="cad_endereco" >
 
-                    <label>Status</label>
-                    <select class="form-control" id="cad_status" >
-                        <option value="Ativo" >Ativo</option>
-                        <option value="Em espera" >Em espera</option>
+                    <label>Situação</label>
+                    <select class="form-control" id="cad_situacao" >
+                        <option>Em andamento</option>
+                        <option>Finalizando positivo</option>
+                        <option>Finalizado negativo</option>
                     </select>
 
                     <label>Selecione o dia do retorno</label>
                     <input type="date" class="form-control" placeholder="Retorno" id="cad_retorno" name="cad_retorno">
 
-                    <label>Sinal</label>
-                    <select class="form-control" id="cad_sinal" >
-                        <option value="#2ad813" >Verde</option>
-                        <option value="#3f7bdb" >Azul</option>
-                        <option value="#ff0a2a" >Vermelho</option>
+                </div>
+                <div class="col-sm-6">
+
+                    <label>Motivo</label>
+                    <select class="form-control" id="cad_motivo" >
+                        <option >Preço</option>
+                        <option >Prazo</option>
+                        <option >Qualidade</option>
+                        <option>Atendimento</option>
+                        <option>Assistência técnica</option>
+                        <option>Concorrência</option>
+                        <option>Análise</option>
+                        <option>Suspens</option>
+                        <option>Cancel</option>
                     </select>
+
+                    <label>Probabilidade Contato</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" placeholder="Digite de aceitação do contato" id="proba_contato" name="proba_contato">
+                        <div class="input-group-addon" >%</div>
+                    </div>
+                    
+
+                    <label>Nome do Projeto</label>
+                    <input type="text" class="form-control" placeholder="Digite o nome do Projeto" id="cad_projeto" name="cad_projeto" >
+
+                    <label>Turn Key</label>
+                    <input type="number" class="form-control" placeholder="Digite a Quantidade de Turn Key" id="cad_quant_turn_key" name="cad_quant_turn_key">
+
+                    <label>Interiores</label>
+                    <input type="number" class="form-control" placeholder="Digite a Quantidade de Interiores" id="cad_quant_interiores" name="cad_quant_interiores">
+
+                    <label>Mobiliario</label>
+                    <input type="number" class="form-control" placeholder="Digite a Quantidade de Mobiliario" id="cad_quant_mobiliario" name="cad_quant_mobiliario">
+
+                    <label>Observação</label>
+                    <textarea id="cad_observacao" class="form-control" placeholder="Digite a Observação" ></textarea>
+
 
                 </div>
 
@@ -202,7 +257,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-success" id="btn_salvar">Salvar</button>
+            <button type="button" class="btn btn-success" id="btn_salvar">Salvar</button>            
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

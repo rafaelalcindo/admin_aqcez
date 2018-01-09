@@ -14,6 +14,15 @@
 		private $retorno_contato;
 		private $sinal_fechamento;
 		private $donoContato;
+
+		private $motivo;
+		private $probabilidade;
+		private $projetos;
+		private $turn_key;
+		private $interiores;
+		private $mobiliario;
+		private $total;
+		private $observacao;
 		
 		function __construct()
 		{
@@ -80,8 +89,84 @@
 			return $this->retorno_contato;
 		}
 
-		public function setSinalFechamento($sinal_fechamento){
-			$this->sinal_fechamento = $sinal_fechamento;
+		public function setMotivo($motivo){
+			$this->motivo = $motivo;
+		}
+
+		public function getMotivo(){
+			return $this->motivo;
+		}
+
+		public function setProbabilidade($probabilidade){
+			$this->probabilidade = $probabilidade;
+		}
+
+		public function getProbabilidade(){
+			return $this->probabilidade;
+		}
+
+		public function setProjetos($projetos){
+			$this->projetos = $projetos;
+		}
+
+		public function getProjetos(){
+			return $this->projetos;
+		}
+
+		public function setTurnKey($turn_key){
+			$this->turn_key = $turn_key;
+		}
+
+		public function getTurnKey(){
+			return $this->turn_key;
+		}
+
+		public function setInteriores($interiores){
+			$this->interiores = $interiores;
+		}
+
+		public function getInteriores(){
+			return $this->interiores;
+		}
+
+		public function setMobiliario($mobiliario){
+			$this->mobiliario = $mobiliario;
+		}
+
+		public function getMobiliario(){
+			return $this->mobiliario;
+		}
+
+		public function setTotal($total){
+			$this->total = $total;
+		}
+
+		public function getTotal(){
+			return $this->total;
+		}
+
+		public function setObservacao($observacao){
+			$this->observacao = $observacao;
+		}
+
+		public function getObservacao(){
+			return $this->observacao;
+		}
+
+		public function setSinalFechamento($sinal){
+
+			if($sinal < 20){
+				$this->sinal_fechamento = '#990000';
+			}else if($sinal >= 20 && $sinal < 40){
+				$this->sinal_fechamento = '#ff1a1a';
+			}else if($sinal >= 40 && $sinal < 60){
+				$this->sinal_fechamento = '#ff751a';
+			}else if($sinal >=60 && $sinal < 80){
+				$this->sinal_fechamento = '#e6e600';
+			}else if($sinal >= 80){
+				$this->sinal_fechamento = '#53ff1a';
+			}
+			
 		}
 
 		public function getSinalFechamento(){
@@ -116,6 +201,13 @@
 			if($resultado){ return true; }else{ return false; }
 		}
 
+		public function deletarContato($obj){
+			$sql_query	 = parent::deletarContato($obj);
+			$db_contatos = new model_connection_contato();
+			$resultado	 = $db_contatos->Excluir($sql_query);
+			if($resultado){ return true; }else{ return false; }
+		}
+
 		public function pegarTodosContato($id_user){
 			$sql_query 	  = parent::pegarTodosContatosQuery($id_user);
 			$db_contatos  = new model_connection_contato();
@@ -126,13 +218,23 @@
 				$contatos_aux = array(); 
 
 				while($row = $resultado->fetch_assoc()){
-					$contatos_aux['empresa'] = utf8_encode($row['empresa']);
-					$contatos_aux['contato'] = utf8_encode($row['contato']);
-					$contatos_aux['tel']	 = $row['tel'];
-					$contatos_aux['end']	 = utf8_encode($row['end']);
-					$contatos_aux['status']  = utf8_encode($row['status']);
-					$contatos_aux['retorno'] = $row['retorno'];
-					$contatos_aux['sinal']   = $row['sinal'];
+					$contatos_aux['id_contatos']	= $row['id_contatos'];
+					$contatos_aux['empresa']  		= utf8_encode($row['empresa']);
+					$contatos_aux['contato']  		= utf8_encode($row['contato']);
+					$contatos_aux['tel']	  		= $row['tel'];
+					$contatos_aux['end']	  		= utf8_encode($row['end']);
+					$contatos_aux['status']   		= utf8_encode($row['status']);
+					$contatos_aux['retorno']  		= $row['retorno'];
+					$contatos_aux['sinal']    		= $row['sinal'];
+					$contatos_aux['projetos'] 		= utf8_encode($row['projetos']);
+					$contatos_aux['turn_key'] 		= $row['turn_key']   != null? $row['turn_key']   : 0;
+					$contatos_aux['interiores'] 	= $row['interiores'] != null? $row['interiores'] : 0; 
+					$contatos_aux['mobiliario'] 	= $row['mobiliario'] != null? $row['mobiliario'] : 0;
+					$contatos_aux['total']			= $row['total']		 != null? $row['total']		 : 0;
+					$contatos_aux['probabilidade']  = $row['probabilidade'];
+					$contatos_aux['motivo']			= utf8_encode($row['motivo']);
+					$contatos_aux['observacao']		= utf8_encode($row['observacao']);
+
 					$contatos[] = $contatos_aux;
 					unset($contatos_aux);
 				}
@@ -152,13 +254,24 @@
 				$contatos_aux 	= array();
 
 				while($row = $resultado->fetch_assoc()) {
-					$contatos_aux['empresa'] = utf8_encode($row['empresa']);
-					$contatos_aux['contato'] = utf8_encode($row['contato']);
-					$contatos_aux['tel']	 = $row['tel'];
-					$contatos_aux['end']	 = utf8_encode($row['end']);
-					$contatos_aux['status']	 = utf8_encode($row['status']);
-					$contatos_aux['retorno'] = $row['retorno'];
-					$contatos_aux['sinal']	 = $row['sinal'];
+
+					$contatos_aux['id_contatos']	= $row['id_contatos'];
+					$contatos_aux['empresa']  		= utf8_encode($row['empresa']);
+					$contatos_aux['contato']  		= utf8_encode($row['contato']);
+					$contatos_aux['tel']	  		= $row['tel'];
+					$contatos_aux['end']	  		= utf8_encode($row['end']);
+					$contatos_aux['status']   		= utf8_encode($row['status']);
+					$contatos_aux['retorno']  		= $row['retorno'];
+					$contatos_aux['sinal']    		= $row['sinal'];
+					$contatos_aux['projetos'] 		= utf8_encode($row['projetos']);
+					$contatos_aux['turn_key'] 		= $row['turn_key']   != null? $row['turn_key']   : 0;
+					$contatos_aux['interiores'] 	= $row['interiores'] != null? $row['interiores'] : 0; 
+					$contatos_aux['mobiliario'] 	= $row['mobiliario'] != null? $row['mobiliario'] : 0;
+					$contatos_aux['total']			= $row['total']		 != null? $row['total']		 : 0;
+					$contatos_aux['probabilidade']  = $row['probabilidade'];
+					$contatos_aux['motivo']			= utf8_encode($row['motivo']);
+					$contatos_aux['observacao']		= utf8_encode($row['observacao']);
+
 					$contatos[] = $contatos_aux;
 					unset($contatos_aux);
 

@@ -1,0 +1,25 @@
+
+.container2{
+	background-color: #ffffff;
+	margin-left: 7%;
+	margin-right: 7%;	
+	margin-top: 3%;
+	padding: 3%;
+	height: 700px;
+}
+
+.btn{
+	border-radius: 0px;
+}
+
+.nav-tabs > li > a{
+	border-radius: 0px;	
+}
+
+.modal-content{
+	border-radius: 0px;
+}
+
+.form-control{
+	border-radius: 0px;
+}

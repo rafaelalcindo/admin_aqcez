@@ -9,13 +9,20 @@ $(document).ready(function(){
 
 		let cad_contato = [];
 
-		cad_contato['empresa']  = $('#cad_empresa').val();
-		cad_contato['contato']  = $('#cad_contato').val();
-		cad_contato['telefone'] = $('#cad_telefone').val();
-		cad_contato['endereco'] = $('#cad_endereco').val();
-		cad_contato['status']   = $('#cad_status').val();
-		cad_contato['retorno']  = $('#cad_retorno').val();
-		cad_contato['sinal']    = $('#cad_sinal').val();
+		cad_contato['empresa']  	 = $('#cad_empresa').val();
+		cad_contato['contato']  	 = $('#cad_contato').val();
+		cad_contato['telefone'] 	 = $('#cad_telefone').val();
+		cad_contato['endereco'] 	 = $('#cad_endereco').val();
+		cad_contato['status']   	 = $('#cad_situacao').val();
+		cad_contato['retorno']  	 = $('#cad_retorno').val();
+		cad_contato['motivo']    	 = $('#cad_motivo').val();
+		cad_contato['probabilidade'] = $('#proba_contato').val();
+		cad_contato['projeto']		 = $('#cad_projeto').val();
+		cad_contato['turn_key']		 = $('#cad_quant_turn_key').val();
+		cad_contato['interiores']	 = $('#cad_quant_interiores').val();
+		cad_contato['mobiliario']	 = $('#cad_quant_mobiliario').val();
+		cad_contato['observacao']	 = $('#cad_observacao').val();
+
 		cad_contato['id_user']  = $('#id_user').val();
 
 		
@@ -122,7 +129,14 @@ function salvarContato(contato){
 	dadosEnviar.append('end_contato', contato['endereco']);
 	dadosEnviar.append('status_contato', contato['status']);
 	dadosEnviar.append('retorno_contato', contato['retorno']);
-	dadosEnviar.append('sinal_fechamento', contato['sinal']);
+	dadosEnviar.append('motivo_contato', contato['motivo']);
+	dadosEnviar.append('probabilidade_contato', contato['probabilidade'] );
+	dadosEnviar.append('projetos', contato['projeto']);
+	dadosEnviar.append('turn_key', contato['turn_key']);
+	dadosEnviar.append('interiores', contato['interiores']);
+	dadosEnviar.append('mobiliario', contato['mobiliario']);
+	dadosEnviar.append('observacao', contato['observacao']);
+
 	dadosEnviar.append('dono_contato', contato['id_user']);
 
 	$.ajax({
@@ -169,8 +183,11 @@ function preencherDadosTotais(data){
 	let bodyTable = "";
 	$.each(data, function(key, val){
 		bodyTable += "<tr>";
-		bodyTable += "<td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.end+"</td>";
-		bodyTable += "<td>"+val.status+"</td> <td>"+val.retorno+"</td> <td><div style='height: 25px; width: 100%; background-color: "+val.sinal+";'  ></div> </td>";
+		bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
+		bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
+		bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
+		bodyTable += "<td> <button type='button' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+		bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 		bodyTable += "</tr>";
 	})
 	
@@ -182,10 +199,17 @@ function preencherDadosTotais(data){
 function preencherDadosContatosHoje(data){
 	let bodyTable = '';
 	$.each(data, function(key, val){
-		bodyTable += '<tr>';
-		bodyTable += "<td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.end+"</td>";
-		bodyTable += "<td>"+val.status+"</td> <td>"+val.retorno+"</td> <td><div style='height: 25px; width: 100%; background-color: "+val.sinal+";'  ></div> </td>";
-		bodyTable += "</tr>";
+
+		if(val.retorno !== undefined){
+			bodyTable += "<tr>";
+			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
+			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
+			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
+			bodyTable += "<td> <button type='button' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+			bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
+			bodyTable += "</tr>";
+		}
+		
 	});
 
 	$('#table_body_hoje').append(bodyTable);
@@ -214,8 +238,14 @@ function validacaoCadastro(contato){
 	}else if(contato['endereco'].trim() == ''){
 		alert('Por favor digite o endereco do contato');
 		return false;
-	}else if(contato['status'].trim() == ''){
-		alert('Por favor diga como esta o status do cliente');
+	}else if(contato['retorno'].trim() == ''){
+		alert('Por favor digite a data do retorno');
+		return false;
+	}else if(contato['probabilidade'].trim() == '' ){
+		alert('Por favor digite a probabilidade de aceitação');
+		return false;
+	}else if(contato['projeto'].trim() == ''){
+		alert('Por favor digite o nome do projeto');
 		return false;
 	}else{
 		return true;
