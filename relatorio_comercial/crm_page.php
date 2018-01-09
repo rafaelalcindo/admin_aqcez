@@ -55,6 +55,7 @@
                   <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Contatos</a></li>
                     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Hoje</a></li>
+                    <li role="presentation"><a href="#filtro" aria-controls="filtro" role="tab" data-toggle="tab">Filtro</a></li>
                   </ul>
 
                   <!-- Tab panes -->
@@ -153,6 +154,24 @@
 
                             </tbody>                        
                         </table>
+
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="filtro">
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 align="center">Filtro de Contatos</h3>
+                                <br/>
+                                <div class="form-inline">
+                                    <label>Nome: </label>
+                                    <input type="text" class="form-control" id="filtro_contato" name="filtro_contato" placeholder="Filtro Contato">
+
+                                    <label>Data: </label>
+                                    <input type="date" class="form-control" id="filtro_data" name="filtro_data" placeholder="Filtro Data">
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     
