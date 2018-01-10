@@ -169,6 +169,8 @@
 
                                     <label>Data: </label>
                                     <input type="date" class="form-control" id="filtro_data" name="filtro_data" placeholder="Filtro Data">
+
+                                    <button type="button" class="btn btn-info">Filtrar</button>
                                 </div>
                             </div>
                         </div>
