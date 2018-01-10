@@ -45,6 +45,21 @@ $app->post('/contatos/listarhoje', function(Request $request, Response $response
 	echo $resultado;
 });
 
+$app->post('/contatos/listarFiltro', function(Request $request, Response $response){
+	$request_array	= $request->getParsedBody();
+	$id_user		= $request_array['dono_contato'];
+	$nome_contato	= $request_array['nome_contato'];
+	$data_reuni		= $request_array['data_reuni'];
+
+	$contatos 		= new Contatos();
+	$resultado 		= $contatos->pegarContatoFiltro($id_user, $nome_contato, $data_reuni);
+	echo $resultado;
+});
+
+
+
+// ========================= Crud Contatos =================================
+
 $app->post('/contatos/salvar', function(Request $request, Response $response){
 
 	

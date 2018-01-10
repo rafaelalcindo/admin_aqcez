@@ -33,8 +33,24 @@ $(document).ready(function(){
 
 	});
 
+
+	$('#filtro_botao').click(function(){
+		let filtro_contato = [];
+
+		filtro_contato['id_user'] 		= $('#id_user').val();
+		filtro_contato['nome_contato']	= $('#filtro_contato').val();
+		filtro_contato['filtro_data']	= $('#filtro_data').val();
+
+		preencherTebelaContatoFiltro(filtro_contato);
+
+
+	})
+
 	
 })
+
+
+// ===================================================== Preencher Contatos ================================================
 
 
 function preecherTabelContatos(id_user){
@@ -115,6 +131,42 @@ function preencherTabelaContatosHoje(id_user){
 	})
 }
 
+function preencherTebelaContatoFiltro(dados_filtro){
+	let dadosEnviar		= new FormData();
+	dadosEnviar.append('dono_contato', dados_filtro['id_user']);
+	dadosEnviar.append('nome_contato', dados_filtro['nome_contato']);
+	dadosEnviar.append('data_reuni',   dados_filtro['filtro_data']);
+
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: dadosEnviar,
+		url: 'controller/controller.php/contatos/listarFiltro',
+		async: false,
+		dataType: 'json',
+		beforeSend: function(){
+			$.blockUI({ 
+				message: '<h2>Buscando Dados</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
+		},
+		success: function(data){
+			preencherDadosContatosFiltro(data);
+		},
+		complete: function(){
+			$.unblockUI();
+		}
+	})
+}
+
 
 
 // ================================================== CRUD CRM ======================================================
@@ -176,6 +228,9 @@ function salvarContato(contato){
 
 
 
+
+
+
 // ============================================= preencher dados ========================================================================
 
 function preencherDadosTotais(data){
@@ -215,6 +270,22 @@ function preencherDadosContatosHoje(data){
 	$('#table_body_hoje').append(bodyTable);
 }
 
+function preencherDadosContatosFiltro(data){
+	let bodyTable = '';
+	$.each(data, function(key, val){
+		if(val.retorno !== undefined){
+			bodyTable += "<tr>";
+			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
+			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
+			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
+			bodyTable += "<td> <button type='button' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+			bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
+			bodyTable += "</tr>";
+		}
+	})
+
+	$('#table_body_filtro').append(bodyTable);
+}
 
 
 

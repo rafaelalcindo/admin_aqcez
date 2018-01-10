@@ -46,7 +46,11 @@
 <?php include "../navbar/navnoticias.php"; ?>
 <input type="hidden" id="id_user" value="">
     <div class="container2" >
-         <h2>Lista de Contatos</h2>
+        <div class="titulos_menu">
+            <h2>Lista de Contatos</h2>
+            <button type="button" class="btn btn-primary" id="btn_modal_contato" data-toggle="modal" data-target="#modal_cad">Adicionar Contato</button>
+        </div>
+         <br/>
          <hr/>
 
          <div class="row">
@@ -163,14 +167,38 @@
                             <div class="col-sm-12">
                                 <h3 align="center">Filtro de Contatos</h3>
                                 <br/>
-                                <div class="form-inline">
+                                <div class="form-inline" id="menu_filtro">
                                     <label>Nome: </label>
                                     <input type="text" class="form-control" id="filtro_contato" name="filtro_contato" placeholder="Filtro Contato">
 
                                     <label>Data: </label>
                                     <input type="date" class="form-control" id="filtro_data" name="filtro_data" placeholder="Filtro Data">
 
-                                    <button type="button" class="btn btn-info">Filtrar</button>
+                                    <button type="button" id="filtro_botao" class="btn btn-info">Filtrar</button>
+                                </div>
+                                <div class="tabela_filtro">
+                                    <table class="table table-bordered table-hover" >
+                                        <thead>
+                                            <tr>
+                                                <th>Data</th>
+                                                <th>Empresa</th>
+                                                <th>Nome Contato</th>
+                                                <th>Telefone</th>
+                                                <th>Projeto</th>
+                                                <th>Turn Key</th>
+                                                <th>Interiores</th>
+                                                <th>Mobiliario</th>
+                                                <th>Total</th>
+                                                <th>Situação</th>
+                                                <th>Motivo</th>
+                                                <th>Probabilidade</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table_body_filtro">
+                                            
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +209,7 @@
 
                   <hr/>
 
-                  <button type="button" class="btn btn-primary" id="btn_modal_contato" data-toggle="modal" data-target="#modal_cad">Adicionar Contato</button>
+                  
 
                   <!-- <button type="button" class="btn btn-success" >
                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

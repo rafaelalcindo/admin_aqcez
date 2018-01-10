@@ -84,6 +84,10 @@ abstract class ContatoQuery
 		return $this->query;
 	}
 
+	protected function deletarContato($obj){
+		$this->query = sprintf("delete from contatos_comercial where idcontatos_comercial = %u ",$obj->getIdContato() );
+		return $this->query;
+	}
 
 
 
@@ -107,13 +111,15 @@ abstract class ContatoQuery
 		return $this->query;
 	}
 
-	protected function deletarContato($obj){
-		$this->query = sprintf("delete from contatos_comercial where idcontatos_comercial = %u ",$obj->getIdContato() );
+	protected function filtroContatoQuery($id_user, $nome_contato, $dataHoje){
+		$this->query = "select idcontatos_comercial as 'id_contatos', nome_empresa as 'empresa', contato_empresa as 'contato', telefone_empresa as 'tel', 			  endereco_empresa as 'end',
+						status_empresa as 'status',  DATE_FORMAT(retorno_empresa,'%d/%m/%Y') as 'retorno', sinal_empresa as 'sinal',
+						projetos as 'projetos', turn_key as 'turn_key', interiores as 'interiores', mobiliario as 'mobiliario', total as 'total',
+						probabilidade_empresa as 'probabilidade', motivo_empresa as 'motivo', observacao_empresa as 'observacao'
+						from contatos_comercial 					    
+					where usuario_id = '".$id_user."' and ((contato_empresa like '".$nome_contato."%' and retorno_empresa >= '".$dataHoje."') )";
 		return $this->query;
 	}
-
-	
-
 
 
 }
