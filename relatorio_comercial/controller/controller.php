@@ -56,7 +56,55 @@ $app->post('/contatos/listarFiltro', function(Request $request, Response $respon
 	echo $resultado;
 });
 
+$app->get('/contatos/listarTodosContatosComercial', function(Request $request, Response $response){
+	$request_array  = $request->getParsedBody();
+	
+	$contatos 		= new Contatos();
+	$resultado		= $contatos->pegarContatosGeral();
+	echo $resultado;
+});
 
+$app->post('/contatos/listarTodosContatosPorFiltro', function(Request $request, Response $response){
+	$request_array = $request->getParsedBody();
+	$filtro = array();
+
+	$filtro['filtro_nome'] = isset($request_array['filtro_nome'])? $request_array['filtro_nome']   :  '';
+
+	$contatos  		= new Contatos();
+	$resultado		= $contatos->pegarContatoFiltroAdmin($filtro);
+	echo $resultado;
+
+});
+
+$app->get('/contatos/listarTodosContatosPorFiltroProximo', function(Request $request, Response $response){
+	//$requrest_array = $request->getParsedBody();
+
+	$dataHoje 		= date('Y-m-d');
+
+	$contatos 		= new Contatos();
+	$resultado 		= $contatos->pegarContatoFiltroProximoAdmin($dataHoje);
+	echo $resultado;
+});
+
+// ========================== Listagem de nomes Pessoal =========================
+
+$app->post('/contatos/PegarNomescontatosPessoal', function(Request $request, Response $response){
+
+	$request_array 	= $request->getParsedBody();
+	$id_user 			= $request_array['dono_contato'];
+
+	$contatos 			= new Contatos();
+	$resultado 			= $contatos->pegarNomesContatos($id_user);
+	echo $resultado;
+});
+
+// ========================== Listagem de nomes ADMIN ==========================
+
+$app->get('/contatos/PegarNomesContatos', function(Request $request, Response $response){
+	$contatos 		= new Contatos();
+	$resultado		= $contatos->pegarNomesContatosAdmin();
+	echo $resultado;
+});
 
 // ========================= Crud Contatos =================================
 

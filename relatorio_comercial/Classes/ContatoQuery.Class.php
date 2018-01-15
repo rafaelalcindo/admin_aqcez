@@ -107,7 +107,9 @@ abstract class ContatoQuery
 						projetos as 'projetos', turn_key as 'turn_key', interiores as 'interiores', mobiliario as 'mobiliario', total as 'total',
 						probabilidade_empresa as 'probabilidade', motivo_empresa as 'motivo', observacao_empresa as 'observacao'
 						from contatos_comercial 
-									where usuario_id = '".$id_user."' and retorno_empresa = '".$dataHoje."' ";
+						where usuario_id = '".$id_user."' 
+                        and retorno_empresa between '".$dataHoje."' and date_add(retorno_empresa, interval 10 day) 
+                        order by retorno_empresa asc";
 		return $this->query;
 	}
 
@@ -121,5 +123,59 @@ abstract class ContatoQuery
 		return $this->query;
 	}
 
+
+
+	//========================================================= Query Gerais ==========================================================
+
+	protected function pegarTodosContatosAdmin(){
+		$this->query = "select cc.idcontatos_comercial as 'id_contatos', cc.nome_empresa as 'empresa', cc.contato_empresa as 'contato', cc.telefone_empresa as 'tel', 			  endereco_empresa as 'end',
+			cc.status_empresa as 'status',  DATE_FORMAT(cc.retorno_empresa,'%d/%m/%Y') as 'retorno', cc.sinal_empresa as 'sinal',
+			cc.projetos as 'projetos', cc.turn_key as 'turn_key', cc.interiores as 'interiores', cc.mobiliario as 'mobiliario', cc.total as 'total',
+			cc.probabilidade_empresa as 'probabilidade', cc.motivo_empresa as 'motivo', cc.observacao_empresa as 'observacao', 
+            usu.usuario_nome as 'dono_nome', usu.usuario_sobrenome as 'dono_sobrenome'
+            
+			from contatos_comercial cc, usuario usu
+			where cc.usuario_id = usu.usuario_id order by idcontatos_comercial desc";
+
+        return $this->query;
+	}
+
+	protected function pegarTodosContatosFiltroAdmin($filtro){
+		$this->query = "select cc.idcontatos_comercial as 'id_contatos', cc.nome_empresa as 'empresa', cc.contato_empresa as 'contato', cc.telefone_empresa as 'tel', 			  endereco_empresa as 'end',
+			cc.status_empresa as 'status',  DATE_FORMAT(cc.retorno_empresa,'%d/%m/%Y') as 'retorno', cc.sinal_empresa as 'sinal',
+			cc.projetos as 'projetos', cc.turn_key as 'turn_key', cc.interiores as 'interiores', cc.mobiliario as 'mobiliario', cc.total as 'total',
+			cc.probabilidade_empresa as 'probabilidade', cc.motivo_empresa as 'motivo', cc.observacao_empresa as 'observacao', 
+            usu.usuario_nome as 'dono_nome', usu.usuario_sobrenome as 'dono_sobrenome'
+            
+			from contatos_comercial cc, usuario usu
+			where cc.usuario_id = usu.usuario_id 
+			and cc.contato_empresa like '".$filtro['filtro_nome']."%' order by idcontatos_comercial desc";
+
+		return $this->query;
+	}
+
+	protected function pegarHojeContatoQueryAdmin($dataHoje){
+		$this->query = "select cc.idcontatos_comercial as 'id_contatos', cc.nome_empresa as 'empresa', cc.contato_empresa as 'contato', cc.telefone_empresa as 'tel', 			  endereco_empresa as 'end',
+					cc.status_empresa as 'status',  DATE_FORMAT(cc.retorno_empresa,'%d/%m/%Y') as 'retorno', cc.sinal_empresa as 'sinal',
+					cc.projetos as 'projetos', cc.turn_key as 'turn_key', cc.interiores as 'interiores', cc.mobiliario as 'mobiliario', cc.total as 'total',
+					cc.probabilidade_empresa as 'probabilidade', cc.motivo_empresa as 'motivo', cc.observacao_empresa as 'observacao', 
+					usu.usuario_nome as 'dono_nome', usu.usuario_sobrenome as 'dono_sobrenome'            
+					from contatos_comercial cc, usuario usu
+					where cc.usuario_id = usu.usuario_id             
+					and cc.retorno_empresa between '".$dataHoje."' and date_add(cc.retorno_empresa, interval 10 day) 
+				order by cc.retorno_empresa asc";
+
+		return $this->query;
+	}
+
+	protected function pegarNomesContatosPessoal($id_user){
+		$this->query = "select cc.contato_empresa as 'contato' from contatos_comercial cc, usuario usu where cc.usuario_id = usu.usuario_id and usu.usuario_id = '".$id_user."' ";
+		return $this->query;
+	}
+
+	protected function pegarNomesContatosAdmin(){
+		$this->query = "select cc.contato_empresa as 'contato' from contatos_comercial cc, usuario usu where cc.usuario_id = usu.usuario_id";
+		return $this->query;
+	}
 
 }

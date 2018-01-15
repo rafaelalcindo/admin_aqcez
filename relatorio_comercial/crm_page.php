@@ -29,6 +29,8 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/relatorio_agenda/relatorio_agenda.css" rel="stylesheet" type="text/css" >
     <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" >
+    <link href="../css/easy-autocomplete.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/easy-autocomplete.themes.min.css" rel="stylesheet" type="text/css" >
     <link href="assets/css/crm_page.css" rel="stylesheet" type="text/css">
     
 
@@ -36,6 +38,7 @@
     <script type="text/javascript" src="../js/bootstrap.min.js" ></script>    
     <script type="text/javascript" src="../js/moment.js"></script>
     <script type="text/javascript" src="../js/jquery.blockUI.js"></script>    
+    <script type="text/javascript" src="../js/jquery.easy-autocomplete.min.js" ></script>
     <script type="text/javascript" src="../js/navGeral/navGeralOriginal.js" ></script>     
     <script type="text/javascript" src="../js/relatorio_comercial/crm_comercial.js" ></script>
     

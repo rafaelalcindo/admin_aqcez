@@ -5,6 +5,21 @@ $(document).ready(function(){
 	preecherTabelContatos(id_user);
 	preencherTabelaContatosHoje(id_user);
 
+	let nomescontatos = ListarNomesContatosPessoal(id_user);
+	console.log(nomescontatos);
+
+	var options = {
+		data: nomescontatos,
+		getValue: "contato",
+		list: {
+			match:{
+				enabled: true
+			}
+		}
+	};
+
+	$('#filtro_contato').easyAutocomplete(options);
+
 	$('#btn_salvar').click(function(){
 
 		let cad_contato = [];
@@ -34,12 +49,15 @@ $(document).ready(function(){
 	});
 
 
-	$('#filtro_botao').click(function(){
+	$('#filtro_contato').bind("change paste keyup",function(){
 		let filtro_contato = [];
 
+		$('#table_body_filtro').children().remove();
+		
 		filtro_contato['id_user'] 		= $('#id_user').val();
 		filtro_contato['nome_contato']	= $('#filtro_contato').val();
 		filtro_contato['filtro_data']	= $('#filtro_data').val();
+
 
 		preencherTebelaContatoFiltro(filtro_contato);
 
@@ -89,7 +107,6 @@ function preecherTabelContatos(id_user){
 
 
 	});
-
 	
 }
 
@@ -167,6 +184,29 @@ function preencherTebelaContatoFiltro(dados_filtro){
 	})
 }
 
+// ============================================  preencher nomesContatos ============================================
+
+	function ListarNomesContatosPessoal(id_user){
+		let dadosEnviar		= new FormData();
+		let nomescontatos = '';
+
+		dadosEnviar.append('dono_contato', id_user);
+
+		$.ajax({
+			type: 'post',
+			processData: false,
+			contentType: false,
+			data: dadosEnviar,
+			url: 'controller/controller.php/contatos/PegarNomescontatosPessoal',
+			async: false,
+			dataType: 'json',
+			success: function(data){
+				nomescontatos = data;
+			}
+		});
+
+		return nomescontatos;
+	}
 
 
 // ================================================== CRUD CRM ======================================================

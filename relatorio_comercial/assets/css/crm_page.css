@@ -5,7 +5,7 @@
 	margin-right: 7%;	
 	margin-top: 3%;
 	padding: 3%;
-	height: 700px;
+	height: 100%;
 }
 
 .btn{
@@ -38,5 +38,9 @@
 
 #btn_modal_contato{
 	margin-left: 70%;
+}
+
+.filtro_inicial{
+	margin-left: 30%;
 }
 
