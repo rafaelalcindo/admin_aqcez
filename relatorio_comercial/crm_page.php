@@ -26,21 +26,24 @@
     <link href="../css/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
+    <link href="../css/easy-autocomplete.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/easy-autocomplete.themes.min.css" rel="stylesheet" type="text/css" > 
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/relatorio_agenda/relatorio_agenda.css" rel="stylesheet" type="text/css" >
-    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" >
-    <link href="../css/easy-autocomplete.min.css" rel="stylesheet" type="text/css">
-    <link href="../css/easy-autocomplete.themes.min.css" rel="stylesheet" type="text/css" >
+    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" >  
+
     <link href="assets/css/crm_page.css" rel="stylesheet" type="text/css">
+    
     
 
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js" ></script>
     <script type="text/javascript" src="../js/bootstrap.min.js" ></script>    
     <script type="text/javascript" src="../js/moment.js"></script>
     <script type="text/javascript" src="../js/jquery.blockUI.js"></script>    
-    <script type="text/javascript" src="../js/jquery.easy-autocomplete.min.js" ></script>
+   
     <script type="text/javascript" src="../js/navGeral/navGeralOriginal.js" ></script>     
     <script type="text/javascript" src="../js/relatorio_comercial/crm_comercial.js" ></script>
+     <script type="text/javascript" src="../js/jquery.easy-autocomplete.min.js" ></script>
     
 
 </head>
@@ -170,14 +173,26 @@
                             <div class="col-sm-12">
                                 <h3 align="center">Filtro de Contatos</h3>
                                 <br/>
-                                <div class="form-inline" id="menu_filtro">
-                                    <label>Nome: </label>
-                                    <input type="text" class="form-control" id="filtro_contato" name="filtro_contato" placeholder="Filtro Contato">
+                                <div class="row" id="menu_filtro">
+                                    
+                                    <div class="col-sm-3">
+                                        <label>Nome: </label>
+                                        <input type="text" class="form-control" id="filtro_contato" name="filtro_contato" placeholder="Filtro Contato">
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-6">                                        
+                                            <label>Data: </label>
+                                        <div class="form-inline">
+                                            <input type="date" class="form-control" id="filtro_data" name="filtro_data" placeholder="Filtro Data">
+                                            <button type="button" id="filtro_botao" class="btn btn-info">Filtrar</button> 
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        
+                                    </div>
+                                    
 
-                                    <label>Data: </label>
-                                    <input type="date" class="form-control" id="filtro_data" name="filtro_data" placeholder="Filtro Data">
-
-                                    <button type="button" id="filtro_botao" class="btn btn-info">Filtrar</button>
+                                    
                                 </div>
                                 <div class="tabela_filtro">
                                     <table class="table table-bordered table-hover" >

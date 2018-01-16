@@ -155,15 +155,13 @@
 
 		public function setSinalFechamento($sinal){
 
-			if($sinal < 20){
-				$this->sinal_fechamento = '#990000';
-			}else if($sinal >= 20 && $sinal < 40){
+			if($sinal >= 0 && $sinal < 25){
 				$this->sinal_fechamento = '#ff1a1a';
-			}else if($sinal >= 40 && $sinal < 60){
+			}else if($sinal >= 25 && $sinal < 50){
 				$this->sinal_fechamento = '#ff751a';
-			}else if($sinal >=60 && $sinal < 80){
-				$this->sinal_fechamento = '#e6e600';
-			}else if($sinal >= 80){
+			}else if($sinal >=50 && $sinal < 75){
+				$this->sinal_fechamento = '#ffff1a';
+			}else if($sinal >= 75){
 				$this->sinal_fechamento = '#53ff1a';
 			}
 			
@@ -195,7 +193,7 @@
 
 		public function editarContato($obj){
 			$sql_query   = parent::editarContato($obj);
-			
+					
 			$db_contatos = new model_connection_contato();
 			$resultado	 = $db_contatos->Editar($sql_query);			
 			if($resultado){ return true; }else{ return false; }

@@ -68,18 +68,29 @@ abstract class ContatoQuery
 
 
 		$this->query = sprintf("update contatos_comercial set
+
 			nome_empresa = '%s',
 			contato_empresa = '%s',
 			endereco_empresa = '%s',
 			telefone_empresa = '%s',
 			status_empresa = '%s',
 			retorno_empresa = '%s',
-			sinal_empresa = '%s'
+			motivo_empresa 	= '%s',
+			probabilidade_empresa = '%u',			
+			sinal_empresa = '%s',
+			projetos = '%s',
+			turn_key = '%u',
+			interiores = '%u',
+			mobiliario = '%u',
+			total = '%s',
+			observacao_empresa = '%s',
+			usuario_id = '%u'
+
 
 			where 
 
 			idcontatos_comercial = %u ", 
-			$obj->getNomeEmpresa(), $obj->getNomeContato(), $obj->getEndContato(), $obj->getTelContato(),  $obj->getStatusContato(), $obj->getRetornoContato(), $obj->getSinalFechamento(), $obj->getIdContato() );
+			$obj->getNomeEmpresa(), $obj->getNomeContato(), $obj->getEndContato(), $obj->getTelContato(),  $obj->getStatusContato(), $obj->getRetornoContato(), $obj->getMotivo(), $obj->getProbabilidade(), $obj->getSinalFechamento(), $obj->getProjetos(), $obj->getTurnKey(), $obj->getInteriores(), $obj->getMobiliario(), $obj->getTotal(), $obj->getObservacao(), $obj->getDonoContato(), $obj->getIdContato() );
 
 		return $this->query;
 	}
