@@ -48,6 +48,27 @@ $(document).ready(function(){
 
 	});
 
+	$('#btn_editar').click(function(){
+		let edit_contato = [];
+
+		edit_contato['empresa']  		= $('#edit_empresa').val();
+		edit_contato['contato']			= $('#edit_contato').val();
+		edit_contato['telefone']		= $('#edit_telefone').val();
+		edit_contato['endereco']		= $('#edit_endereco').val();
+		edit_contato['status']			= $('#edit_situacao').val();
+		edit_contato['retorno'] 		= $('#edit_retorno').val();
+		edit_contato['motivo']			= $('#edit_motivo').val();
+		edit_contato['probabilidade']	= $('#edit_proba_contato').val();
+		edit_contato['projeto']			= $('#edit_projeto').val();
+		edit_contato['turn_key']		= $('#edit_quant_turn_key').val();
+		edit_contato['interiores']		= $('#edit_quant_interiores').val();
+		edit_contato['mobiliario']		= $('#edit_quant_mobiliario').val();
+		edit_contato['observacao']		= $('#edit_observacao').val();
+
+		edit_contato['id_user']			= $('#')
+
+	});
+
 
 	$('#filtro_contato').bind("change paste keyup",function(){
 		let filtro_contato = [];
@@ -209,6 +230,8 @@ function preencherTebelaContatoFiltro(dados_filtro){
 	}
 
 
+
+
 // ================================================== CRUD CRM ======================================================
 
 
@@ -263,9 +286,33 @@ function salvarContato(contato){
 
 }
 
+function EditarContato(contato){
+
+}
 
 
 
+function preencherDadosEditar(id){
+	
+	let dadosEditar = new FormData();
+
+	dadosEditar.append('id_contato', id);
+
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: dadosEditar,
+		url: 'controller/controller.php/contatos/pegarContato',
+		async: false,
+		dataType: 'json',
+		success: function(data){
+			
+			preencherDadosEditarForm(data);
+			$('#modal_edit').modal('show');
+		}
+	});
+}
 
 
 
@@ -281,7 +328,7 @@ function preencherDadosTotais(data){
 		bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
 		bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
 		bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
-		bodyTable += "<td> <button type='button' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+		bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
 		bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 		bodyTable += "</tr>";
 	})
@@ -300,7 +347,7 @@ function preencherDadosContatosHoje(data){
 			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
 			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
 			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
-			bodyTable += "<td> <button type='button' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+			bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
 			bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 			bodyTable += "</tr>";
 		}
@@ -325,6 +372,21 @@ function preencherDadosContatosFiltro(data){
 	})
 
 	$('#table_body_filtro').append(bodyTable);
+}
+
+function preencherDadosEditarForm(data){
+	$('#edit_empresa').val(data[0].empresa);
+	$('#edit_contato').val(data[0].contato);
+	$('#edit_telefone').val(data[0].tel);
+	$('#edit_endereco').val(data[0].end);
+	$('#edit_retorno').val(data[0].retorno);
+	$('#edit_proba_contato').val(data[0].probabilidade);
+	$('#edit_projeto').val(data[0].projetos);
+	$('#edit_quant_turn_key').val(data[0].turn_key);
+	$('#edit_quant_interiores').val(data[0].interiores);
+	$('#edit_quant_mobiliario').val(data[0].mobiliario);
+	$('#edit_observacao').val(data[0].observacao);
+
 }
 
 
@@ -364,6 +426,9 @@ function validacaoCadastro(contato){
 }
 
 
+
+
+
 //-------- - - - - - - - -- - -   Formatar Data --- - - - - - - - -- - - - - - - - - -
 
 function GetDataHoje(){
@@ -371,3 +436,4 @@ function GetDataHoje(){
 	let formato = moment(dia).format('YYYY-MM-DD');
 	return formato;
 }
+

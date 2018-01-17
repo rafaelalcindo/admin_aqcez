@@ -330,4 +330,92 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+<!-- ====================================================  Modal Editar Contato ===================================================== -->
+
+
+<div class="modal fade" tabindex="-2" role="dialog" id="modal_edit" aria-labelledby="modal_edit">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">Editar Contato</h3>
+          </div>
+          <div class="modal-body">
+            <h2>Editar de Contato</h2>
+            <div class="row">
+                <div class="col-sm-6" style="border-right: 3px solid #a6a6a6">
+                    <label>Nome da Empresa</label>
+                    <input type="text" class="form-control" placeholder="Empresa" id="edit_empresa" name="edit_empresa">
+
+                    <label>Nome do Contato</label>
+                    <input type="text" class="form-control" placeholder="Contato" id="edit_contato" name="edit_contato">
+
+                    <label>Telefone do Contato</label>
+                    <input type="text" class="form-control" placeholder="Telefone de Contato" id="edit_telefone" name="edit_telefone" >
+
+                    <label>Endereço do Contato</label>
+                    <input type="text" class="form-control" placeholder="Endereço" id="edit_endereco" name="edit_endereco" >
+
+                    <label>Situação</label>
+                    <select class="form-control" id="edit_situacao" >
+                        <option>Em andamento</option>
+                        <option>Finalizando positivo</option>
+                        <option>Finalizado negativo</option>
+                    </select>
+
+                    <label>Selecione o dia do retorno</label>
+                    <input type="date" class="form-control" placeholder="Retorno" id="edit_retorno" name="edit_retorno">
+
+                </div>
+                <div class="col-sm-6">
+
+                    <label>Motivo</label>
+                    <select class="form-control" id="edit_motivo" >
+                        <option >Preço</option>
+                        <option >Prazo</option>
+                        <option >Qualidade</option>
+                        <option>Atendimento</option>
+                        <option>Assistência técnica</option>
+                        <option>Concorrência</option>
+                        <option>Análise</option>
+                        <option>Suspens</option>
+                        <option>Cancel</option>
+                    </select>
+
+                    <label>Probabilidade Contato</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" placeholder="Digite de aceitação do contato" id="edit_proba_contato" name="edit_proba_contato">
+                        <div class="input-group-addon" >%</div>
+                    </div>
+                    
+
+                    <label>Nome do Projeto</label>
+                    <input type="text" class="form-control" placeholder="Digite o nome do Projeto" id="edit_projeto" name="edit_projeto" >
+
+                    <label>Turn Key</label>
+                    <input type="number" class="form-control" placeholder="Digite a Quantidade de Turn Key" id="edit_quant_turn_key" name="edit_quant_turn_key">
+
+                    <label>Interiores</label>
+                    <input type="number" class="form-control" placeholder="Digite a Quantidade de Interiores" id="edit_quant_interiores" name="edit_quant_interiores">
+
+                    <label>Mobiliario</label>
+                    <input type="number" class="form-control" placeholder="Digite a Quantidade de Mobiliario" id="edit_quant_mobiliario" name="edit_quant_mobiliario">
+
+                    <label>Observação</label>
+                    <textarea id="edit_observacao" class="form-control" placeholder="Digite a Observação" ></textarea>
+
+
+                </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-success" id="btn_editar">Salvar alterações</button>            
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </body>

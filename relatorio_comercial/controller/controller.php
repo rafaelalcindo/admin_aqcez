@@ -23,6 +23,14 @@ date_default_timezone_set("America/Sao_Paulo");
 @session_start();
 
 
+
+
+
+
+
+
+
+
 //=========================listagem de contatos ===================================
 $app->post('/contatos/listarContatos', function(Request $request, Response $response){
 	$request_array = $request->getParsedBody();
@@ -86,6 +94,21 @@ $app->get('/contatos/listarTodosContatosPorFiltroProximo', function(Request $req
 	echo $resultado;
 });
 
+$app->post('/contatos/pegarContato', function(Request $request, Response $response){
+	$request_array 	= $request->getParsedBody();
+	$id_contato 	= $request_array['id_contato'];
+
+	$contatos 		= new Contatos();
+	$resultado		= $contatos->getContatoEditar($id_contato);
+	echo $resultado;
+});
+
+
+
+
+
+
+
 // ========================== Listagem de nomes Pessoal =========================
 
 $app->post('/contatos/PegarNomescontatosPessoal', function(Request $request, Response $response){
@@ -97,6 +120,12 @@ $app->post('/contatos/PegarNomescontatosPessoal', function(Request $request, Res
 	$resultado 			= $contatos->pegarNomesContatos($id_user);
 	echo $resultado;
 });
+
+
+
+
+
+
 
 // ========================== Listagem de nomes ADMIN ==========================
 
