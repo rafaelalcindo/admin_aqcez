@@ -431,7 +431,7 @@
             <h3 class="modal-title">Deletar Contato</h3>
           </div>
           <div class="modal-body">
-            
+            <input type="hidden" value="" id="del_id_contato" />
             <div class="row">
 
                 <div class="col-sm-12" style="border-right: 3px solid #a6a6a6">

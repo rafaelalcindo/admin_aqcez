@@ -363,12 +363,30 @@ function preencherDadosEditar(id){
 	});
 }
 
-function openDeletarModal(){
+function openDeletarModal(id){
+	$('#del_id_contato').val('');
+	$('#del_id_contato').val(id);
 	$('#modal_deletar').modal('show');
 }
 
-function deletarDadosContato(id){
+function deletarDadosContato(){
+	let id = $('#del_id_contato').val();
+	let dadosDeletar = new FormData();
 
+	dadosDeletar.append('id_contato', id);
+
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: dadosDeletar,
+		url: 'controller/controller.php/contatos/deletar',
+		async: false,
+		dataType: 'json',
+		success: function(data){
+
+		}
+	});
 }
 
 
@@ -386,7 +404,7 @@ function preencherDadosTotais(data){
 		bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
 		bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
 		bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
-		bodyTable += "<button type='button' id='btn_modal_deletar' class='btn btn-danger' onclick='openDeletarModal()' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
+		bodyTable += "<button type='button' id='btn_modal_deletar' class='btn btn-danger' onclick='openDeletarModal("+val.id_contatos+")' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 		bodyTable += "</tr>";
 	})
 	
