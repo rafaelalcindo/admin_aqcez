@@ -65,7 +65,12 @@ $(document).ready(function(){
 		edit_contato['mobiliario']		= $('#edit_quant_mobiliario').val();
 		edit_contato['observacao']		= $('#edit_observacao').val();
 
-		edit_contato['id_user']			= $('#')
+		edit_contato['id_user']			= $('#id_user').val();
+		edit_contato['id_contato']		= $('#edit_id_contato').val();
+
+		if(validacaoCadastro(edit_contato)){
+			EditarContato(edit_contato);	
+		}		
 
 	});
 
@@ -287,7 +292,51 @@ function salvarContato(contato){
 }
 
 function EditarContato(contato){
+	let dadosEditar = new FormData();
+	dadosEditar.append('nome_emp', contato['empresa']);
+	dadosEditar.append('nome_contato', contato['contato']);
+	dadosEditar.append('tel_contato', contato['telefone']);
+	dadosEditar.append('end_contato', contato['endereco']);
+	dadosEditar.append('status_contato', contato['status']);
+	dadosEditar.append('retorno_contato', contato['retorno']);
+	dadosEditar.append('motivo_contato', contato['motivo']);
+	dadosEditar.append('probabilidade_contato', contato['probabilidade']);
+	dadosEditar.append('projetos', contato['projeto']);
+	dadosEditar.append('turn_key', contato['turn_key']);
+	dadosEditar.append('interiores', contato['interiores']);
+	dadosEditar.append('observacao', contato['observacao']);
+	dadosEditar.append('dono_contato', contato['id_user']);
+	dadosEditar.append('id_contato', contato['id_contato']);
 
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: dadosEditar,
+		url: 'controller/controller.php/contatos/editar',
+		async: false,
+		dataType: 'json',
+		beforeSend: function(){
+			$.blockUI({ 
+				message: '<h2>Buscando Dados</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
+		},
+		success: function(data){
+			location.reload();
+		},
+		complete: function(){
+			$.unblockUI();
+		}
+
+	});
 }
 
 
@@ -307,11 +356,19 @@ function preencherDadosEditar(id){
 		async: false,
 		dataType: 'json',
 		success: function(data){
-			
+			limparComposEditar();
 			preencherDadosEditarForm(data);
 			$('#modal_edit').modal('show');
 		}
 	});
+}
+
+function openDeletarModal(){
+	$('#modal_deletar').modal('show');
+}
+
+function deletarDadosContato(id){
+
 }
 
 
@@ -329,7 +386,7 @@ function preencherDadosTotais(data){
 		bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
 		bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
 		bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
-		bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
+		bodyTable += "<button type='button' id='btn_modal_deletar' class='btn btn-danger' onclick='openDeletarModal()' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 		bodyTable += "</tr>";
 	})
 	
@@ -347,7 +404,7 @@ function preencherDadosContatosHoje(data){
 			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
 			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
 			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
-			bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+			bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
 			bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 			bodyTable += "</tr>";
 		}
@@ -365,7 +422,7 @@ function preencherDadosContatosFiltro(data){
 			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
 			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
 			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
-			bodyTable += "<td> <button type='button' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+			bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
 			bodyTable += "<button type='button' class='btn btn-danger' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
 			bodyTable += "</tr>";
 		}
@@ -374,7 +431,23 @@ function preencherDadosContatosFiltro(data){
 	$('#table_body_filtro').append(bodyTable);
 }
 
+function limparComposEditar(){
+	$('#edit_empresa').val('');
+	$('#edit_contato').val('');
+	$('#edit_telefone').val('');
+	$('#edit_endereco').val('');
+	$('#edit_retorno').val('');
+	$('#edit_proba_contato').val('');
+	$('#edit_projeto').val('');
+	$('#edit_quant_turn_key').val('');
+	$('#edit_quant_interiores').val('');
+	$('#edit_quant_mobiliario').val('');
+	$('#edit_observacao').val('');
+	$('#edit_id_contato').val('');
+}
+
 function preencherDadosEditarForm(data){
+	$('#edit_id_contato').val(data[0].id_contatos);
 	$('#edit_empresa').val(data[0].empresa);
 	$('#edit_contato').val(data[0].contato);
 	$('#edit_telefone').val(data[0].tel);

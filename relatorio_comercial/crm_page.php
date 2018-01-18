@@ -344,7 +344,9 @@
           <div class="modal-body">
             <h2>Editar de Contato</h2>
             <div class="row">
+
                 <div class="col-sm-6" style="border-right: 3px solid #a6a6a6">
+                    <input type="hidden" value="" id="edit_id_contato" name="edit_id_contato">
                     <label>Nome da Empresa</label>
                     <input type="text" class="form-control" placeholder="Empresa" id="edit_empresa" name="edit_empresa">
 
@@ -417,5 +419,35 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <!-- ======================================== Modal Deletar Contato ============================================== -->
+
+
+    <div class="modal fade" tabindex="-2" role="dialog" id="modal_deletar" aria-labelledby="modal_deletar">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">Deletar Contato</h3>
+          </div>
+          <div class="modal-body">
+            
+            <div class="row">
+
+                <div class="col-sm-12" style="border-right: 3px solid #a6a6a6">
+                    <p>Você realmente deseja deletar esse contato?</p>
+                </div>               
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-danger" id="btn_deletar">Deletar Contato</button>            
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
 
 </body>
