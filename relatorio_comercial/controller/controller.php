@@ -246,7 +246,7 @@ $app->post('/contatos/deletar', function(Request $request, Response $response){
 	$contatos 		 = new Contatos();
 	$contatos->setIdContato($id_contato);
 	$resultado		 = $contatos->deletarContato($contatos);
-	if($resultado){ echo 'true'; }else{ echo 'false'; }
+	if($resultado){ echo "true"; }else{ echo "false"; }
 
 });
 

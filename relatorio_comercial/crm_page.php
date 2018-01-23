@@ -54,6 +54,13 @@
     <div class="container2" >
         <div class="titulos_menu">
             <h2>Lista de Contatos</h2>
+            <!-- <button type="file" class="btn btn-primary" id="btn_importar_excell" > <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Importar contatos via Excell</button> -->
+            <label class="btn btn-primary" id="btn_upload_excell" for="btn_importar_excell" >
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                <input type="file" class="btn btn-primary" id="btn_importar_excell" style="display: none;" name="btn_importar_excell" value=""> 
+                Adicionar Planilha   
+            </label>
+            
             <button type="button" class="btn btn-primary" id="btn_modal_contato" data-toggle="modal" data-target="#modal_cad">Adicionar Contato</button>
         </div>
          <br/>
@@ -442,7 +449,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-danger" id="btn_deletar">Deletar Contato</button>            
+            <button type="button" class="btn btn-danger" id="btn_deletar" onclick="deletarDadosContato()">Deletar Contato</button>            
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

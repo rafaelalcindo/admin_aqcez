@@ -281,6 +281,7 @@ function salvarContato(contato){
 	        } });
 		},
 		success: function(data){
+			limparCamposSalvar();
 			location.reload();
 		},
 		complete: function(){
@@ -382,9 +383,13 @@ function deletarDadosContato(){
 		data: dadosDeletar,
 		url: 'controller/controller.php/contatos/deletar',
 		async: false,
-		dataType: 'json',
+		dataType: 'text',
 		success: function(data){
-
+			if(data == 'true'){
+				location.reload();
+			}else{
+				alert('Falha me deletar o cliente!');
+			}
 		}
 	});
 }
@@ -447,6 +452,20 @@ function preencherDadosContatosFiltro(data){
 	})
 
 	$('#table_body_filtro').append(bodyTable);
+}
+
+function limparCamposSalvar(){
+	$('#cad_empresa').val('');
+	$('#cad_contato').val('');
+	$('#cad_telefone').val('');
+	$('#cad_endereco').val('');
+	$('#cad_retorno').val('');
+	$('#proba_contato').val('');
+	$('#cad_projeto').val('');
+	$('#cad_quant_turn_key').val('');
+	$('#cad_quant_interiores').val('');
+	$('#cad_quant_mobiliario').val('');
+	$('#cad_observacao').val('');
 }
 
 function limparComposEditar(){

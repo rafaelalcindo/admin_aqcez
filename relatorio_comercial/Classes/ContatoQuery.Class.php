@@ -200,4 +200,25 @@ abstract class ContatoQuery
 		return $this->query;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// ================================================= Filtros Feito em importação de arquivo Excell ========================================
+
+
+	protected function queryVerificaProjeto($projeto){
+		$this->query = sprintf("select * from contatos_comercial where projetos = '%s' ", $projetos);
+		return $this->query;
+	}
 }

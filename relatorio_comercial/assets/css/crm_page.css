@@ -37,7 +37,11 @@
 }
 
 #btn_modal_contato{
-	margin-left: 70%;
+	margin-left: 1%;
+}
+
+#btn_upload_excell{
+	margin-left: 60%;
 }
 
 .filtro_inicial{
