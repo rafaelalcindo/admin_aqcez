@@ -4,6 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../../myslimsite/vendor/autoload.php';
 require_once('../Classes/Contatos.Class.php');
+require_once('../Classes/ExcellComercial.Class.php');
 
 $configuration = [
 'settings' => [
@@ -105,6 +106,43 @@ $app->post('/contatos/pegarContato', function(Request $request, Response $respon
 
 
 
+$app->post('/contatos/importarContatosExcell', function(Request $request, Response $response){
+	$request_array 			= $request->getParsedBody();	 	
+	$id_user				= $request_array['dono_contato'];
+	$arquivo_excell			= isset($_FILES['excell'])? $_FILES['excell'] : null;
+
+	//echo "<br/>".print_r($arquivo_excell);
+
+	$excellComercial 		= new ExcellComercial();
+	$diretorioUpload		= $excellComercial->checkDiretorioUpload($id_user);
+	$extensaoArquivo		= $excellComercial->verificaExtensaoArquivo($arquivo_excell);
+
+	if($extensaoArquivo){
+		$resultadoUpload = $excellComercial->moverArquivoUpload($arquivo_excell, $diretorioUpload);		
+		$arrayExcell     = $excellComercial->criarObjetoFromExcell($resultadoUpload);
+
+		//echo "<br/><br/>".print_r($arrayExcell);
+		//exit;
+		foreach ($arrayExcell as $key => $value) {
+			if($key >= 10){
+				if($value['B'] != ''  && $value['C'] != '' && $value['D'] != ''){
+					$excellComercial->InserirNomes($value);
+					$resultadoInsert = $excellComercial->verificaAtualizacao($id_user);
+					
+				}
+			}
+		}
+		if(isset($resultadoInsert)){
+			echo "{status: true}";
+		}
+	}else{
+		echo "{status: false}";
+	}
+	
+});
+
+
+
 
 
 
@@ -118,7 +156,7 @@ $app->post('/contatos/PegarNomescontatosPessoal', function(Request $request, Res
 
 	$contatos 			= new Contatos();
 	$resultado 			= $contatos->pegarNomesContatos($id_user);
-	echo $resultado;
+	echo print_r($resultado);
 });
 
 

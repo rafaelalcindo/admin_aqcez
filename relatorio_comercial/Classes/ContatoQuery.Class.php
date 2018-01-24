@@ -217,8 +217,78 @@ abstract class ContatoQuery
 	// ================================================= Filtros Feito em importação de arquivo Excell ========================================
 
 
-	protected function queryVerificaProjeto($projeto){
-		$this->query = sprintf("select * from contatos_comercial where projetos = '%s' ", $projetos);
+	protected function queryVerificaProjeto($projeto, $id_dono){
+		$this->query = sprintf("select * from contatos_comercial where projetos = '%s' and usuario_id = '%u' ", $projeto, $id_dono);
 		return $this->query;
 	}
+
+	protected function atualizarListaExcell($info, $id_dono){
+		$dataUpdate = $info['ano']."-".$info['mes']."-".$info['dia'];
+
+		$this->query =sprintf("
+			update contatos_comercial set	
+			
+			status_empresa = '%s',
+			retorno_empresa = '%s',
+			motivo_empresa 	= '%s',
+			probabilidade_empresa = '%u',	
+			sinal_empresa = '%s',		
+			projetos = '%s',
+			turn_key = '%u',
+			interiores = '%u',
+			mobiliario = '%u',
+			total = '%s',
+			observacao_empresa = '%s'
+			
+			where 
+
+			idcontatos_comercial = %u ", $info['situacao'], $dataUpdate, $info['motivo'], $info['probabilidade'], $info['sinal_empresa'], $info['projeto'], $info['turn_key'], $info['interiores'], $info['mobiliario'], $info['total'], $info['observacao'], $id_dono );
+
+		return $this->query;
+
+	}
+
+	protected function cadastrarListaExcell($info, $id_dono){
+		$dataUpdate = $info['ano']."-".$info['mes']."-".$info['dia'];
+
+		$this->query = sprintf("
+			insert into contatos_comercial
+			( 
+			    
+			    status_empresa,
+			    retorno_empresa,
+			    motivo_empresa,
+			    probabilidade_empresa,
+			    sinal_empresa,
+			    projetos,
+			    turn_key,
+			    interiores,
+			    mobiliario,
+			    total,
+			    observacao_empresa,
+			    usuario_id
+			)
+			values
+			(
+
+			    '%s',
+			    '%s',
+			    '%s',
+			    '%u',
+			    '%s',
+			    '%s',
+			    '%u',
+			    '%u',
+			    '%u',
+			    '%u',
+			    '%s',
+			    '%u'
+
+			)
+		", $info['situacao'], $dataUpdate, $info['motivo'], $info['probabilidade'], $info['sinal_empresa'], $info['projeto'], $info['turn_key'], $info['interiores'], $info['mobiliario'], $info['total'], $info['observacao'], $id_dono );
+
+		return $this->query;
+	}
+
+
 }
