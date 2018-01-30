@@ -1,5 +1,20 @@
 $(document).ready(function(){
 
+	$('#btn_teste').click(function(){
+		console.log('Entrou btn teste');
+		 $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } }); 
+ 
+        setTimeout($.unblockUI, 2000); 
+	});
+
 	$('#consultar').click(function(){
 
 		let data_ini = $('#data_ini').val();
@@ -32,8 +47,11 @@ $(document).ready(function(){
 	$('#sair_menu').removeAttr('href');		
 	$('#sair_menu').attr('href','../login/controller.php?login=deslogar&pageName=index.html');
 
+
 	$('#nav_voltar_painel').removeAttr('href');
 	$('#nav_voltar_painel').attr('href', '../painel_controle.html');
+
+	
 
 });
 

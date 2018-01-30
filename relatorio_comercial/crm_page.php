@@ -39,11 +39,12 @@
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js" ></script>
     <script type="text/javascript" src="../js/bootstrap.min.js" ></script>    
     <script type="text/javascript" src="../js/moment.js"></script>
-    <script type="text/javascript" src="../js/jquery.blockUI.js"></script>    
+       
    
     <script type="text/javascript" src="../js/navGeral/navGeralOriginal.js" ></script>     
     <script type="text/javascript" src="../js/relatorio_comercial/crm_comercial.js" ></script>
-     <script type="text/javascript" src="../js/jquery.easy-autocomplete.min.js" ></script>
+    <script type="text/javascript" src="../js/jquery.easy-autocomplete.min.js" ></script>
+    <script type="text/javascript" src="../js/jquery.blockUI.js"></script> 
     
 
 </head>
@@ -62,6 +63,24 @@
             </label>
             
             <button type="button" class="btn btn-primary" id="btn_modal_contato" data-toggle="modal" data-target="#modal_cad">Adicionar Contato</button>
+            
+        </div>
+        <div class="row" id="div_barra_de_progresso">
+            <hr/>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+                <div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" id="barra_carrega_excell" style="width: 0%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-success" id="btn_importar_ex_carregado">
+                        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                        Importar para o servidor
+                    </button>
+                </div>
+            </div>
         </div>
          <br/>
          <hr/>

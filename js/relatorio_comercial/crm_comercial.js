@@ -20,6 +20,23 @@ $(document).ready(function(){
 
 	$('#filtro_contato').easyAutocomplete(options);
 
+	$('#div_barra_de_progresso').hide();
+	$('#btn_importar_ex_carregado').hide();
+
+	$("#btn_importar_excell").on('change', function(){
+		
+		if($(this).val() != '' && $(this).val() != undefined ){
+			
+			let validacao = validarArquivo($("#btn_importar_excell").prop('files')[0]);
+			if(validacao){
+				$('#div_barra_de_progresso').show('slow');
+				carregarBarra();
+			}else{
+				alert('Por favor coloque arquivo com extensão .xls');
+			}
+		}
+	});
+
 	$('#btn_salvar').click(function(){
 
 		let cad_contato = [];
@@ -88,7 +105,22 @@ $(document).ready(function(){
 		preencherTebelaContatoFiltro(filtro_contato);
 
 
-	})
+	});
+
+
+	$('#btn_importar_ex_carregado').click(function(){
+		let file_upload_excell = $("#btn_importar_excell").prop('files')[0];
+		let id_user			   = $('#id_user').val();
+
+		let uploadfile = new FormData();
+		uploadfile.append('excell', file_upload_excell);
+		uploadfile.append('dono_contato', id_user);
+
+		salvarUploadExcell(uploadfile);
+
+	});
+
+
 
 	
 })
@@ -109,7 +141,7 @@ function preecherTabelContatos(id_user){
 		contentType: false,
 		data: dataIdForm,
 		url: 'controller/controller.php/contatos/listarContatos',
-		async: false,
+		
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
@@ -149,7 +181,7 @@ function preencherTabelaContatosHoje(id_user){
 		contentType: false,
 		data: TabelaHoje,
 		url: 'controller/controller.php/contatos/listarhoje',
-		async: false,
+		
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
@@ -185,8 +217,7 @@ function preencherTebelaContatoFiltro(dados_filtro){
 		processData: false,
 		contentType: false,
 		data: dadosEnviar,
-		url: 'controller/controller.php/contatos/listarFiltro',
-		async: false,
+		url: 'controller/controller.php/contatos/listarFiltro',		
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
@@ -264,12 +295,11 @@ function salvarContato(contato){
 		processData: false,
 		contentType: false,
 		data: dadosEnviar,
-		url: 'controller/controller.php/contatos/salvar',
-		async: false,
+		url: 'controller/controller.php/contatos/salvar',		
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
-				message: '<h2>Buscando Dados</h2>',
+				message: '<h2>Salvando Dados</h2>',
 				css: { 
 	            border: 'none', 
 	            padding: '15px', 
@@ -290,6 +320,38 @@ function salvarContato(contato){
 
 	});
 
+}
+
+function salvarUploadExcell(dataForm){
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: dataForm,
+		url: 'controller/controller.php/contatos/importarContatosExcell',		
+		dataType: 'json',
+		beforeSend: function(){
+			$.blockUI({ 
+				message: '<h2>Mandando Dados</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
+		},
+		success: function(data){
+			//console.log(data);
+			//console.log(data.status);
+			location.reload();
+		},
+		complete: function(){
+			$.unblockUI();
+		}
+	});
 }
 
 function EditarContato(contato){
@@ -315,11 +377,11 @@ function EditarContato(contato){
 		contentType: false,
 		data: dadosEditar,
 		url: 'controller/controller.php/contatos/editar',
-		async: false,
+		
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
-				message: '<h2>Buscando Dados</h2>',
+				message: '<h2>Editando Dados</h2>',
 				css: { 
 	            border: 'none', 
 	            padding: '15px', 
@@ -547,3 +609,28 @@ function GetDataHoje(){
 	return formato;
 }
 
+
+//-------------------------------- Validando arquivos ---------------------------------
+
+function validarArquivo(file){
+	let ext_permitida = ['xls'];
+	let extention = file.name.split('.').pop().toLowerCase();
+	if($.inArray(extention, ext_permitida) ){
+		return false;
+	}else{ return true; }
+
+}
+
+
+function carregarBarra(){
+	let val = 0;
+	let intervalo = setInterval(() => {
+		val = val + 1;
+		$('#barra_carrega_excell').css("width", val+"%");
+		if(val == 100){
+			clearInterval(intervalo);
+			$('#btn_importar_ex_carregado').show();
+		}
+
+	}, 50);
+}
