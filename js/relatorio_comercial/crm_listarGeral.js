@@ -27,7 +27,11 @@ $(document).ready(function(){
 
 	$('#situacao').change(function(){
 		let situacao = $("#situacao option:selected").val();
-		console.log(situacao);
+		$('#table_filtro').children().remove();
+
+		if(situacao !== ""){
+			pegarContatosPeloStatus(situacao);
+		}
 	});
 
 })
@@ -126,7 +130,7 @@ function pegarContatosPeloStatus($status){
 		processData: false,
 		contentType: false,
 		data: passaStatus,
-		url: '',
+		url: 'controller/controller.php/contatos/filtroAdmin',
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
@@ -142,7 +146,7 @@ function pegarContatosPeloStatus($status){
 	        } });
 		},
 		success: function(data){
-
+			preencherTodosDadosFiltroTodosContatos(data);
 		},
 		complete: function(){
 			$.unblockUI();
@@ -183,4 +187,20 @@ function preencherTodosOsDadosHojeProximo(data){
 	});
 
 	$('#table_hj_proximo').append(bodyTable);
+}
+
+function preencherTodosDadosFiltroTodosContatos(data){
+	let bodyTable = '';
+
+	$.each(data, function(key, val){
+		if(val.retorno !== undefined){
+			bodyTable += "<tr>";
+			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
+			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
+			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td><td>"+val.dono_nome+" "+val.dono_sobrenome+"</td>";
+			bodyTable += "</tr>";
+		}
+	});
+
+	$('#table_filtro').append(bodyTable);
 }
