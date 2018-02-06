@@ -60,7 +60,7 @@
 
  		public function InserirNomes($valores){
  			$this->projeto['dia'] 	   		 = $valores['B'];
- 			$this->projeto['mes'] 			 = $valores['C'];
+ 			$this->projeto['mes'] 			 = validaMes( $valores['C'] );
  			$this->projeto['ano'] 			 = $valores['D'];
  			$this->projeto['projeto'] 	  	 = $valores['F'];
  			$this->projeto['turn_key']	 	 = $valores['G'];
@@ -154,6 +154,21 @@
  		}else if($num == 9){
  			$motivo = "Cancel";
  			return $motivo;
+ 		}
+ 	}
+
+
+
+ 	function validaMes($mes){
+ 		$mes = "".$mes; 		
+ 		if(strpos($mes, "0") !== false){ 			
+ 			if(strlen($mes) == 2){
+ 				return $mes;
+ 			}
+ 		}else{ 
+ 			if(strlen($mes) == 2){
+ 				return $mes;
+ 			}else{ return "0".$mes; }
  		}
  	}
 

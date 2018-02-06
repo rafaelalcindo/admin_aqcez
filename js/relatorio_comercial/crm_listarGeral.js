@@ -23,7 +23,12 @@ $(document).ready(function(){
 		console.log($(this).val());
 		listagem['nome'] = $(this).val();
 		listarPorFiltro(listagem);
-	})
+	});
+
+	$('#situacao').change(function(){
+		let situacao = $("#situacao option:selected").val();
+		console.log(situacao);
+	});
 
 })
 
@@ -107,6 +112,43 @@ function listaNomesContatos(){
 	});
 
 	return nomescontatos;
+}
+
+// ======================================================== Listar Filtro ========================================================
+
+function pegarContatosPeloStatus($status){
+ 	
+ 	let passaStatus = new FormData();
+ 	passaStatus.append("situacao", $status);
+
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: passaStatus,
+		url: '',
+		dataType: 'json',
+		beforeSend: function(){
+			$.blockUI({ 
+				message: '<h2>Um momento, estamos processando seus dados...</h2>',
+				css: { 
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        } });
+		},
+		success: function(data){
+
+		},
+		complete: function(){
+			$.unblockUI();
+		}
+
+	});
 }
 
 // ======================================================  Preencher os Dados ===================================================

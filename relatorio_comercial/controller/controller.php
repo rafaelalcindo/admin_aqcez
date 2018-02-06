@@ -173,6 +173,15 @@ $app->get('/contatos/PegarNomesContatos', function(Request $request, Response $r
 	echo $resultado;
 });
 
+$app->post('/contatos/filtroAdmin', function(Request $request, Response $response){
+	$requrest_array = $request->getParsedBody();
+	$situacao		= $requrest_array['situacao'];
+
+	$contatos 		= new Contatos();
+	$resultado 		= $contatos->pegarContatoFiltroSituacaoAdmin($situacao);
+	echo $resultado;
+});
+
 // ========================= Crud Contatos =================================
 
 $app->post('/contatos/salvar', function(Request $request, Response $response){

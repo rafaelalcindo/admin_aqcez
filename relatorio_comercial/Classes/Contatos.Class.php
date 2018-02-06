@@ -400,6 +400,18 @@
 			}else{ return "[{}]"; }
 		}
 
+		public function pegarContatoFiltroSituacaoAdmin($situacao){
+			$sql_query		= parent::pegarContatosFiltroSituacao($situacao);
+			$db_contatos	= new model_connection_contato();
+			$resultado 		= $db_contatos->Consultar($sql_query);
+
+			if($resultado != false){
+				$resultadoJson = ListarInfoAdmin($resultado);
+				return $resultadoJson;
+			}else{ return "[{}]"; }
+
+		}
+
 
 
 

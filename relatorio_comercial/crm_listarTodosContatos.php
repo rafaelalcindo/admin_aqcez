@@ -121,9 +121,52 @@
                             </tbody>
                         </table>
                     </div>
+
+
                     <div role="tabpanel" class="tab-pane" id="filtro" >
-                        filtro
+                        <br/>
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <label>Situação</label>
+                                <select class="form-control" id="situacao" >
+                                    <option value="" >-</option>
+                                    <option value="Finalizado Positivo" >Finalizado</option>
+                                    <option value="Finalizado Negativo" >Perdido</option>
+                                    <option value="Em Andamento" >Em Andamento</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-hover" >
+                                    <thead>
+                                        <th>Data</th>
+                                        <th>Empresa</th>
+                                        <th>Nome Contato</th>
+                                        <th>Telefone</th>
+                                        <th>Projeto</th>
+                                        <th>Turn Key</th>
+                                        <th>Interiores</th>
+                                        <th>Mobiliario</th>
+                                        <th>Total</th>
+                                        <th>Situação</th>
+                                        <th>Motivo</th>
+                                        <th>Probabilidade</th>
+                                        <th>Dono do Contato</th>
+                                    </thead>
+                                    <tbody id="table_filtro" >
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
+
+
                 </div>
             </div>
         </div>
