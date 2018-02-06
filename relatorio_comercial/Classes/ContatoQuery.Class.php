@@ -298,4 +298,7 @@ abstract class ContatoQuery
 	}
 
 
+	
+
+
 }
