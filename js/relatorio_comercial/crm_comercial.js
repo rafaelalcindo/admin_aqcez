@@ -115,7 +115,7 @@ $(document).ready(function(){
 		let uploadfile = new FormData();
 		uploadfile.append('excell', file_upload_excell);
 		uploadfile.append('dono_contato', id_user);
-
+		console.log('entrou no click')
 		salvarUploadExcell(uploadfile);
 
 	});
@@ -323,12 +323,14 @@ function salvarContato(contato){
 }
 
 function salvarUploadExcell(dataForm){
+	console.log('entrou no salvar')
 	$.ajax({
 		type: 'post',
 		processData: false,
 		contentType: false,
 		data: dataForm,
-		url: 'controller/controller.php/contatos/importarContatosExcell',		
+		url: 'controller/controller.php/contatos/importarContatosExcell',
+		
 		dataType: 'json',
 		beforeSend: function(){
 			$.blockUI({ 
@@ -344,12 +346,13 @@ function salvarUploadExcell(dataForm){
 	        } });
 		},
 		success: function(data){
-			//console.log(data);
+			console.log(data);
 			//console.log(data.status);
-			location.reload();
+			window.location.reload();
 		},
 		complete: function(){
 			$.unblockUI();
+			window.location.reload();
 		}
 	});
 }
@@ -450,7 +453,7 @@ function deletarDadosContato(){
 			if(data == 'true'){
 				location.reload();
 			}else{
-				alert('Falha me deletar o cliente!');
+				alert('Falha de deletar o cliente!');
 			}
 		}
 	});

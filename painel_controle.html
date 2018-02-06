@@ -83,7 +83,8 @@
                             
                             removeNavOptions(data.nome, data.sobrenome);
                         }else{
-                            window.location.href = 'index.html';
+                            window.lo
+                            cation.href = 'index.html';
                         }
 
                     }
@@ -110,6 +111,11 @@
             
             let id_data = new FormData();
             id_data.append('id', $id);
+
+            if(position <= 4 && position >= 1)
+                $('#pn_Lista').show();
+
+
             $.ajax({
                 type: 'post',
                 url: 'login/controller.php?login=veriPermissionNews',
@@ -136,14 +142,12 @@
                 data: id_data,
                 dataType: 'json',
                 success: function(data){
-
+                    console.log(data);
                     if(data.status){
                         
                         $('#pn_notacao').show();
 
-                        if(position < 2 && position >= 1)
-                            $('#pn_Lista').show();
-
+                        
                     }else{ $('#pn_notacao').hide(); $('#pn_Lista').hide(); }
                 }
             });
