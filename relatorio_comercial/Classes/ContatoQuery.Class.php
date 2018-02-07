@@ -136,12 +136,32 @@ abstract class ContatoQuery
 	}
 
 	protected function filtroContatoQuery($id_user, $nome_contato, $dataHoje){
-		$this->query = "select idcontatos_comercial as 'id_contatos', nome_empresa as 'empresa', contato_empresa as 'contato', telefone_empresa as 'tel', 			  endereco_empresa as 'end',
+		//echo "<br/>nome: ".$nome_contato;
+		//echo "data: ".$dataHoje;
+		/*$this->query = "select idcontatos_comercial as 'id_contatos', nome_empresa as 'empresa', contato_empresa as 'contato', telefone_empresa as 'tel', 			  endereco_empresa as 'end',
 						status_empresa as 'status',  DATE_FORMAT(retorno_empresa,'%d/%m/%Y') as 'retorno', sinal_empresa as 'sinal',
 						projetos as 'projetos', turn_key as 'turn_key', interiores as 'interiores', mobiliario as 'mobiliario', total as 'total',
 						probabilidade_empresa as 'probabilidade', motivo_empresa as 'motivo', observacao_empresa as 'observacao'
 						from contatos_comercial 					    
-					where usuario_id = '".$id_user."' and ((contato_empresa like '".$nome_contato."%' and retorno_empresa >= '".$dataHoje."') )";
+					where usuario_id = '".$id_user."' and ((contato_empresa like '".$nome_contato."%' and retorno_empresa >= '".$dataHoje."') )"; */
+
+		$this->query = "select idcontatos_comercial as 'id_contatos', nome_empresa as 'empresa', contato_empresa as 'contato', telefone_empresa as 						'tel', 			  endereco_empresa as 'end',
+							status_empresa as 'status',  DATE_FORMAT(retorno_empresa,'%d/%m/%Y') as 'retorno', sinal_empresa as 'sinal',
+							projetos as 'projetos', turn_key as 'turn_key', interiores as 'interiores', mobiliario as 'mobiliario', total as 'total',
+							probabilidade_empresa as 'probabilidade', motivo_empresa as 'motivo', observacao_empresa as 'observacao'
+							from contatos_comercial 					    
+					where usuario_id = '5' and 
+					(
+						case
+							when '".$dataHoje."' = '' then contato_empresa like '".$nome_contato."%'
+							when '".$nome_contato."' = '' then retorno_empresa >= '".$dataHoje."'
+							when '".$nome_contato."' is null then  retorno_empresa >= '".$dataHoje."'        
+					        else
+					        contato_empresa like '".$nome_contato."%' and retorno_empresa >= '".$dataHoje."'
+					    end
+					)";
+
+
 		return $this->query;
 	}
 

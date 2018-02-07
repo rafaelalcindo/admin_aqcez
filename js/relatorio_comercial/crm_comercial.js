@@ -101,6 +101,9 @@ $(document).ready(function(){
 		filtro_contato['nome_contato']	= $('#filtro_contato').val();
 		filtro_contato['filtro_data']	= $('#filtro_data').val();
 
+		console.log("nome: "+ filtro_contato['nome_contato']);
+		console.log("filtro: "+ filtro_contato['filtro_data']);
+
 
 		preencherTebelaContatoFiltro(filtro_contato);
 
@@ -220,7 +223,7 @@ function preencherTebelaContatoFiltro(dados_filtro){
 		url: 'controller/controller.php/contatos/listarFiltro',		
 		dataType: 'json',
 		beforeSend: function(){
-			$.blockUI({ 
+			/*$.blockUI({ 
 				message: '<h2>Buscando Dados</h2>',
 				css: { 
 	            border: 'none', 
@@ -230,13 +233,13 @@ function preencherTebelaContatoFiltro(dados_filtro){
 	            '-moz-border-radius': '10px', 
 	            opacity: .5, 
 	            color: '#fff' 
-	        } });
+	        } }); */
 		},
 		success: function(data){
 			preencherDadosContatosFiltro(data);
 		},
 		complete: function(){
-			$.unblockUI();
+			//F$.unblockUI();
 		}
 	})
 }
