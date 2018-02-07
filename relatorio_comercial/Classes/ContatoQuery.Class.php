@@ -224,13 +224,17 @@ abstract class ContatoQuery
 	// ================================================= Filtros Feito em importação de arquivo Excell ========================================
 
 
+
 	protected function queryVerificaProjeto($projeto, $id_dono){
+		//echo "<br/>".$projeto;
 		$this->query = sprintf("select * from contatos_comercial where projetos = '%s' and usuario_id = '%u' ", $projeto, $id_dono);
 		return $this->query;
 	}
 
 	protected function atualizarListaExcell($info, $id_dono){
 		$dataUpdate = $info['ano']."-".$info['mes']."-".$info['dia'];
+
+		//echo "<br/>data".$dataUpdate;
 
 		$this->query =sprintf("
 			update contatos_comercial set	
@@ -249,7 +253,7 @@ abstract class ContatoQuery
 			
 			where 
 
-			idcontatos_comercial = %u ", $info['situacao'], $dataUpdate, $info['motivo'], $info['probabilidade'], $info['sinal_empresa'], $info['projeto'], $info['turn_key'], $info['interiores'], $info['mobiliario'], $info['total'], $info['observacao'], $id_dono );
+			projetos = '%s' and usuario_id = '%u' ", $info['situacao'], $dataUpdate, $info['motivo'], $info['probabilidade'], $info['sinal_empresa'], $info['projeto'], $info['turn_key'], $info['interiores'], $info['mobiliario'], $info['total'], $info['observacao'], $info['projeto'] ,$id_dono );
 
 		return $this->query;
 

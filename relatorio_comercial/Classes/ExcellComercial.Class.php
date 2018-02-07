@@ -83,10 +83,13 @@
  			if($resultado != false){
  				// atualizar
  				$sql_atualizar = parent::atualizarListaExcell($this->projeto, $id_dono);
+ 				//echo "<br/>".$sql_atualizar;
  				$resultado	   = $db_contatos->Editar($sql_atualizar);
+ 				//echo "<br/> resu: ".$resultado;
  				if($resultado){ return $resultado; }else{ return false; }
  			}else{
  				// cadastrar
+ 				//echo "<br/>entrou cadastrar";
  				$sql_cadastro  = parent::cadastrarListaExcell($this->projeto, $id_dono);
  				$resultado	   = $db_contatos->Inserir($sql_cadastro);
  				if($resultado){ return $resultado; }else{ return false; }

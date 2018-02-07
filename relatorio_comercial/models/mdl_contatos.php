@@ -28,6 +28,12 @@
 		}
 
 		public function Consultar($sql){
+			$this->conexao->set_charset("utf8");
+			$this->conexao->query("SET NAMES 'utf8'");
+			$this->conexao->query('SET character_set_connection=utf8');
+			$this->conexao->query('SET character_set_client=utf8');
+			$this->conexao->query('SET character_set_results=utf8');
+			
 			$resultado = $this->conexao->query($sql);
 			if($resultado->num_rows > 0){ return $resultado; }else{ return false; }
 		}
