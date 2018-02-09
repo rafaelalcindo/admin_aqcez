@@ -472,13 +472,17 @@ function preencherDadosTotais(data){
 
 	let bodyTable = "";
 	$.each(data, function(key, val){
-		bodyTable += "<tr>";
-		bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
-		bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
-		bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
-		bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
-		bodyTable += "<button type='button' id='btn_modal_deletar' class='btn btn-danger' onclick='openDeletarModal("+val.id_contatos+")' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
-		bodyTable += "</tr>";
+
+		if(val.retorno !== undefined){
+			bodyTable += "<tr>";
+			bodyTable += "<td>"+val.retorno+"</td><td>"+val.empresa+"</td><td>"+val.contato+"</td><td>"+val.tel+"</td><td>"+val.projetos+"</td>";
+			bodyTable += "<td>"+val.turn_key+"</td><td>"+val.interiores+"</td><td>"+val.mobiliario+"</td><td>"+val.total+"</td><td>"+val.status+"</td>";
+			bodyTable += "<td>"+val.motivo+"</td><td style='background-color: "+val.sinal+"' >"+val.probabilidade+"%</td>"
+			bodyTable += "<td> <button type='button' data-toggle='modal' data-target='modal_edit' onclick='preencherDadosEditar("+val.id_contatos+")' class='btn btn-success' > <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span> </button> ";
+			bodyTable += "<button type='button' id='btn_modal_deletar' class='btn btn-danger' onclick='openDeletarModal("+val.id_contatos+")' ><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>";		
+			bodyTable += "</tr>";
+		}
+				
 	})
 	
 

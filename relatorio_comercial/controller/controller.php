@@ -125,7 +125,7 @@ $app->post('/contatos/importarContatosExcell', function(Request $request, Respon
 		//exit;
 		foreach ($arrayExcell as $key => $value) {
 			if($key >= 10){
-				if($value['B'] != ''  && $value['C'] != '' && $value['D'] != ''){
+				if($value['F'] != ''  && $value['K'] != '' && $value['L'] != ''){
 					$excellComercial->InserirNomes($value);
 					$resultadoInsert = $excellComercial->verificaAtualizacao($id_user);
 					
