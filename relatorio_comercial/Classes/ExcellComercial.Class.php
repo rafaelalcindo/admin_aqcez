@@ -76,8 +76,10 @@
 
  		public function verificaAtualizacao($id_dono){
  			$sql_query_veriProjeto = parent::queryVerificaProjeto($this->projeto['projeto'], $id_dono);
+ 			//echo "<br/>".$sql_query_veriProjeto;
  			$db_contatos 		   = new model_connection_contato();
  			$resultado 			   = $db_contatos->Consultar($sql_query_veriProjeto);
+ 			//echo "resultado ".var_dump($resultado);
 
  			//verifica se realmente o projeto já existe no banco
  			if($resultado != false){
@@ -91,6 +93,7 @@
  				// cadastrar
  				//echo "<br/>entrou cadastrar";
  				$sql_cadastro  = parent::cadastrarListaExcell($this->projeto, $id_dono);
+ 				//echo "<br/>".$sql_cadastro;
  				$resultado	   = $db_contatos->Inserir($sql_cadastro);
  				if($resultado){ return $resultado; }else{ return false; }
  			}
