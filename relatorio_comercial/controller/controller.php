@@ -5,6 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require '../../myslimsite/vendor/autoload.php';
 require_once('../Classes/Contatos.Class.php');
 require_once('../Classes/ExcellComercial.Class.php');
+require_once('../Classes/ExcellComercialPlanilhaQualquer.php');
 
 $configuration = [
 'settings' => [
@@ -139,6 +140,49 @@ $app->post('/contatos/importarContatosExcell', function(Request $request, Respon
 		echo "{status: false}";
 	}
 	
+});
+
+$app->post('/contatos/importarContatosPlanilhaQualquer', function(Request $request, Response $response){
+	$request_array 		= $request->getParsedBody();
+	$id_user 			= $request_array['dono_contato'];
+	$arquivo_excell		= isset($_FILES['planilha_qualquer'])? $_FILES['planilha_qualquer'] : null;
+
+	$excellComercial 	= new ExcellComercialPlanilhaQualquer();
+	$diretorioUpload 	= $excellComercial->ChecarDiretorioDono($id_user);
+	$extensaoArquivo 	= $excellComercial->verificaExtensaoArquivo($arquivo_excell);
+
+	if($extensaoArquivo){
+		$resultadoUpload = $excellComercial->moverArquivoUpload($arquivo_excell, $diretorioUpload);
+		$arrayExcell 	 = $excellComercial->criarObjetoFromExcell($resultadoUpload);
+
+		echo "<br/><br/>".print_r($arrayExcell);
+		echo "<br/><br/>";
+
+
+
+		foreach($arrayExcell as $key_1 =>$value_1){
+			foreach ($value_1 as $key_2 => $value_2) {
+				//empresa
+				$resuEmpFindKey = $excellComercial->verificaEmpresa($key_2, $value_2);
+				if($resuEmpFindKey != 1){					
+					if($excellComercial->getKeyEmpresa() == $key_2 ){ $excellComercial->AddEmpresa($value_2); }
+				}
+
+				//Contato 
+				$resuContFindKey = $excellComercial->verificaContato($key_2, $value_2);
+				if($resuContFindKey != 1){
+					if($excellComercial->getKeyContato() == $key_2){ $excellComercial->AddContato($value_2); }
+				}
+
+
+			}
+		}
+
+		$excellComercial->pegarTodosDadosArray();
+
+		exit;
+	}
+
 });
 
 
