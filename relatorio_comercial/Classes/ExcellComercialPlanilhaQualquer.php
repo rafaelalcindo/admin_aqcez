@@ -8,13 +8,22 @@
 
 	class ExcellComercialPlanilhaQualquer extends ContatoQuery
  	{
- 		private $projetos = array();
+ 		private $projetos 	= array();
 
- 		private $empresa  = array();
- 		private $empresaId = '';
+ 		private $empresa  	= array();
+ 		private $empresaId 	= '';
 
- 		private $contato   = array();
- 		private $contatoId = '';
+ 		private $contato   	= array();
+ 		private $contatoId 	= '';
+
+ 		private $telefone  	= array();
+ 		private $telefoneId = '';
+
+ 		private $celular 	= array();
+ 		private $celularId  = '';
+
+ 		private $endereco	= array();
+ 		private $enderecoId = '';
 
  		function __construct(){	}
 
@@ -118,10 +127,94 @@
  			}
  		}
 
+ 		// Telefone ----------------------------------------
+
+ 		public function addTelefoneKey($telefoneId){
+ 			$this->telefoneId = $telefoneId;
+ 		}
+
+ 		public function getkeyTelefone(){
+ 			return $this->telefoneId;
+ 		}
+
+ 		public function addTelefone($telefone){
+ 			array_push($this->telefone, $telefone);
+ 		}
+
+ 		public function verificaTelefone($key, $telefone){
+ 			$telefone = preg_replace('/\s+/','', $telefone);
+ 			if($telefone == 'Telefone'){
+ 				$this->telefoneId = $key;
+ 				return 1;
+ 			}else if($telefone == 'telefone'){
+ 				$this->telefoneId = $key;
+ 				return 1;
+ 			}else{
+ 				return 0;
+ 			}
+ 		}
+
+ 		// Celular -------------------------------------
+
+ 		public function addCelularKey($celularId){
+ 			$this->celularId = $celularId;
+ 		}
+
+ 		public function getkeyCelular(){
+ 			return $this->celularId;
+ 		}
+
+ 		public function addCelular($celular){
+ 			array_push($this->celular, $celular);
+ 		}
+
+ 		public function verificaCelular($key, $celular){
+ 			$celular = preg_replace('/\s+/','', $celular);
+ 			if($celular == 'Celular'){
+ 				$this->celularId = $key;
+ 				return 1;
+ 			}else if($celular == 'celular'){
+ 				$this->celularId = $key;
+ 				return 1;
+ 			}else{
+ 				return 0;
+ 			}
+ 		}
+
+ 		// Endereço ---------------------------------
+
+ 		public function addEnderecoKey($enderecoId){
+ 			$this->enderecoId = $enderecoId;
+ 		}
+
+ 		public function getkeyEndereco(){
+ 			return $this->enderecoId;
+ 		}
+
+ 		public function addEndereco($endereco){
+ 			array_push($this->endereco, $endereco);
+ 		}
+
+ 		public function verificaEndereco($key, $endereco){
+ 			$endereco = preg_replace('/\s+/','', $endereco);
+ 			if($endereco == 'Endereço'){
+ 				$this->enderecoId = $key;
+ 				return 1;
+ 			}else if($endereco == 'endereco'){
+ 				$this->enderecoId = $key;
+ 				return 1;
+ 			}else {
+ 				return 0;
+ 			}
+ 		}
+
 
  		public function pegarTodosDadosArray(){
  			echo "<br/>".print_r($this->empresa);
  			echo "<br/>".print_r($this->contato);
+ 			echo "<br/>".print_r($this->telefone);
+ 			echo "<br/>".print_r($this->celular);
+ 			echo "<br/>".print_r($this->endereco);
  		}
 
 

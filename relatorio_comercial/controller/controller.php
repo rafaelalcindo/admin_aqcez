@@ -174,6 +174,23 @@ $app->post('/contatos/importarContatosPlanilhaQualquer', function(Request $reque
 					if($excellComercial->getKeyContato() == $key_2){ $excellComercial->AddContato($value_2); }
 				}
 
+				// Telefone
+				$resuTelFindKey = $excellComercial->verificaTelefone($key_2, $value_2);
+				if($resuTelFindKey != 1){
+					if($excellComercial->getkeyTelefone() ==$key_2 ){ $excellComercial->addTelefone($value_2); }
+				}
+
+				// Celular
+				$resuCelFindKey = $excellComercial->verificaCelular($key_2, $value_2);
+				if($resuCelFindKey != 1){
+					if($excellComercial->getkeyCelular() == $key_2 ){ $excellComercial->addCelular($value_2); }
+				}
+
+				// Endereço
+				$resuEndFindKey = $excellComercial->verificaEndereco($key_2, $value_2);
+				if($resuEndFindKey != 1){
+					if($excellComercial->getkeyEndereco() == $key_2 ){ $excellComercial->addEndereco($value_2); }
+				}
 
 			}
 		}
