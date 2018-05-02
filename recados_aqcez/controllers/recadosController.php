@@ -149,6 +149,50 @@
 
 	// =========================== Fim Paginação Geral ===============================================
 
+	// ============================ Notícias Gerente ================================
+
+	$app->post('/cadRecadoGerentes', function(Request $request, Response $response){
+		$request_array = $request->getParsedBody();
+		$status 	   = array();
+
+		$titulo 	   = $request_array['titulo'];
+		$descricao 	   = $request_array['descricao'];
+		$tipo 		   = $request_array['tipo'];
+		$dep 		   = $request_array['dep'];
+		$texto 		   = $request_array['texto'];
+		$nome 		   = $request_array['nome'];
+		$sobrenome	   = $request_array['sobrenome'];
+		$arquivo  	   = isset($_FILES['file01'])? $_FILES['file01'] : null;
+
+		$data 		   = date("Y-m-d H:i:s");
+
+		$recadosDep = new RecadoDep();
+		$recadosDep->setTitulo($titulo);
+		$recadosDep->setDescricao($descricao);
+		$recadosDep->setTexto($texto);
+		$recadosDep->setTipo($tipo);
+		$recadosDep->setNomeDep($dep);
+		$recadosDep->setQuemCad($nome, $sobrenome);
+		$recadosDep->setDataPublicacao($data);
+
+		$emails = $recadosDep->pegarGerenteEmails();
+		$resul_email = $recadosDep->sendEmailDep($emails, $arquivo);
+
+		$resultado = $recadosDep->InserirNoticiaDep();
+
+		if($resultado){
+			$status['status'] = 'true';
+		}else{
+			$status['status'] = 'false';
+		}
+		$statusjson = json_encode($status);
+		echo $statusjson;
+
+
+		//echo "emails: ".print_r($emails);
+
+	});
+
 
 	// ================================= Notícia Dep ======================================
 

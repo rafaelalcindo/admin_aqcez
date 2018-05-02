@@ -173,6 +173,24 @@
 
 		}
 
+		// ========================== pegar todos emails dos Gerente =====================
+
+		public function pegarGerenteEmails() {
+			$db_dados = new RecadosModels();
+			$resultado = $db_dados->PegarEmailsGerentes();
+			$email_array = array();
+			if(!$resultado) {
+				echo "false";
+				return false;
+			} else {
+				while( $row = $resultado->fetch_assoc()) {
+					$email_array[] = $row['email'];
+				}
+				
+				return $email_array;
+			}
+		}
+
 		// ========================== Enviar emails dos dep ===============================
 
 		public function sendEmailDep($emails, $arquivo){

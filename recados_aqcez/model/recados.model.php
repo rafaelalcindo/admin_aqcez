@@ -66,6 +66,13 @@
 			if($pegarDepEmail != false){ return $pegarDepEmail; }else{ return false; }
 		}
 
+		// ====================================== Pegar Email Gerentes ==================================
+
+		public function PegarEmailsGerentes() {
+			$pegarGerenteEmails = pegarEmailsGerente($this->conexao);
+			if($pegarGerenteEmails != false) { return $pegarGerenteEmails; }else { return false; }
+		}
+
 		// ===================================== Inicio todas paginas Dep ==============================
 
 		public function PegarTodasNoticiaPaginaDep($num_pagina, $dep){
@@ -198,6 +205,14 @@
 		$sql_emailDep = sprintf("select usuario_email as 'email' from usuario where usuario_dep = '%s' ", $dep);
 		$resul_query = $conexao->query($sql_emailDep);
 		if($resul_query){ return $resul_query; }else{ return false; }
+	}
+
+// ============================== Pegar emails Gerentes ==========================
+
+	function pegarEmailsGerente($conexao) {
+		$sql_emailGerentes = "select usuario_email as 'email' from usuario where usuario_dep like 'gerente%' ";
+		$resul_query      = $conexao->query($sql_emailGerentes);
+		if($resul_query){ return $resul_query; } else { return false; }
 	}
 
 

@@ -104,6 +104,7 @@
                         <select class="form-control" id="select_tipo" >
                             <option value="geral" >Geral</option>
                             <option value="dep" >Departamento</option>
+                            <option value="gerente" >Gerentes</option>
                         </select>
                     </div>
                 </div>

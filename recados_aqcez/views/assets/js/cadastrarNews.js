@@ -149,6 +149,12 @@ function ExecutandoScript(data){
 				cadastrarNoticiaDep(data);
 			}				
 		}else{ alert('Por favor, complete todo o formulário.'); }
+	} else if(data.get('tipo') == 'gerente') {
+		if(validacaoNews(data)) {
+			if(validacaoCampos(data)) {
+				cadastrarNodiciaGerente(data);
+			}
+		}else { alert('Por favor, complete todo o formulário'); }
 	}else{
 		if(validacaoNews(data)){
 			if(validacaoCampos(data)){
@@ -250,6 +256,41 @@ function cadastrarNoticiaDep(newsForm){
 			$('#btn_enviar').removeAttr('disabled');
 			$.unblockUI();
 			//location.reload();
+		}
+	});
+}
+
+function cadastrarNodiciaGerente(newsForm) {
+	$.ajax({
+		type: 'post',
+		processData: false,
+		contentType: false,
+		data: newsForm,
+		url: '../../controllers/recadosController.php/cadRecadoGerentes',
+		dataType: 'json',
+		beforeSend: function() {
+			$.blockUI({
+				message: '<h2>Um momento, estamos processando seus dados...</h2>',
+				css: {
+					border: 'none', 
+		            padding: '15px', 
+		            backgroundColor: '#000', 
+		            '-webkit-border-radius': '10px', 
+		            '-moz-border-radius': '10px', 
+		            opacity: .5, 
+		            color: '#fff' 
+				}
+			});
+		},
+		success: function(data) {
+			if(data.status == 'true') {
+				limparCampos();
+				$('#modal_msg_cad').modal('show');
+			}
+		},
+		complete: function() {
+			$('#btn_enviar').removeAttr('disabled');
+			$.unblockUI();
 		}
 	});
 }
