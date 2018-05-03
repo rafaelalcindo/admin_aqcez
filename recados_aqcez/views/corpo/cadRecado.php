@@ -115,6 +115,9 @@
                         <select class="form-control" id="select_dep" >
                             <option value="comercial" >Comercial</option>
                             <option value="marketing" >Marketing</option>
+                            <option value="financas" >Finanças</option>
+                            <option value="engenharia" >Engenharia</option>
+                            <option value="compras" >Compras</option>
                         </select>
                     </div>
                 </div>
