@@ -202,7 +202,8 @@
 
 
 	function pegarEmailsDep($conexao, $dep){
-		$sql_emailDep = sprintf("select usuario_email as 'email' from usuario where usuario_dep = '%s' ", $dep);
+		//$sql_emailDep = sprintf("select usuario_email as 'email' from usuario where usuario_dep = '%s' ", $dep);
+		$sql_emailDep = "select usuario_email as 'email' from usuario where usuario_dep like '%".$dep."%' ";
 		$resul_query = $conexao->query($sql_emailDep);
 		if($resul_query){ return $resul_query; }else{ return false; }
 	}

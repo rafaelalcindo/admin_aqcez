@@ -229,6 +229,8 @@
 
   			 $m->Subject = $this->titulo;
   			 $m->Body 	 = $this->texto;
+  			 $m->Body    .= "<br/><br/>";
+  			 $m->Body 	 .= "<b>Messagem enviada por:</b>  ".$this->quem_cad;
   			 $m->AltBody = $this->descricao;
 
   			 if($m->send()){
